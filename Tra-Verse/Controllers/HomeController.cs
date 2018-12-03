@@ -1,6 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Mvc;
 
 
@@ -22,6 +24,23 @@ namespace Tra_Verse.Controllers
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
+            string data = rd.ReadToEnd();
+
+            JArray nasaJson = JArray.Parse(data);
+            ViewBag.Example = nasaJson;
+
+            rd.Close();
+
+            return View();
+        }
+
+        public ActionResult SkyScanner()
+        {
+            HttpClient headerToken = new HttpClient();
+            headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "ABR-plCBOgfQoArv1-_uzUDn-Ekv31wcpRzuak0OmYJHqH37ZFC5oNDnmjF0cmOsMRb83pdKD6lbLbxqRHXAkjjCBxTOOTB_2j6lgV-MQB7iShsdb_Rti4ggPEgFXHYx");
+
+            string request = "https://api.yelp.com/v3/businesses/search?location=bos";
+            StreamReader rd = new StreamReader(headerToken.GetStreamAsync(request).Result);
             string data = rd.ReadToEnd();
 
             JArray nasaJson = JArray.Parse(data);
