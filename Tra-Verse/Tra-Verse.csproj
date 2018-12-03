@@ -212,10 +212,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-<<<<<<< HEAD
     <Content Include="Views\User\Index.cshtml" />
-=======
->>>>>>> change controller user
     <Content Include="Views\Home\NASA.cshtml" />
     <Content Include="Views\Home\Yelp.cshtml" />
     <Content Include="Views\Home\TripList.cshtml" />
