@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 
@@ -21,6 +22,7 @@ namespace Tra_Verse.Controllers
         {
             string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
             HttpWebRequest request = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&format=json");
+
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
@@ -29,6 +31,7 @@ namespace Tra_Verse.Controllers
             JArray nasaJson = JArray.Parse(data);
             ViewBag.Example = nasaJson;
 
+            
             rd.Close();
 
             return View();
@@ -37,14 +40,13 @@ namespace Tra_Verse.Controllers
         public ActionResult Yelp()
         {
             HttpClient headerToken = new HttpClient();
-            headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", )
+            headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", );
             string request = "https://api.yelp.com/v3/businesses/search?location=bos";
             StreamReader rd = new StreamReader(headerToken.GetStreamAsync(request).Result);
             string data = rd.ReadToEnd();
 
-            JArray nasaJson = JArray.Parse(data);
-            ViewBag.Example = nasaJson;
-
+            JObject yelpJson = JObject.Parse(data);
+            ViewBag.YelpInfo = yelpJson;
             rd.Close();
 
             return View();
