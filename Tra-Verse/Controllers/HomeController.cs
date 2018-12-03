@@ -34,7 +34,7 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult SkyScanner()
+        public ActionResult Yelp()
         {
             HttpClient headerToken = new HttpClient();
             headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", )

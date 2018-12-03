@@ -172,8 +172,15 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\NASA.cshtml" />
-    <Content Include="Views\Home\SkyScanner.cshtml" />
+    <Content Include="Views\Home\Yelp.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\TripList.cshtml" />
+    <Content Include="Views\Home\TripDetails.cshtml" />
+    <Content Include="Views\Home\PrivateAccomodations.cshtml" />
+    <Content Include="Views\Home\PublicAccomodations.cshtml" />
+    <Content Include="Views\Home\EditTrip.cshtml" />
+    <Content Include="Views\Home\CheckOut.cshtml" />
+    <Content Include="Views\Home\ConfirmationPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
