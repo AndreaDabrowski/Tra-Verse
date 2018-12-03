@@ -8,6 +8,7 @@ namespace Tra_Verse.Controllers
 {
     public class UserController : Controller
     {
+        //comment
         public static CurrentUser currentUser = new CurrentUser();
         public ActionResult Index()
         {
