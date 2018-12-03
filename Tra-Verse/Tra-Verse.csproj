@@ -224,7 +224,6 @@
     <Content Include="Views\Home\ConfirmationPage.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Yelp.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

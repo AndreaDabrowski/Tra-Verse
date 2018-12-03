@@ -1,37 +1,36 @@
-﻿@* FORMAT FOR VISIBILITY (MAKE IT PRETTY)  *@
+﻿
+<h1>Tra-Verse</h1>
+<h3>Always Moving Forward</h3><br /> <br />
 
+@ViewBag.Error
+@ViewBag.Logout
+@ViewBag.LoggedOut
+<a href="/User/Logout" />Log Out</a>
+<form action="/User/LoginButton" method="post">
 
+    <label class="control-label">Email</label>
+    <input type="text" name="Email" class="form-control" />
 
-    <h1>Tra-Verse</h1>
-    <h3>Always Moving Forward</h3><br /> <br />
+    <label class="control-label">Password</label>
+    <input type="password" name="Password" class=" form-control">
 
+    <input type="submit" value="Log In!" class="btn-default" /><!--Log in button-->
 
-    <a href="/Home/Logout" />Log Out</a>
-    <form action="/Home/LoginButton" method="post">
+</form>
 
-        <label class="control-label">Email</label>
-        <input type="text" name="Email" class="form-control" />
+<h2>Register New User:</h2><br />
+<form action="/User/RegisterUser" method="post">
+    <label class="control-label">Email</label>
+    <input type="email" name="Email" class="form-control" />
 
-        <label class="control-label">Password</label>
-        <input type="password" name="Password" class=" form-control">
+    <label class="control-label">Password</label>
+    <input type="password" name="Password" class=" form-control">
 
-        <input type="submit" value="Log In!" class="btn-default" /><!--Log in button-->
+    <label class="control-label">Confirm Password</label>
+    <input type="password" class=" form-control">
 
-    </form>
-
-    <h2>Register New User:</h2><br />
-    <form action="/Home/RegisterUser" method="post">
-        <label class="control-label">Email</label>
-        <input type="email" name="Email" class="form-control" />
-
-        <label class="control-label">Password</label>
-        <input type="password" name="Password" class=" form-control">
-
-        <label class="control-label">Confirm Password</label>
-        <input type="password" class=" form-control">
-
-        <input type="submit" value="Register!" class="btn-default" /><!--registration button-->
-    </form>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>src =</script>
+    <input type="submit" value="Register!" class="btn-default" /><!--registration button-->
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>src =</script>
 
