@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
 {
     public class UserController : Controller
     {
-        //comment
+        TraVerseEntities database = new TraVerseEntities();
         public static CurrentUser currentUser = new CurrentUser();
         public ActionResult Index()
         {
@@ -17,15 +18,15 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Logout()
         {
-            if (currentUser.LogIn == true)
+            if (currentUser.LoggedIn == true)
             {
-                currentUser.LogIn = false;
-                currentUser.ID = 0;
+                currentUser.LoggedIn = false;
+                currentUser.UserID = 0;
                 ViewBag.Logout = "You've been Logged out!";
-                return View("Login");
+                return View("Index");
             }
             ViewBag.LoggedOut = "You're not logged in";
-            return View("Login");
+            return View("Index");
         }
 
         public ActionResult Login()
@@ -35,27 +36,25 @@ namespace Tra_Verse.Controllers
 
         public ActionResult LoginButton(User logUser)
         {
-
-            TaskListDBEntities ORM = new TaskListDBEntities();
-            List<User> foundID = ORM.Users.ToList<User>();
+            List<User> foundID = database.Users.ToList<User>();
             foreach (User user in foundID)
             {
                 if (logUser.Email == user.Email)
                 {
-                    if (currentUser.LogIn == false)
+                    if (currentUser.LoggedIn == false)
                     {
-                        currentUser.LogIn = true;
-                        currentUser.ID = user.UserID;
+                        currentUser.LoggedIn = true;
+                        currentUser.UserID = user.UserID;
                         TempData["LoggedIn"] = "You've successfully logged in!";
-                        return RedirectToAction("TaskList");//, logUser
+                        return RedirectToAction("TripList");//, logUser
                     }
                     ViewBag.Error = "You are already logged in!";
-                    return View("Login");
+                    return View("Index");
 
                 }
             }
             ViewBag.Error = "This is not a valid email address";
-            return View("Login");
+            return View("Index");
 
 
         }
@@ -63,11 +62,10 @@ namespace Tra_Verse.Controllers
         {
             if (ModelState.IsValid)
             {
-                TaskListDBEntities ORM = new TaskListDBEntities();
-                User added = ORM.Users.Add(newUser);
-                ORM.SaveChanges();
-                currentUser.ID = added.UserID;
-                currentUser.LogIn = true;
+                User added = database.Users.Add(newUser);
+                database.SaveChanges();
+                currentUser.UserID = added.UserID;
+                currentUser.LoggedIn = true;
                 return RedirectToAction("TaskList");//, added
             }
             else
@@ -78,64 +76,63 @@ namespace Tra_Verse.Controllers
 
         }
 
-        public ActionResult TaskList()//User CurrentUser
-        {
+        //public ActionResult TaskList()//User CurrentUser
+        //{
 
-            TaskListDBEntities ORM = new TaskListDBEntities();
-            ViewBag.CurrentUserUserID = currentUser.ID;
-            ViewBag.Tasks = ORM.Tasks.ToList<Task>();
+        //    ViewBag.CurrentUserUserID = currentUser.UserID;
+           
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public ActionResult UpdateComplete(int taskID)
-        {
-            TaskListDBEntities ORM = new TaskListDBEntities();
-            Task oldTask = ORM.Tasks.Find(taskID);
-            if (oldTask.Complete == false)
-            {
-                oldTask.Complete = true;
-                ORM.Entry(oldTask).State = System.Data.Entity.EntityState.Modified;
-                ORM.SaveChanges();
-                return RedirectToAction("TaskList");
-            }
-            else
-            {
-                return RedirectToAction("TaskList");
-            }
-        }
+    //    public ActionResult UpdateComplete(int taskID)
+    //    {
+    //        TaskListDBEntities ORM = new TaskListDBEntities();
+    //        Task oldTask = ORM.Tasks.Find(taskID);
+    //        if (oldTask.Complete == false)
+    //        {
+    //            oldTask.Complete = true;
+    //            ORM.Entry(oldTask).State = System.Data.Entity.EntityState.Modified;
+    //            ORM.SaveChanges();
+    //            return RedirectToAction("TaskList");
+    //        }
+    //        else
+    //        {
+    //            return RedirectToAction("TaskList");
+    //        }
+    //    }
 
-        public ActionResult DeleteTask(int taskID)
-        {
-            TaskListDBEntities ORM = new TaskListDBEntities();
-            Task found = ORM.Tasks.Find(taskID);
-            ORM.Tasks.Remove(found);
-            ORM.SaveChanges();
-            return RedirectToAction("TaskList");
+    //    public ActionResult DeleteTask(int taskID)
+    //    {
+    //        TaskListDBEntities ORM = new TaskListDBEntities();
+    //        Task found = ORM.Tasks.Find(taskID);
+    //        ORM.Tasks.Remove(found);
+    //        ORM.SaveChanges();
+    //        return RedirectToAction("TaskList");
 
-        }
+    //    }
 
-        public ActionResult AddTask()
-        {
-            return View();
-        }
+    //    public ActionResult AddTask()
+    //    {
+    //        return View();
+    //    }
 
-        public ActionResult AddNewTask(Task newTask)
-        {
-            if (ModelState.IsValid)
-            {
-                TaskListDBEntities ORM = new TaskListDBEntities();
-                newTask.UserID = currentUser.ID;
-                ORM.Tasks.Add(newTask);
-                ORM.SaveChanges();
-                return RedirectToAction("TaskList");
+    //    public ActionResult AddNewTask(Task newTask)
+    //    {
+    //        if (ModelState.IsValid)
+    //        {
+    //            TaskListDBEntities ORM = new TaskListDBEntities();
+    //            newTask.UserID = currentUser.ID;
+    //            ORM.Tasks.Add(newTask);
+    //            ORM.SaveChanges();
+    //            return RedirectToAction("TaskList");
 
-            }
-            else
-            {
-                ViewBag.Error = "Error with adding task.";
-                return View("AddTask");
-            }
-        }
+    //        }
+    //        else
+    //        {
+    //            ViewBag.Error = "Error with adding task.";
+    //            return View("AddTask");
+    //        }
+    //    }
     }
 }
