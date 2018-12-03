@@ -39,8 +39,9 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Yelp()
         {
+            string yelpAPIKey = System.Configuration.ConfigurationManager.AppSettings["Yelp Api Header"];
             HttpClient headerToken = new HttpClient();
-            headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "");
+            headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", yelpAPIKey);
             
             string request = "https://api.yelp.com/v3/businesses/search?location=bos";
             StreamReader rd = new StreamReader(headerToken.GetStreamAsync(request).Result);
