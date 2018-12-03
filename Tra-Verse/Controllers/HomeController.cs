@@ -69,6 +69,5 @@ namespace Tra_Verse.Controllers
         public ActionResult ConfirmationPage() { return View(); } // confirms payment and sends an auto-email
 
         //public ActionResult EditConfirmationPage () { return View(); }   ???? Do we need this, or can we just use the ConfirmationPage()
-
     }
 }
