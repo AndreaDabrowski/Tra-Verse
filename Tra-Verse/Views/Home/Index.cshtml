@@ -1,16 +1,33 @@
 ﻿
+    <h1>Tra-Verse</h1>
+    <h3>Always Moving Forward</h3><br /> <br />
 
-<<<<<<< HEAD
-<h2>Welcome to Tra-Verse<h2/>
-=======
-@ViewBag.Title
+    <a href="/Home/Logout" />Log Out</a>
+    <form action="/Home/LoginButton" method="post">
 
-@* LOG-IN PAGE
+        <label class="control-label">Email</label>
+        <input type="text" name="Email" class="form-control" />
 
-    name:
-    email:
-    password:
+        <label class="control-label">Password</label>
+        <input type="password" name="Password" class=" form-control">
 
-*@
+        <input type="submit" value="Log In!" class="btn-default" /><!--Log in button-->
 
->>>>>>> changed api key for Yelp
+    </form>
+
+    <h2>Register New User:</h2><br />
+    <form action="/Home/RegisterUser" method="post">
+        <label class="control-label">Email</label>
+        <input type="email" name="Email" class="form-control" />
+
+        <label class="control-label">Password</label>
+        <input type="password" name="Password" class=" form-control">
+
+        <label class="control-label">Confirm Password</label>
+        <input type="password" class=" form-control">
+
+        <input type="submit" value="Register!" class="btn-default" /><!--registration button-->
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>src =</script>
+
