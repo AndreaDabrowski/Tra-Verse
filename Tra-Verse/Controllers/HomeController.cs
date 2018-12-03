@@ -3,7 +3,6 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 
 
@@ -31,7 +30,7 @@ namespace Tra_Verse.Controllers
             JArray nasaJson = JArray.Parse(data);
             ViewBag.Example = nasaJson;
 
-            
+
             rd.Close();
 
             return View();
@@ -39,10 +38,11 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Yelp()
         {
-            string yelpAPIKey = System.Configuration.ConfigurationManager.AppSettings["Yelp Api Header"];
+            string yelpAPIKey = System.Configuration.ConfigurationManager.AppSettings["Yelp API Key"];
             HttpClient headerToken = new HttpClient();
+
             headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", yelpAPIKey);
-            
+
             string request = "https://api.yelp.com/v3/businesses/search?location=bos";
             StreamReader rd = new StreamReader(headerToken.GetStreamAsync(request).Result);
             string data = rd.ReadToEnd();
