@@ -33,7 +33,7 @@ namespace Tra_Verse.Controllers
 
             rd.Close();
 
-            return View();
+            return View("TripList");
         }
 
         public ActionResult Yelp()
@@ -51,7 +51,7 @@ namespace Tra_Verse.Controllers
             ViewBag.YelpInfo = yelpJson;
             rd.Close();
 
-            return View();
+            return View("TripList");
         }
 
         public ActionResult TripList() { return View(); }
