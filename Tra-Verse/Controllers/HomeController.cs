@@ -37,8 +37,7 @@ namespace Tra_Verse.Controllers
         public ActionResult SkyScanner()
         {
             HttpClient headerToken = new HttpClient();
-            headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "ABR-plCBOgfQoArv1-_uzUDn-Ekv31wcpRzuak0OmYJHqH37ZFC5oNDnmjF0cmOsMRb83pdKD6lbLbxqRHXAkjjCBxTOOTB_2j6lgV-MQB7iShsdb_Rti4ggPEgFXHYx");
-
+            headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", )
             string request = "https://api.yelp.com/v3/businesses/search?location=bos";
             StreamReader rd = new StreamReader(headerToken.GetStreamAsync(request).Result);
             string data = rd.ReadToEnd();
