@@ -158,9 +158,6 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>Tra-Verse.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\User1.cs">
-      <DependentUpon>Tra-Verse.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\VacationLog.cs">
       <DependentUpon>Tra-Verse.tt</DependentUpon>
     </Compile>
