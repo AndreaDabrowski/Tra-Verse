@@ -10,6 +10,6 @@
     <p>Business Price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
     <p>Review count: @ViewBag.YelpInfo["businesses"][i]["review_count"]</p>
     <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
-    <a href="Home/PrivateAccomodations?index=i">Choose this Destination</a>
+    <a href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a>
     <br />
 }
