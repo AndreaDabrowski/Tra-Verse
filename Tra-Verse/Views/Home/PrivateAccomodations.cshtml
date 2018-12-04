@@ -1,60 +1,66 @@
-<<<<<<< HEAD
-﻿<form>
+﻿
 
+
+<form action="/Home/CheckOut" method="post">
     <span>PLANET PICTURE</span>
-    <p>Planet Name: @ViewBag.NASAInfo[ViewBag.Index]["pl_name"]</p>
+    <p value="@ViewBag.NASAInfo[ViewBag.Index]["pl_name"]" name="PlanetName">
+        Planet Name: @ViewBag.NASAInfo[ViewBag.Index]["pl_name"]
+    </p>
     <p>Distance from Earth: @ViewBag.NASAInfo[ViewBag.Index]["st_dist"] parsecs</p>
     <p>Business Price: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"]</p>
     <p>Review count: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["review_count"]</p>
     <p>Rating: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["rating"]</p>
-    <label>Start Date: </label><input type="date" name="StartDate" value="2050-12-14"/>
-    <label>End Date: </label><input type="date" name="EndDate" value="2050-12-14"/>
-    <p>+100,000</p><input type="radio" value="1" name="shipOption"/>
-    <p>+200,000</p><input type="radio" value="2" name="shipOption"/>
-    <p>+300,000</p><input type="radio" value="3" name="shipOption"/>
+    <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
+    <p>+100,000</p><input type="radio" value="1" name="shipOption" />
+    <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
+    <p>+200,000</p><input type="radio" value="2" name="shipOption" />
+    <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
+    <p>+300,000</p><input type="radio" value="3" name="shipOption" /><br />
+    <label>Start Date: </label><input type="date" name="StartDate" value="2050-12-14" />
+    <label>End Date: </label><input type="date" name="EndDate" value="2050-12-15" /><br /> 
+
+    @{ 
+        int totalPrice = 400;
+    }
+
+    <p value=@totalPrice name="Price">Total Price: @totalPrice</p>
+    <input type="submit" value="Submit Vacation" />
 </form>
 @* X amount per distance
     X random number generator for dollar signs (start by million multiplier)
-    ship options - radio button
-    date start - look up how to change calendar start date
-    date end
+    X ship options - radio button
+    X date start - look up how to change calendar start date
+    X date end
     total price box
-    method to do total math
+    X method to do total math
     form submit
-    
+    connect to DB
+
 *@
 @{
-    int pricePerDistance = ViewBag.NASAInfo[ViewBag.Index]["st_dist"]/100 * 200000;
+    int pricePerDistance = ViewBag.NASAInfo[ViewBag.Index]["st_dist"] / 100 * 200000;
     int pricePerDollarSign = ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"].ToString().Length * 10000;
-    int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
-        }
+    //int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
+}
 <p>Price per Distance: $@pricePerDistance</p>
 <p>Price rating: $@pricePerDollarSign</p>
 <p>totalPrice</p>
+@*
 
-
-﻿@* 
-    
     - Planet Name
     - Planet Image
     - Distance (added to total)
-    - $ range 
+    - $ range
         * rand number generator based on $$$$
         * adds to total
         * sends to VacationLog database
-
     - Ship Option
         * add money based on ship
         * sent to VacationLog database
-
     - Start Date
         * sent to VacationLog
     - End Date
         * sent to VacationLog
-
     - Current total based on the options
-
     - Submit button
-
 *@
-

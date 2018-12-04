@@ -164,6 +164,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\background.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -212,13 +213,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-<<<<<<< HEAD
-    <Content Include="Views\User\Index.cshtml" />
-=======
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\NASA.cshtml" />
     <Content Include="Views\Home\Yelp.cshtml" />
->>>>>>> 4e0a89cb080dcfebb126dae569be0e6598d489a3
     <Content Include="Views\Home\TripList.cshtml" />
     <Content Include="Views\Home\TripDetails.cshtml" />
     <Content Include="Views\Home\PrivateAccomodations.cshtml" />
