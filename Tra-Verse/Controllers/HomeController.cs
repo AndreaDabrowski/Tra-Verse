@@ -11,11 +11,8 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
-        {
-            ViewBag.Title = "Always Moving Forward";
-            return View();
-        }
+
+
 
         public ActionResult NASA()
         {
@@ -54,7 +51,15 @@ namespace Tra_Verse.Controllers
             return View("TripList");
         }
 
-        public ActionResult TripList() { return View(); }
+        public ActionResult TripList()
+        {
+            Yelp();
+            NASA();
+
+
+
+            return View();
+        }
 
         public ActionResult TripDetails() { return View(); }
 
