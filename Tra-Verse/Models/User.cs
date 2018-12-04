@@ -15,10 +15,10 @@ namespace Tra_Verse.Models
     public partial class User
     {
         public int UserID { get; set; }
-        public int OrderID { get; set; }
+        public Nullable<int> OrderID { get; set; }
         public string CreditCard { get; set; }
         public string NameOnCard { get; set; }
-        public int CRV { get; set; }
+        public Nullable<int> CRV { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
     }
