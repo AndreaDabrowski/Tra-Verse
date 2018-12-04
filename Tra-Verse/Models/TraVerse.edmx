@@ -64,20 +64,7 @@
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="VacationLogs" EntityType="Self.VacationLog" />
-          <EntitySet Name="User1" EntityType="Model.User1" />
         </EntityContainer>
-        <EntityType Name="User1">
-          <Key>
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="OrderID" Type="Int32" />
-          <Property Name="CreditCard" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="NameOnCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CRV" Type="Int32" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

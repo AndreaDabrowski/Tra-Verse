@@ -212,7 +212,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\Home\TripList.cshtml" />
     <Content Include="Views\Home\TripDetails.cshtml" />
     <Content Include="Views\Home\PrivateAccomodations.cshtml" />
@@ -221,6 +220,7 @@
     <Content Include="Views\Home\CheckOut.cshtml" />
     <Content Include="Views\Home\ConfirmationPage.cshtml" />
     <Content Include="Views\Web.config" />
+    <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
