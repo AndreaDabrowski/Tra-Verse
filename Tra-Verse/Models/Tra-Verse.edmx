@@ -64,13 +64,27 @@
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="VacationLogs" EntityType="Self.VacationLog" />
+          <EntitySet Name="User1" EntityType="Model.User1" />
         </EntityContainer>
+        <EntityType Name="User1">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" />
+          <Property Name="CreditCard" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="NameOnCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CRV" Type="Int32" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="TraVerseEntities">
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="Model.User">
               <MappingFragment StoreEntitySet="Users">
@@ -84,6 +98,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <EntitySetMapping Name="VacationLogs">
             <EntityTypeMapping TypeName="Model.VacationLog">
               <MappingFragment StoreEntitySet="VacationLog">
@@ -97,6 +112,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <!--<EntitySetMapping Name="User1">
+            <EntityTypeMapping TypeName="Model.User1">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CRV" ColumnName="CRV" />
+                <ScalarProperty Name="NameOnCard" ColumnName="NameOnCard" />
+                <ScalarProperty Name="CreditCard" ColumnName="CreditCard" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>-->
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
