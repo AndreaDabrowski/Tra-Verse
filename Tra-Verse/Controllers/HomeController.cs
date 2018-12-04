@@ -11,54 +11,66 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
+
+
         public ActionResult Index()
         {
             ViewBag.Title = "Always Moving Forward";
             return View();
         }
 
-        public ActionResult NASA()
+        public JArray NASA()
         {
-            string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
-            HttpWebRequest request = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&format=json");
-
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            //string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
+            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&format=json");
+            HttpWebResponse response = (HttpWebResponse)nasaRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
             string data = rd.ReadToEnd();
 
             JArray nasaJson = JArray.Parse(data);
-            ViewBag.Example = nasaJson;
-
+            //ViewBag.Example = nasaJson;
 
             rd.Close();
 
-            return View("TripList");
+            return nasaJson;
         }
 
-        public ActionResult Yelp()
+        public JObject Yelp()
         {
             string yelpAPIKey = System.Configuration.ConfigurationManager.AppSettings["Yelp API Key"];
             HttpClient headerToken = new HttpClient();
 
             headerToken.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", yelpAPIKey);
 
-            string request = "https://api.yelp.com/v3/businesses/search?location=bos";
-            StreamReader rd = new StreamReader(headerToken.GetStreamAsync(request).Result);
+            string yelpRequest = "https://api.yelp.com/v3/businesses/search?location=bos";
+            StreamReader rd = new StreamReader(headerToken.GetStreamAsync(yelpRequest).Result);
             string data = rd.ReadToEnd();
 
             JObject yelpJson = JObject.Parse(data);
-            ViewBag.YelpInfo = yelpJson;
+            //ViewBag.YelpInfo = yelpJson;
             rd.Close();
 
-            return View("TripList");
+            return yelpJson;
         }
 
-        public ActionResult TripList() { return View(); }
+        public ActionResult TripList()
+        {
+            ViewBag.YelpInfo = Yelp();
+            ViewBag.NASAInfo = NASA();
+
+            return View();
+        }
 
         public ActionResult TripDetails() { return View(); }
 
-        public ActionResult PrivateAccomodations() { return View(); }
+        public ActionResult PrivateAccomodations(int index)
+        {
+            ViewBag.YelpInfo = Yelp();
+            ViewBag.NASAInfo = NASA();
+            ViewBag.Index = index;
+            return View();
+        }
 
         public ActionResult PublicAccomodations() { return View(); }
 

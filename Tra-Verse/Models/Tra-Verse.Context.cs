@@ -27,5 +27,6 @@ namespace Tra_Verse.Models
     
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<VacationLog> VacationLogs { get; set; }
+        public virtual DbSet<User1> User1 { get; set; }
     }
 }

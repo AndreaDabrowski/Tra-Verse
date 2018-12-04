@@ -1,1 +1,16 @@
-﻿
+﻿<span>PLANET PICTURE</span>
+<p>Planet Name: @ViewBag.NASAInfo[ViewBag.Index]["pl_name"]</p>
+<p>Distance from Earth: @ViewBag.NASAInfo[ViewBag.Index]["st_dist"] parsecs</p>
+<p>Business Price: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"]</p>
+<p>Review count: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["review_count"]</p>
+<p>Rating: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["rating"]</p>
+
+@* amount per distance
+    random number generator for dollar signs (start by million multiplier)
+    ship options - radio button
+    date start - look up how to change calendar start date
+    date end
+    total price box
+    method to do total math
+    form submit
+    *@
