@@ -16,7 +16,7 @@ namespace Tra_Verse.Models
     public partial class TraVerseEntities : DbContext
     {
         public TraVerseEntities()
-            : base("name=Entities")
+            : base("name=TraVerseEntities")
         {
         }
     
