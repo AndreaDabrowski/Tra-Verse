@@ -11,10 +11,11 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
+        UserController UC = new UserController();
         public ActionResult Index()
         {
             ViewBag.Title = "Always Moving Forward";
-            return View();
+            return UC.Index();
         }
 
         public JArray NASA()
