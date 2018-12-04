@@ -9,8 +9,11 @@
     <p>Rating: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["rating"]</p>
     <label>Start Date: </label><input type="date" name="StartDate" value="2050-12-14"/>
     <label>End Date: </label><input type="date" name="EndDate" value="2050-12-14"/>
+    <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" />
     <p>+100,000</p><input type="radio" value="1" name="shipOption"/>
+    <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" />
     <p>+200,000</p><input type="radio" value="2" name="shipOption"/>
+    <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949"/>
     <p>+300,000</p><input type="radio" value="3" name="shipOption"/>
 </form>
 @* X amount per distance
@@ -22,11 +25,11 @@
     method to do total math
     form submit
     
+    int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
 *@
 @{
     int pricePerDistance = ViewBag.NASAInfo[ViewBag.Index]["st_dist"]/100 * 200000;
     int pricePerDollarSign = ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"].ToString().Length * 10000;
-    int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
         }
 <p>Price per Distance: $@pricePerDistance</p>
 <p>Price rating: $@pricePerDollarSign</p>
