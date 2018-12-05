@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Data.Entity.Validation;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Mvc;
+using Tra_Verse.Models;
 
 
 //testing this commit
@@ -12,6 +15,8 @@ namespace Tra_Verse.Controllers
     public class HomeController : Controller
     {
         UserController UC = new UserController();
+        TraVerseEntities database = new TraVerseEntities();
+
         public ActionResult Index()
         {
             ViewBag.Title = "Always Moving Forward";
@@ -76,7 +81,32 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTrip() { return View(); }
 
-        public ActionResult CheckOut() { return View(); } // takes and submits payment information
+
+        public ActionResult CheckOut(VacationLog order)
+        {
+            try
+            {
+                VacationLog added = database.VacationLogs.Add(order);
+                database.SaveChanges();
+
+                UserController.currentUser.OrderID = added.OrderID;
+                User loggedInUser = database.Users.Find(UserController.currentUser.UserID);
+                loggedInUser.OrderID = added.OrderID;
+                database.Entry(loggedInUser).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.Write(e.EntityValidationErrors);
+                return View("Error");
+            }
+
+            return View();//input order object here later
+        } 
+        public ActionResult Error()
+        {
+            return View();
+        }
 
         public ActionResult ConfirmationPage() { return View(); } // confirms payment and sends an auto-email
 
