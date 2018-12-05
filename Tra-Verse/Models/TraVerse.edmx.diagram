@@ -4,10 +4,9 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="75dc36700e1e4855b92e255aeb82b2f6" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.VacationLog" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.User1" Width="1.5" PointX="0.75" PointY="4.75" />
+      <Diagram DiagramId="299831e331df49f79bda56761bb5a03b" Name="Diagram1">
+        <EntityTypeShape EntityType="TraVerseModel.User" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TraVerseModel.VacationLog" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
