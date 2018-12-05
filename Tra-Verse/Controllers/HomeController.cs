@@ -20,7 +20,7 @@ namespace Tra_Verse.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Always Moving Forward";
-            return UC.Index();
+            return View();
         }
 
         public JArray NASA()
@@ -73,8 +73,7 @@ namespace Tra_Verse.Controllers
             ViewBag.YelpInfo = Yelp();
             ViewBag.NASAInfo = NASA();
             UC.currentUser.CurrentIndex = index;
-            ViewBag.Index = index;
-
+            ViewBag.Index = UC.currentUser.CurrentIndex;
 
             return View();
         }
@@ -84,9 +83,9 @@ namespace Tra_Verse.Controllers
         public ActionResult EditTrip() { return View(); }
 
 
-        public ActionResult SaveTrip(VacationLog order)
+        public ActionResult Checkout(VacationLog order)
         {
-            if(UC.currentUser.LoggedIn == false)
+            if (UC.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
             }
@@ -107,17 +106,20 @@ namespace Tra_Verse.Controllers
                 Console.Write(e.EntityValidationErrors);
                 return View("Error");
             }
-            return RedirectToAction("Checkout");//input order object here later
 
-        } 
-
-        public ActionResult Checkout()
-        {
+            ViewBag.NASAInfo = NASA();
+            //ViewBag.YelpInfo = Yelp();
             ViewBag.Index = UC.currentUser.CurrentIndex;
-            return View();
+            //ViewBag.Index = UC.currentUser.CurrentIndex;
+
+            return View();//input order object here later
         }
 
         public ActionResult Error()
+        {
+            return View();
+        }
+        public ActionResult LoginError()
         {
             return View();
         }
