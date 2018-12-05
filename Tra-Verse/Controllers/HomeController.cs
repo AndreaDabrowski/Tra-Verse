@@ -11,12 +11,11 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
-
-
+        UserController UC = new UserController();
         public ActionResult Index()
         {
             ViewBag.Title = "Always Moving Forward";
-            return View();
+            return UC.Index();
         }
 
         public JArray NASA()
@@ -69,6 +68,7 @@ namespace Tra_Verse.Controllers
             ViewBag.YelpInfo = Yelp();
             ViewBag.NASAInfo = NASA();
             ViewBag.Index = index;
+
             return View();
         }
 
