@@ -45,6 +45,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -134,26 +140,26 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\CurrentUser.cs" />
-    <Compile Include="Models\Tra-Verse.Context.cs">
+    <Compile Include="Models\TraVerse.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Tra-Verse.Context.tt</DependentUpon>
+      <DependentUpon>TraVerse.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tra-Verse.cs">
+    <Compile Include="Models\TraVerse.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Tra-Verse.tt</DependentUpon>
+      <DependentUpon>TraVerse.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\Tra-Verse.Designer.cs">
+    <Compile Include="Models\TraVerse.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Tra-Verse.edmx</DependentUpon>
+      <DependentUpon>TraVerse.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>Tra-Verse.tt</DependentUpon>
+      <DependentUpon>TraVerse.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\VacationLog.cs">
-      <DependentUpon>Tra-Verse.tt</DependentUpon>
+      <DependentUpon>TraVerse.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -167,24 +173,24 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\Tra-Verse.Context.tt">
+    <Content Include="Models\TraVerse.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Tra-Verse.edmx</DependentUpon>
-      <LastGenOutput>Tra-Verse.Context.cs</LastGenOutput>
+      <LastGenOutput>TraVerse.Context.cs</LastGenOutput>
+      <DependentUpon>TraVerse.edmx</DependentUpon>
     </Content>
-    <Content Include="Models\Tra-Verse.tt">
+    <Content Include="Models\TraVerse.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Tra-Verse.edmx</DependentUpon>
-      <LastGenOutput>Tra-Verse.cs</LastGenOutput>
+      <DependentUpon>TraVerse.edmx</DependentUpon>
+      <LastGenOutput>TraVerse.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\Tra-Verse.edmx">
+    <EntityDeploy Include="Models\TraVerse.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Tra-Verse.Designer.cs</LastGenOutput>
+      <LastGenOutput>TraVerse.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <Content Include="Models\Tra-Verse.edmx.diagram">
-      <DependentUpon>Tra-Verse.edmx</DependentUpon>
+    <Content Include="Models\TraVerse.edmx.diagram">
+      <DependentUpon>TraVerse.edmx</DependentUpon>
     </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -197,7 +203,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
