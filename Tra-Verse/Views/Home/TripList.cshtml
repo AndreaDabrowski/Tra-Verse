@@ -1,16 +1,30 @@
-﻿
+﻿@{
+
+    string[] images = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg"};
+}
+
+
 <h1>Choose Your Vacation :)</h1>
 @TempData["LoggedIn"]
 @*Search function!!!!!!!!!!!!*@
-@for (int i = 0; i <= 10; i++)
+@for (int i = 0; i < 10; i++)
 {
-    <span>PLANET PICTURE</span>
-    <p>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</p>
-    <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
-    <p>Business Price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
-    <p>Review count: @ViewBag.YelpInfo["businesses"][i]["review_count"]</p>
-    <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
-    <a href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a>
+    <p>
+        <img src=@images[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
+        <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span>
+        <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
+        <p>Business Price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
+        <p>Review count: @ViewBag.YelpInfo["businesses"][i]["review_count"]</p>
+        <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
+        <a href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a>
+        
+    </p>
     <br />
+<<<<<<< HEAD
+    <br />
+
+}
+=======
 }
 
+>>>>>>> 65c58721b0a4cdc1f526a2d1c6befbe944b473d0

@@ -21,7 +21,7 @@ namespace Tra_Verse.Controllers
         public JArray NASA()
         {
             //string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
-            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&format=json");
+            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&format=json&select=pl_name,st_dist");
             HttpWebResponse response = (HttpWebResponse)nasaRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
