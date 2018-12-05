@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Web.Mvc;
 using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
@@ -14,65 +16,62 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        //public ActionResult Logout()
-        //{
-        //    if (currentUser.LoggedIn == true)
-        //    {
-        //        currentUser.LoggedIn = false;
-        //        currentUser.UserID = 0;
-        //        ViewBag.Logout = "You've been Logged out!";
-        //        return View("Index");
-        //    }
-        //    ViewBag.LoggedOut = "You're not logged in";
-        //    return View("Index");
-        //}
+        public ActionResult Logout()
+        {
+            if (currentUser.LoggedIn == true)
+            {
+                currentUser.LoggedIn = false;
+                currentUser.UserID = 0;
+                currentUser.OrderID = 0;
+                ViewBag.Logout = "You've been Logged out!";
+                return View("Index");
+            }
+            ViewBag.LoggedOut = "You're not logged in";
+            return View("Index");
+        }
+        
+        public ActionResult LoginButton(User logUser)
+        {
+            List<User> foundID = database.Users.ToList();
+            foreach (User user in foundID)
+            {
+                if (logUser.Email == user.Email)
+                {
+                    if (currentUser.LoggedIn == false)
+                    {
+                        currentUser.LoggedIn = true;
+                        currentUser.UserID = user.UserID;
+                        currentUser.OrderID = user.OrderID;
+                        TempData["LoggedIn"] = "You've successfully logged in!";
+                        return RedirectToAction("TripList", "Home");//, logUser
+                    }
+                    ViewBag.Error = "You are already logged in!";
+                    return View("Index");
+                }
+            }
 
-        //public ActionResult Login()
-        //{
-        //    return View();
-        //}
+            ViewBag.Error = "This is not a valid email address";
+            return View("Index");
+        }
+        public ActionResult RegisterUser(User newUser)
+        {
+            if (ModelState.IsValid)
+            {
+                User added = database.Users.Add(newUser);
+                database.SaveChanges();
+                currentUser.UserID = added.UserID;
+                currentUser.LoggedIn = true;
+                currentUser.OrderID = 0;
+                TempData["AddedUser"] = "You've been registered";
+                return RedirectToAction("Index");//, added
+            }
+            else
+            {
+                TempData["Error"] = "Error with adding user.";
+                return View("Index");
+            }
 
-        //public ActionResult LoginButton(User logUser)
-        //{
-        //    List<User> foundID = database.Users.ToList<User>();
-        //    foreach (User user in foundID)
-        //    {
-        //        if (logUser.Email == user.Email)
-        //        {
-        //            if (currentUser.LoggedIn == false)
-        //            {
-        //                currentUser.LoggedIn = true;
-        //                currentUser.UserID = user.UserID;
-        //                TempData["LoggedIn"] = "You've successfully logged in!";
-        //                return RedirectToAction("TripList", "Home");//, logUser
-        //            }
-        //            ViewBag.Error = "You are already logged in!";
-        //            return View("Index");
-
-        //        }
-        //    }
-        //    ViewBag.Error = "This is not a valid email address";
-        //    return View("Index");
-
-
-        //}
-        //public ActionResult RegisterUser(User newUser)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        User added = database.Users.Add(newUser);
-        //        database.SaveChanges();
-        //        currentUser.UserID = added.UserID;
-        //        currentUser.LoggedIn = true;
-        //        return RedirectToAction("Index");//, added
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Error = "Error with adding user.";
-        //        return View("Index");
-        //    }
-
-        //}
+        }
 
         //public ActionResult TaskList()//User CurrentUser
         //{

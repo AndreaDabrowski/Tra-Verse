@@ -1,3 +1,13 @@
+@{
+    int pricePerDistance = ViewBag.NASAInfo[ViewBag.Index]["st_dist"] / 100 * 200000;
+    int pricePerDollarSign = ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"].ToString().Length * 10000;
+    //int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
+    string rating = ViewBag.YelpInfo["businesses"][ViewBag.Index]["rating"].ToString();
+    string planetName = ViewBag.NASAInfo[ViewBag.Index]["pl_name"].ToString();
+}
+<p>Price per Distance: $@pricePerDistance</p>
+<p>Price rating: $@pricePerDollarSign</p>
+<p>totalPrice</p>
 
 @{
 
@@ -7,22 +17,36 @@
 
     <span><img src=@images[ViewBag.Index] alt=@ViewBag.NASAInfo[ViewBag.Index]["pl_name"] height="200" width="200" align="left"></span>
 
-    <p value="@ViewBag.NASAInfo[ViewBag.Index]["pl_name"]" name="PlanetName">
+    <p> 
+       <input type="hidden" value="@planetName" name="PlanetName">
         Planet Name: @ViewBag.NASAInfo[ViewBag.Index]["pl_name"]
     </p>
+    
     <p>Distance from Earth: @ViewBag.NASAInfo[ViewBag.Index]["st_dist"] parsecs</p>
-    <p>Business Price: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"]</p>
-    <p>Review count: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["review_count"]</p>
-    <p>Rating: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["rating"]</p>
-    <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
-    <p>+100,000</p><input type="radio" value="1" name="shipOption" />
-    <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
-    <p>+200,000</p><input type="radio" value="2" name="shipOption" />
-    <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
-    <p>+300,000</p><input type="radio" value="3" name="shipOption" /><br />
-    <label>Start Date: </label><input type="date" name="StartDate" value="2050-12-14" />
 
-    <label>End Date: </label><input type="date" name="EndDate" value="2050-12-15" /><br />
+    <p >
+       <input type="hidden" value="@pricePerDollarSign" name="Price">@*TEMPORARY PRICE INPUT UNTIL TOTAL CALCULATED*@
+        Business Price: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"]
+    </p>
+
+    <p>Review count: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["review_count"]</p>
+
+    <p >
+       <input type="hidden" value="@double.Parse(rating)" name="Rating">
+        Rating: @double.Parse(rating)
+    </p>
+
+    <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
+    <p>+100,000</p><input type="radio" value="1" name="ShipOption" /> <br />
+    <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
+    <p>+200,000</p><input type="radio" value="2" name="ShipOption" /><br />
+    <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
+
+    <p>+300,000</p><input type="radio" value="3" name="ShipOption" /><br />
+
+    <label>Start Date: </label><input type="date" name="DateStart" value="2050-12-14" />
+
+    <label>End Date: </label><input type="date" name="DateEnd" value="2050-12-15" /><br />
 
     @*<p value=@totalPrice name="Price">Total Price: @totalPrice</p>*@
 
@@ -35,30 +59,10 @@
     X date end
     total price box
     X method to do total math
-    form submit
-    connect to DB
+    X form submit
+    X connect to DB
 
-<<<<<<< HEAD
 
-=======
->>>>>>> 65c58721b0a4cdc1f526a2d1c6befbe944b473d0
-*@
-@{
-    int pricePerDistance = ViewBag.NASAInfo[ViewBag.Index]["st_dist"] / 100 * 200000;
-    int pricePerDollarSign = ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"].ToString().Length * 10000;
-    //int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
-}
-<p>Price per Distance: $@pricePerDistance</p>
-<p>Price rating: $@pricePerDollarSign</p>
-<p>totalPrice</p>
-@*
-
-<<<<<<< HEAD
-
-﻿@*
-
-=======
->>>>>>> 65c58721b0a4cdc1f526a2d1c6befbe944b473d0
     - Planet Name
     - Planet Image
     - Distance (added to total)

@@ -6,9 +6,10 @@
 @ViewBag.Error
 @ViewBag.Logout
 @ViewBag.LoggedOut
+@TempData["AddedUser"]
+@TempData["Error"]
 
-
-<a href="/User/Logout">Log Out></a>
+<a href="/User/Logout">Log Out</a>
 <form action="/User/LoginButton" method="post">
 
     <label class="control-label">Email</label>

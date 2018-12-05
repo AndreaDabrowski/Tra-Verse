@@ -9,7 +9,7 @@
 @*Search function!!!!!!!!!!!!*@
 @for (int i = 0; i < 10; i++)
 {
-    <p>
+    <div>
         <img src=@images[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
         <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span>
         <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
@@ -18,13 +18,7 @@
         <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
         <a href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a>
         
-    </p>
-    <br />
-<<<<<<< HEAD
+    </div>
     <br />
 
 }
-=======
-}
-
->>>>>>> 65c58721b0a4cdc1f526a2d1c6befbe944b473d0
