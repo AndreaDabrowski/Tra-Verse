@@ -8,7 +8,7 @@ namespace Tra_Verse.Controllers
     public class UserController : Controller
     {
         TraVerseEntities database = new TraVerseEntities();
-        public static CurrentUser currentUser = new CurrentUser();
+        public CurrentUser currentUser = new CurrentUser();
 
         public ActionResult Index()
         {

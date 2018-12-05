@@ -36,7 +36,7 @@ namespace Tra_Verse.Controllers
             //ViewBag.Example = nasaJson;
 
             rd.Close();
-
+            Session["example"] = nasaJson;  // how does this work if it will?
             return nasaJson;
         }
 
@@ -72,7 +72,9 @@ namespace Tra_Verse.Controllers
         {
             ViewBag.YelpInfo = Yelp();
             ViewBag.NASAInfo = NASA();
+            UC.currentUser.CurrentIndex = index;
             ViewBag.Index = index;
+
 
             return View();
         }
@@ -82,15 +84,20 @@ namespace Tra_Verse.Controllers
         public ActionResult EditTrip() { return View(); }
 
 
-        public ActionResult CheckOut(VacationLog order)
+        public ActionResult SaveTrip(VacationLog order)
         {
+            if(UC.currentUser.LoggedIn == false)
+            {
+                return View("LoginError");
+            }
+
             try
             {
                 VacationLog added = database.VacationLogs.Add(order);
                 database.SaveChanges();
 
-                UserController.currentUser.OrderID = added.OrderID;
-                User loggedInUser = database.Users.Find(UserController.currentUser.UserID);
+                UC.currentUser.OrderID = added.OrderID;
+                User loggedInUser = database.Users.Find(UC.currentUser.UserID);
                 loggedInUser.OrderID = added.OrderID;
                 database.Entry(loggedInUser).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
@@ -101,8 +108,15 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            return View();//input order object here later
+            return RedirectToAction("Checkout");//input order object here later
         } 
+
+        public ActionResult Checkout()
+        {
+            ViewBag.Index = UC.currentUser.CurrentIndex;
+            return View();
+        }
+
         public ActionResult Error()
         {
             return View();
