@@ -72,6 +72,7 @@ namespace Tra_Verse.Controllers
         {
             ViewBag.YelpInfo = Yelp();
             ViewBag.NASAInfo = NASA();
+            UC.currentUser.CurrentIndex = index;
             ViewBag.Index = index;
 
             return View();
@@ -89,8 +90,8 @@ namespace Tra_Verse.Controllers
                 VacationLog added = database.VacationLogs.Add(order);
                 database.SaveChanges();
 
-                UserController.currentUser.OrderID = added.OrderID;
-                User loggedInUser = database.Users.Find(UserController.currentUser.UserID);
+                UC.currentUser.OrderID = added.OrderID;
+                User loggedInUser = database.Users.Find(UC.currentUser.UserID);
                 loggedInUser.OrderID = added.OrderID;
                 database.Entry(loggedInUser).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
@@ -100,7 +101,7 @@ namespace Tra_Verse.Controllers
                 Console.Write(e.EntityValidationErrors);
                 return View("Error");
             }
-
+            ViewBag.Index = UC.currentUser.CurrentIndex;
             return View();//input order object here later
         } 
         public ActionResult Error()
@@ -108,7 +109,17 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult ConfirmationPage() { return View(); } // confirms payment and sends an auto-email
+        public ActionResult ConfirmationPage(User paymentInfo, int index)
+        {
+            paymentInfo.UserID = UC.currentUser.UserID;
+            User findEmail = database.Users.Find(UC.currentUser.UserID);
+            paymentInfo.Email = findEmail.Email;
+            database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+            ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";
+            ViewBag.Index = UC.currentUser.CurrentIndex;
+            return View();
+        } // confirms payment and sends an auto-email
 
         //public ActionResult EditConfirmationPage () { return View(); }   ???? Do we need this, or can we just use the ConfirmationPage()
     }
