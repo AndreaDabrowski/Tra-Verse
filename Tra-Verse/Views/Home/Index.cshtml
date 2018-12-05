@@ -13,10 +13,13 @@
 <form action="/User/LoginButton" method="post">
 
     <label class="control-label">Email</label>
-    <input type="email" name="Email" class="form-control" />
+    <input type="text" name="Email" id="loginEmail" onchange="return validate()" class="form-control" />
+    <div id="result"></div>
+
 
     <label class="control-label">Password</label>
-    <input type="password" name="Password" class=" form-control">
+    <input type="password" name="Password" id="loginPassword" onchange="return passValidate()" class=" form-control">
+    <div id="passResult"></div>
 
     <input type="submit" value="Log In!" class="btn-default" /><!--Log in button-->
 
@@ -25,15 +28,21 @@
 <h2>Register New User:</h2><br />
 <form action="/User/RegisterUser" method="post">
     <label class="control-label">Email</label>
-    <input type="email" name="Email" class="form-control" />
+    <input type="text" name="Email" id="regEmail" onchange="return emailValidate()" class="form-control" />
+    <div id="regEmailResult"></div>
 
     <label class="control-label">Password</label>
-    <input type="password" name="Password" class=" form-control">
+    <input type="password" name="Password" id="regPassword" onchange="return regPassValidate()" class=" form-control">
+    <div id="regPassResult"></div>
 
     <label class="control-label">Confirm Password</label>
-    <input type="password" class=" form-control">
+    <input type="password" id="confPass" onchange="return confPassValidate()" class=" form-control">
+    <div id="confResult"></div>
 
     <input type="submit" value="Register!" class="btn-default" /><!--registration button-->
 </form>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="~/Scripts/JSValidation.js"></script>
+
 
