@@ -1,3 +1,4 @@
+
 @{
     int pricePerDistance = ViewBag.NASAInfo[ViewBag.Index]["st_dist"] / 100 * 200000;
     int pricePerDollarSign = ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"].ToString().Length * 10000;
@@ -14,7 +15,6 @@
 }
 
 ﻿<form action="/Home/Checkout" method="post">
-
     <span><img src=@images[ViewBag.Index] alt=@ViewBag.NASAInfo[ViewBag.Index]["pl_name"] height="200" width="200" align="left"></span>
 
     <p>

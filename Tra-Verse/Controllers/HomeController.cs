@@ -36,7 +36,6 @@ namespace Tra_Verse.Controllers
             //ViewBag.Example = nasaJson;
 
             rd.Close();
-            Session["example"] = nasaJson;  // how does this work if it will?
             return nasaJson;
         }
 
@@ -72,8 +71,8 @@ namespace Tra_Verse.Controllers
         {
             ViewBag.YelpInfo = Yelp();
             ViewBag.NASAInfo = NASA();
-            UC.currentUser.CurrentIndex = index;
-            ViewBag.Index = UC.currentUser.CurrentIndex;
+            UserController.currentUser.CurrentIndex = index;
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
 
             return View();
         }
@@ -85,7 +84,7 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Checkout(VacationLog order)
         {
-            if (UC.currentUser.LoggedIn == false)
+            if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
             }
@@ -95,8 +94,8 @@ namespace Tra_Verse.Controllers
                 VacationLog added = database.VacationLogs.Add(order);
                 database.SaveChanges();
 
-                UC.currentUser.OrderID = added.OrderID;
-                User loggedInUser = database.Users.Find(UC.currentUser.UserID);
+                UserController.currentUser.OrderID = added.OrderID;
+                User loggedInUser = database.Users.Find(UserController.currentUser.UserID);
                 loggedInUser.OrderID = added.OrderID;
                 database.Entry(loggedInUser).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
@@ -109,7 +108,7 @@ namespace Tra_Verse.Controllers
 
             ViewBag.NASAInfo = NASA();
             //ViewBag.YelpInfo = Yelp();
-            ViewBag.Index = UC.currentUser.CurrentIndex;
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
             //ViewBag.Index = UC.currentUser.CurrentIndex;
 
             return View();//input order object here later
@@ -126,8 +125,8 @@ namespace Tra_Verse.Controllers
 
         public ActionResult ConfirmationPage(User paymentInfo)
         {
-            paymentInfo.UserID = UC.currentUser.UserID;
-            User findEmail = database.Users.Find(UC.currentUser.UserID);
+            paymentInfo.UserID = UserController.currentUser.UserID;
+            User findEmail = database.Users.Find(UserController.currentUser.UserID);
             paymentInfo.Email = findEmail.Email;
             database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
@@ -135,7 +134,7 @@ namespace Tra_Verse.Controllers
             ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";
             ViewBag.NASAInfo = NASA();
             ViewBag.YelpInfo = Yelp();
-            ViewBag.Index = UC.currentUser.CurrentIndex;
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
             //method to send email automatically
 
             return View();
