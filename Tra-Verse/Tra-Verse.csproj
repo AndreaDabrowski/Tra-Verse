@@ -175,8 +175,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Models\TraVerse.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>TraVerse.Context.cs</LastGenOutput>
       <DependentUpon>TraVerse.edmx</DependentUpon>
+      <LastGenOutput>TraVerse.Context.cs</LastGenOutput>
     </Content>
     <Content Include="Models\TraVerse.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
