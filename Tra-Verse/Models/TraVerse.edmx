@@ -4,7 +4,11 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
+<<<<<<< HEAD
+    <Schema Namespace="TraVerseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+=======
       <Schema Namespace="TraVerseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+>>>>>>> 2548bb60c2a98db947c1669a856162862ed562af
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
@@ -33,11 +37,22 @@
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VacationLog" EntityType="Self.VacationLog" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
+<<<<<<< HEAD
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TraVerseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="TraVerseEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="Users" EntityType="TraVerseModel.User" />
+          <EntitySet Name="VacationLogs" EntityType="TraVerseModel.VacationLog" />
+        </EntityContainer>
+=======
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="TraVerseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+>>>>>>> 2548bb60c2a98db947c1669a856162862ed562af
         <EntityType Name="User">
           <Key>
             <PropertyRef Name="UserID" />
@@ -47,14 +62,28 @@
           <Property Name="CreditCard" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="NameOnCard" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CRV" Type="Int32" />
+<<<<<<< HEAD
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+=======
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+>>>>>>> 2548bb60c2a98db947c1669a856162862ed562af
         </EntityType>
         <EntityType Name="VacationLog">
           <Key>
             <PropertyRef Name="OrderID" />
           </Key>
           <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+<<<<<<< HEAD
+          <Property Name="PlanetName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Int32" Nullable="false" />
+          <Property Name="Rating" Type="Double" Nullable="false" />
+          <Property Name="DateStart" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="DateEnd" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ShipOption" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+=======
           <Property Name="PlanetName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Price" Type="Int32" Nullable="false" />
           <Property Name="Rating" Type="Double" Nullable="false" />
@@ -66,11 +95,25 @@
           <EntitySet Name="Users" EntityType="Self.User" />
           <EntitySet Name="VacationLogs" EntityType="Self.VacationLog" />
         </EntityContainer>
+>>>>>>> 2548bb60c2a98db947c1669a856162862ed562af
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+<<<<<<< HEAD
+        <EntityContainerMapping StorageEntityContainer="TraVerseModelStoreContainer" CdmEntityContainer="TraVerseEntities" >
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TraVerseModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="CRV" ColumnName="CRV" />
+                <ScalarProperty Name="NameOnCard" ColumnName="NameOnCard" />
+                <ScalarProperty Name="CreditCard" ColumnName="CreditCard" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+=======
         <EntityContainerMapping StorageEntityContainer="TraVerseModelStoreContainer" CdmEntityContainer="TraVerseEntities">
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="TraVerseModel.User">
@@ -82,12 +125,22 @@
                 <ScalarProperty Name="CRV" ColumnName="CRV" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
+>>>>>>> 2548bb60c2a98db947c1669a856162862ed562af
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="VacationLogs">
             <EntityTypeMapping TypeName="TraVerseModel.VacationLog">
               <MappingFragment StoreEntitySet="VacationLog">
+<<<<<<< HEAD
+                <ScalarProperty Name="ShipOption" ColumnName="ShipOption" />
+                <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
+                <ScalarProperty Name="DateStart" ColumnName="DateStart" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="PlanetName" ColumnName="PlanetName" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+=======
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="PlanetName" ColumnName="PlanetName" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
@@ -95,6 +148,7 @@
                 <ScalarProperty Name="DateStart" ColumnName="DateStart" />
                 <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
                 <ScalarProperty Name="ShipOption" ColumnName="ShipOption" />
+>>>>>>> 2548bb60c2a98db947c1669a856162862ed562af
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
