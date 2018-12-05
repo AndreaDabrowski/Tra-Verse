@@ -106,11 +106,10 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            ViewBag.NASAInfo = NASA();
-            //ViewBag.YelpInfo = Yelp();
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
-            //ViewBag.Index = UC.currentUser.CurrentIndex;
 
+
+            ViewBag.NASAInfo = NASA();
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
             return View();//input order object here later
         }
 

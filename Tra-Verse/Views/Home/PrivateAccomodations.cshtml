@@ -15,7 +15,7 @@
 }
 
 ﻿<form action="/Home/Checkout" method="post">
-    <span><img src=@images[ViewBag.Index] alt=@ViewBag.NASAInfo[ViewBag.Index]["pl_name"] height="200" width="200" align="left"></span>
+    <span><img src=@images[ViewBag.Index] alt=@ViewBag.NASAInfo[ViewBag.Index]["pl_name"] height="100" width="100" align="left"></span>
 
     <p>
         <input type="hidden" value="@planetName" name="PlanetName">
@@ -45,6 +45,7 @@
 
     <label>Start Date: </label><input type="date" name="DateStart" value="2050-12-14" />
     <label>End Date: </label><input type="date" name="DateEnd" value="2050-12-15" /><br />
+
 
     @*<p value=@totalPrice name="Price">Total Price: @totalPrice</p>*@
 
