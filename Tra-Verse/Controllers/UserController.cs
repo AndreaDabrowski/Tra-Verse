@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Tra_Verse.Models;
@@ -9,12 +10,6 @@ namespace Tra_Verse.Controllers
     {
         TraVerseEntities database = new TraVerseEntities();
         public CurrentUser currentUser = new CurrentUser();
-
-        public ActionResult Index()
-        {
-            ViewBag.Title = "Always Moving Forward";
-            return View();
-        }
 
         public ActionResult Logout()
         {
@@ -29,7 +24,7 @@ namespace Tra_Verse.Controllers
             ViewBag.LoggedOut = "You're not logged in";
             return View("Index");
         }
-        
+
         public ActionResult LoginButton(User logUser)
         {
             List<User> foundID = database.Users.ToList();
@@ -45,8 +40,7 @@ namespace Tra_Verse.Controllers
                         TempData["LoggedIn"] = "You've successfully logged in!";
                         return RedirectToAction("TripList", "Home");//, logUser
                     }
-                    ViewBag.Error = "You are already logged in!";
-                    return View("Index");
+                    return View("TripList", "Home");
                 }
             }
 
