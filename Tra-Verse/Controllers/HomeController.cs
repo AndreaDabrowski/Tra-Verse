@@ -107,8 +107,13 @@ namespace Tra_Verse.Controllers
                 Console.Write(e.EntityValidationErrors);
                 return View("Error");
             }
+<<<<<<< HEAD
 
             return RedirectToAction("Checkout");//input order object here later
+=======
+            ViewBag.Index = UC.currentUser.CurrentIndex;
+            return View();//input order object here later
+>>>>>>> andrea3
         } 
 
         public ActionResult Checkout()
@@ -122,7 +127,17 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult ConfirmationPage() { return View(); } // confirms payment and sends an auto-email
+        public ActionResult ConfirmationPage(User paymentInfo, int index)
+        {
+            paymentInfo.UserID = UC.currentUser.UserID;
+            User findEmail = database.Users.Find(UC.currentUser.UserID);
+            paymentInfo.Email = findEmail.Email;
+            database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+            ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";
+            ViewBag.Index = UC.currentUser.CurrentIndex;
+            return View();
+        } // confirms payment and sends an auto-email
 
         //public ActionResult EditConfirmationPage () { return View(); }   ???? Do we need this, or can we just use the ConfirmationPage()
     }
