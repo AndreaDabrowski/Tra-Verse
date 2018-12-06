@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Mvc;
 using Tra_Verse.Models;
+using System.Net.Mail;
+using System.Threading.Tasks;
 
 
 //testing this commit
@@ -194,16 +196,59 @@ namespace Tra_Verse.Controllers
             database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
 
-            ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";
+            ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
             ViewBag.NASAInfo = NASA();
             ViewBag.YelpInfo = Yelp();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
+<<<<<<< HEAD
             VacationLog vacation = new VacationLog();
             ViewBag.TotalPrice = TotalPrice(vacation.ShipOption, vacation.Price);
             //method to send email automatically
+=======
+
+            VacationLog vacationInfo = database.VacationLogs.Find(paymentInfo.OrderID);
+            ViewBag.VacationLogDBInfo = vacationInfo;
+            ViewBag.UserDBInfo = paymentInfo;
+            //method to send email automatically??
+>>>>>>> andrea3
 
             return View();
-        } 
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var body = "<p>Email From: {0} ({1})</p><p>Order:</p><p>{2}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
+                message.From = new MailAddress("TraVerseNOREPLY@gmail.com");  // replace with valid value
+                message.Subject = "Confirmation of your vacation with Tra-Verse";
+                message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "Andrea.Dab@hotmail.com",  // replace with valid value
+                        Password = "PassForAndrea!"  // replace with valid value
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp-mail.outlook.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(message);
+                    return RedirectToAction("ConfirmationPage");
+                }
+            }
+            return View(model);
+        }
+        public ActionResult ConfirmationEmailFormat()
+        {
+            return View();
+        }
 
         //public ActionResult EditConfirmationPage () { return View(); }   ???? Do we need this, or can we just use the ConfirmationPage()
     }
