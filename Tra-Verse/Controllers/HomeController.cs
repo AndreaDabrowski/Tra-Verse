@@ -65,12 +65,12 @@ namespace Tra_Verse.Controllers
         }
 
         public ActionResult PrivateAccomodations(int index)
-        {
-            ViewBag.YelpInfo = Yelp();
+        { 
+            ViewBag.YelpInfo = Yelp();    
             ViewBag.NASAInfo = NASA();
             UserController.currentUser.CurrentIndex = index;
             ViewBag.Index = UserController.currentUser.CurrentIndex;
-
+            ViewBag.TripPrice = TripPriceRandomizer(index);
             return View();
         }
 
@@ -108,6 +108,37 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("PrivateAccomodations", new { index });
         }
 
+        private int TripPriceRandomizer(int index)
+        {
+            var yelp = Yelp();
+            string randomPrice = yelp["businesses"][index]["price"].ToString();
+            int pricePerDollarSign = 0;
+            Random rand = new Random();
+
+            switch (randomPrice)
+            {
+                case "$":
+                    pricePerDollarSign = rand.Next(1000000, 1500000);
+                    break;
+                case "$$":
+                    pricePerDollarSign = rand.Next(1500001, 2000000);
+                    break;
+                case "$$$":
+                    pricePerDollarSign = rand.Next(2000001, 2500000);
+                    break;
+                case "$$$$":
+                    pricePerDollarSign = rand.Next(2500001, 3000000);
+                    break;
+                case "$$$$$":
+                    pricePerDollarSign = rand.Next(3000001, 4000000);
+                    break;
+                default:
+                    break;
+            }
+
+            return pricePerDollarSign;
+        }
+
         private int TotalPrice(string ship, int price)
         {
             var Nasa = NASA();
@@ -142,13 +173,14 @@ namespace Tra_Verse.Controllers
         {
             ViewBag.NASAInfo = NASA();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
-            return View();//input order object here later
+            return View();//input order object here later??
         }
 
         public ActionResult Error()
         {
             return View();
         }
+
         public ActionResult LoginError()
         {
             return View();
@@ -166,6 +198,8 @@ namespace Tra_Verse.Controllers
             ViewBag.NASAInfo = NASA();
             ViewBag.YelpInfo = Yelp();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
+            VacationLog vacation = new VacationLog();
+            ViewBag.TotalPrice = TotalPrice(vacation.ShipOption, vacation.Price);
             //method to send email automatically
 
             return View();
