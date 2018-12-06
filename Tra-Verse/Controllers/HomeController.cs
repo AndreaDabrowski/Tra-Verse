@@ -104,8 +104,10 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
+            var yelp = Yelp();
             int index = UserController.currentUser.CurrentIndex;
-            TempData["TotalPrice"] = TotalPrice(order.ShipOption, order.Price);
+            int yelpPrice = Convert.ToInt32(yelp["businesses"][index]["price"]);
+            TempData["TotalPrice"] = TotalPrice(order.ShipOption, yelpPrice);
 
             return RedirectToAction("PrivateAccomodations", new { index });
         }
@@ -120,19 +122,19 @@ namespace Tra_Verse.Controllers
             switch (randomPrice)
             {
                 case "$":
-                    pricePerDollarSign = rand.Next(1000000, 1500000);
+                    pricePerDollarSign = rand.Next(10000, 15000);
                     break;
                 case "$$":
-                    pricePerDollarSign = rand.Next(1500001, 2000000);
+                    pricePerDollarSign = rand.Next(15001, 20000);
                     break;
                 case "$$$":
-                    pricePerDollarSign = rand.Next(2000001, 2500000);
+                    pricePerDollarSign = rand.Next(20001, 25000);
                     break;
                 case "$$$$":
-                    pricePerDollarSign = rand.Next(2500001, 3000000);
+                    pricePerDollarSign = rand.Next(25001, 30000);
                     break;
                 case "$$$$$":
-                    pricePerDollarSign = rand.Next(3000001, 4000000);
+                    pricePerDollarSign = rand.Next(30001, 40000);
                     break;
                 default:
                     break;
@@ -144,10 +146,10 @@ namespace Tra_Verse.Controllers
         int TotalPrice(string ship, int price)
         {
             var Nasa = NASA();
-            string placeholder = Nasa[UserController.currentUser.CurrentIndex]["st_dist"].ToString();
-            int PH = int.Parse(placeholder);
+            var placeholder = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
+            int PH = Convert.ToInt32(placeholder);
 
-            int pricePerDistance = PH / 100 * 200000;
+            int pricePerDistance = PH / 100 * 25000;
             int pricePerDollarSign = price * 10000;
             int priceShipOption = 0;
 
@@ -200,23 +202,21 @@ namespace Tra_Verse.Controllers
             ViewBag.NASAInfo = NASA();
             ViewBag.YelpInfo = Yelp();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
-<<<<<<< HEAD
-            VacationLog vacation = new VacationLog();
-            ViewBag.TotalPrice = TotalPrice(vacation.ShipOption, vacation.Price);
-            //method to send email automatically
-=======
+
+            //VacationLog vacation = new VacationLog();
+            //VacationLog vacation 
 
             VacationLog vacationInfo = database.VacationLogs.Find(paymentInfo.OrderID);
+            ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
+            //method to send email automatically
+
             ViewBag.VacationLogDBInfo = vacationInfo;
             ViewBag.UserDBInfo = paymentInfo;
-            //method to send email automatically??
->>>>>>> andrea3
+            //method to send email automatically?
 
             return View();
-<<<<<<< HEAD
-        } 
-=======
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
@@ -248,12 +248,10 @@ namespace Tra_Verse.Controllers
             }
             return View(model);
         }
+
         public ActionResult ConfirmationEmailFormat()
         {
             return View();
         }
-
->>>>>>> 6fc7b9b4d99ff8cc4961589bcb2b2c94d9deb9a7
-        //public ActionResult EditConfirmationPage () { return View(); }   ???? Do we need this, or can we just use the ConfirmationPage()
     }
 }
