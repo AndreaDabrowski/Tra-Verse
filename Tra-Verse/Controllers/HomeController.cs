@@ -14,13 +14,13 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
-        UserController UC = new UserController();
+        //UserController UC = new UserController();
         TraVerseEntities database = new TraVerseEntities();
 
         public ActionResult Index()
         {
             ViewBag.Title = "Always Moving Forward";
-            return UC.Index();
+            return View();
         }
 
         public JArray NASA()
@@ -33,7 +33,6 @@ namespace Tra_Verse.Controllers
             string data = rd.ReadToEnd();
 
             JArray nasaJson = JArray.Parse(data);
-            //ViewBag.Example = nasaJson;
 
             rd.Close();
 
@@ -52,7 +51,6 @@ namespace Tra_Verse.Controllers
             string data = rd.ReadToEnd();
 
             JObject yelpJson = JObject.Parse(data);
-            //ViewBag.YelpInfo = yelpJson;
             rd.Close();
 
             return yelpJson;
@@ -66,13 +64,12 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult TripDetails() { return View(); }
-
         public ActionResult PrivateAccomodations(int index)
         {
             ViewBag.YelpInfo = Yelp();
             ViewBag.NASAInfo = NASA();
-            ViewBag.Index = index;
+            UserController.currentUser.CurrentIndex = index;
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
 
             return View();
         }
@@ -81,9 +78,13 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTrip() { return View(); }
 
-
-        public ActionResult CheckOut(VacationLog order)
+        public ActionResult RefreshForTotal(VacationLog order)
         {
+            if (UserController.currentUser.LoggedIn == false)
+            {
+                return View("LoginError");
+            }
+
             try
             {
                 VacationLog added = database.VacationLogs.Add(order);
@@ -101,14 +102,74 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
+            int index = UserController.currentUser.CurrentIndex;
+            TempData["TotalPrice"] = TotalPrice(order.ShipOption, order.Price);
+
+            return RedirectToAction("PrivateAccomodations", new { index });
+        }
+
+        private int TotalPrice(string ship, int price)
+        {
+            var Nasa = NASA();
+            string placeholder = Nasa[UserController.currentUser.CurrentIndex]["st_dist"].ToString();
+            int PH = int.Parse(placeholder);
+
+            int pricePerDistance = PH / 100 * 200000;
+            int pricePerDollarSign = price * 10000;
+            int priceShipOption = 0;
+
+            switch (ship)
+            {
+                case "1":
+                    priceShipOption = 100000;
+                    break;
+                case "2":
+                    priceShipOption = 200000;
+                    break;
+                case "3":
+                    priceShipOption = 300000;
+                    break;
+                default:
+                    break;
+            }
+
+            int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
+
+            return totalPrice;
+        }
+
+        public ActionResult Checkout(VacationLog order)
+        {
+            ViewBag.NASAInfo = NASA();
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
             return View();//input order object here later
-        } 
+        }
+
         public ActionResult Error()
         {
             return View();
         }
+        public ActionResult LoginError()
+        {
+            return View();
+        }
 
-        public ActionResult ConfirmationPage() { return View(); } // confirms payment and sends an auto-email
+        public ActionResult ConfirmationPage(User paymentInfo)
+        {
+            paymentInfo.UserID = UserController.currentUser.UserID;
+            User findEmail = database.Users.Find(UserController.currentUser.UserID);
+            paymentInfo.Email = findEmail.Email;
+            database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+
+            ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";
+            ViewBag.NASAInfo = NASA();
+            ViewBag.YelpInfo = Yelp();
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
+            //method to send email automatically
+
+            return View();
+        } 
 
         //public ActionResult EditConfirmationPage () { return View(); }   ???? Do we need this, or can we just use the ConfirmationPage()
     }
