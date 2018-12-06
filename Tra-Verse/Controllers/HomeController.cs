@@ -173,10 +173,16 @@ namespace Tra_Verse.Controllers
             return totalPrice;
         }
 
-        public ActionResult Checkout(VacationLog order)
+        public ActionResult Checkout(int price)
         {
             ViewBag.NASAInfo = NASA();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
+
+            VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            currentVacation.Price = price;
+            database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+
             return View();//input order object here later??
         }
 
