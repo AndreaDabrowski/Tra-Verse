@@ -108,7 +108,7 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("PrivateAccomodations", new { index });
         }
 
-        private int TripPriceRandomizer(int index)
+        int TripPriceRandomizer(int index)
         {
             var yelp = Yelp();
             string randomPrice = yelp["businesses"][index]["price"].ToString();
@@ -139,7 +139,7 @@ namespace Tra_Verse.Controllers
             return pricePerDollarSign;
         }
 
-        private int TotalPrice(string ship, int price)
+        int TotalPrice(string ship, int price)
         {
             var Nasa = NASA();
             string placeholder = Nasa[UserController.currentUser.CurrentIndex]["st_dist"].ToString();
@@ -204,7 +204,6 @@ namespace Tra_Verse.Controllers
 
             return View();
         } 
-
         //public ActionResult EditConfirmationPage () { return View(); }   ???? Do we need this, or can we just use the ConfirmationPage()
     }
 }
