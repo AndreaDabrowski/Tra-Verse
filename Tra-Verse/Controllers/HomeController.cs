@@ -72,7 +72,10 @@ namespace Tra_Verse.Controllers
             ViewBag.NASAInfo = NASA();
             UserController.currentUser.CurrentIndex = index;
             ViewBag.Index = UserController.currentUser.CurrentIndex;
-            ViewBag.TripPrice = TripPriceRandomizer(index);
+            int randPrice = TripPriceRandomizer(index);
+            UserController.currentUser.RandPrice = randPrice;
+            ViewBag.PricePerDollarSign = randPrice;
+
             return View();
         }
 
@@ -86,7 +89,6 @@ namespace Tra_Verse.Controllers
             {
                 return View("LoginError");
             }
-
             try
             {
                 VacationLog added = database.VacationLogs.Add(order);
@@ -104,10 +106,9 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            var yelp = Yelp();
             int index = UserController.currentUser.CurrentIndex;
-            int yelpPrice = Convert.ToInt32(yelp["businesses"][index]["price"]);
-            TempData["TotalPrice"] = TotalPrice(order.ShipOption, yelpPrice);
+            int randPrice = UserController.currentUser.RandPrice;
+            TempData["TotalPrice"] = TotalPrice(order.ShipOption, randPrice);
 
             return RedirectToAction("PrivateAccomodations", new { index });
         }
@@ -177,7 +178,10 @@ namespace Tra_Verse.Controllers
         {
             ViewBag.NASAInfo = NASA();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
+<<<<<<< HEAD
 
+=======
+>>>>>>> c59144a15e12a647949a1cc5295f70ee3197c56e
             VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
             currentVacation.Price = price;
             database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
