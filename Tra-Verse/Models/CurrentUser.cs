@@ -9,6 +9,7 @@ namespace Tra_Verse.Models
     {
         public bool LoggedIn { get; set; }
         public int CurrentIndex { get; set; }
+        public int RandPrice { get; set; }
 
         public CurrentUser()
         {
@@ -16,6 +17,7 @@ namespace Tra_Verse.Models
             LoggedIn = false;
             OrderID = 0;
             CurrentIndex = -1;
+            RandPrice = 0;
         }
     }
 }

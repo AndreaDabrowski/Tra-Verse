@@ -72,7 +72,10 @@ namespace Tra_Verse.Controllers
             ViewBag.NASAInfo = NASA();
             UserController.currentUser.CurrentIndex = index;
             ViewBag.Index = UserController.currentUser.CurrentIndex;
-            ViewBag.TripPrice = TripPriceRandomizer(index);
+            int randPrice = TripPriceRandomizer(index);
+            UserController.currentUser.RandPrice = randPrice;
+            ViewBag.PricePerDollarSign = randPrice;
+
             return View();
         }
 
@@ -86,7 +89,6 @@ namespace Tra_Verse.Controllers
             {
                 return View("LoginError");
             }
-
             try
             {
                 VacationLog added = database.VacationLogs.Add(order);
@@ -104,12 +106,11 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            var yelp = Yelp();
-            int index = UserController.currentUser.CurrentIndex;
-            int yelpPrice = Convert.ToInt32(yelp["businesses"][index]["price"]);
-            TempData["TotalPrice"] = TotalPrice(order.ShipOption, yelpPrice);
+            //int index = UserController.currentUser.CurrentIndex;
+            //int randPrice = UserController.currentUser.RandPrice;
+            TempData["TotalPrice"] = TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
 
-            return RedirectToAction("PrivateAccomodations", new { index });
+            return RedirectToAction("PrivateAccomodations", new { UserController.currentUser.CurrentIndex });
         }
 
         int TripPriceRandomizer(int index)
@@ -143,40 +144,44 @@ namespace Tra_Verse.Controllers
             return pricePerDollarSign;
         }
 
-        int TotalPrice(string ship, int price)
+        int TotalPrice(string ship, int dollarSign)
         {
             var Nasa = NASA();
-            var placeholder = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
-            int PH = Convert.ToInt32(placeholder);
+            var takeDistance = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
+            int distance = Convert.ToInt32(takeDistance);
 
-            int pricePerDistance = PH / 100 * 25000;
-            int pricePerDollarSign = price * 10000;
+            int pricePerDistance = distance / 100 * 2500;
+            int pricePerDollarSign = dollarSign * 1000;
             int priceShipOption = 0;
 
             switch (ship)
             {
                 case "1":
-                    priceShipOption = 100000;
+                    priceShipOption = 10000;
                     break;
                 case "2":
-                    priceShipOption = 200000;
+                    priceShipOption = 20000;
                     break;
                 case "3":
-                    priceShipOption = 300000;
+                    priceShipOption = 30000;
                     break;
                 default:
                     break;
             }
 
             int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
-
             return totalPrice;
         }
 
-        public ActionResult Checkout(VacationLog order)
+        public ActionResult Checkout(int price)
         {
             ViewBag.NASAInfo = NASA();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
+            VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            currentVacation.Price = price;
+            database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+
             return View();//input order object here later??
         }
 
@@ -203,16 +208,13 @@ namespace Tra_Verse.Controllers
             ViewBag.YelpInfo = Yelp();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
 
-            //VacationLog vacation = new VacationLog();
-            //VacationLog vacation 
-
             VacationLog vacationInfo = database.VacationLogs.Find(paymentInfo.OrderID);
-            ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
-            //method to send email automatically
+            ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, UserController.currentUser.RandPrice);
 
+            ViewBag.Planet = vacationInfo.PlanetName;
             ViewBag.VacationLogDBInfo = vacationInfo;
             ViewBag.UserDBInfo = paymentInfo;
-            //method to send email automatically?
+            //method to send email automatically??
 
             return View();
         }
@@ -223,20 +225,20 @@ namespace Tra_Verse.Controllers
         {
             if (ModelState.IsValid)
             {
-                var body = "<p>Email From: {0} ({1})</p><p>Order:</p><p>{2}</p>";
+                //var body = $"{0}";
                 var message = new MailMessage();
                 message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
-                message.From = new MailAddress("TraVerseNOREPLY@gmail.com");  // replace with valid value
+                message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
                 message.Subject = "Confirmation of your vacation with Tra-Verse";
-                message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+                message.Body = string.Format(model.Message);
                 message.IsBodyHtml = true;
 
                 using (var smtp = new SmtpClient())
                 {
                     var credential = new NetworkCredential
                     {
-                        UserName = "Andrea.Dab@hotmail.com",  // replace with valid value
-                        Password = "PassForAndrea!"  // replace with valid value
+                        UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
+                        Password = "GucciBoi"  // replace with valid value
                     };
                     smtp.Credentials = credential;
                     smtp.Host = "smtp-mail.outlook.com";
