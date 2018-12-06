@@ -1,49 +1,57 @@
-﻿@{ 
+﻿@model Tra_Verse.Models.EmailFormModel
+@{
     string[] images = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
 }
-   
+
 <h1>Confirmation Page</h1><br />
 @ViewBag.EditedConfirmationPage
-<p>*This information has been send to the email associated with this account</p>
+@*<p>*This information has been send to the email associated with this account</p>*@
 <br />
 
-@*<span><img src=@images[ViewBag.Index] alt=@ViewBag.NASAInfo[ViewBag.Index]["pl_name"] height="200" width="200" align="left"></span>*@
-@*<p>Distance from Earth: @ViewBag.NASAInfo[ViewBag.Index]["st_dist"] parsecs</p>*@
-
-<p>
-    Planet Name: @ViewBag.VacationLogDBInfo.PlanetName
-</p>
-<p>
-<<<<<<< HEAD
-    @*changed business price to total price*@
-    Total Price: @ViewBag.TotalPrice
-=======
-    Destination Rating: @ViewBag.VacationLogDBInfo.Rating
->>>>>>> andrea3
-</p>
-<p>
-    
-    Total Price: @ViewBag.VacationInfo.Price
-</p>
-
-
-@if (ViewBag.VacationDBInfo.ShipOption == "1")
+@using (Html.BeginForm())
 {
-    <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
+    @Html.AntiForgeryToken()
+    <h4>Confirmation of your vacation with Traverse</h4>
+    <hr />
+
+    <div name="Message">
+        <h1>Confirmation Page</h1><br />
+        @ViewBag.EditedConfirmationPage
+        <br />
+        <p>Planet Name: @ViewBag.VacationLogDBInfo.PlanetName</p>
+        <p>Destination Rating: @ViewBag.VacationLogDBInfo.Rating</p>
+        <p>Total Price: @ViewBag.VacationInfo.Price</p>
+        <p>Ship Choice:</p>
+
+        @if (ViewBag.VacationDBInfo.ShipOption == "1")
+        {
+            <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
+        }
+        else if (ViewBag.VacationDBInfo.ShipOption == "2")
+        {
+            <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
+        }
+        else
+        {
+            <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
+        }
+
+        <p name="DateStart">Start Date: @ViewBag.VacationInfo.DateStart</p>
+        <p name="DateStart">End Date: @ViewBag.VacationInfo.DateEnd</p>
+
+        <p>Charge has been made to: @ViewBag.UserDBInfo.NameOnCard</p>
+        <p>With the following card information: @ViewBag.UserDBInfo.CreditCard</p>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" value="Send Confirmation Email" />
+        </div>
+    </div>
 }
-else if (ViewBag.VacationDBInfo.ShipOption == "2")
-{
-    <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
-}
-else
-{
-    <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
+        <p>*This information will send to the email associated with this account</p>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
-<p name="DateStart">Start Date: @ViewBag.VacationInfo.DateStart</p>
-<p name="DateStart">End Date: @ViewBag.VacationInfo.DateEnd</p>
-
-<p>Charge has been made to: @ViewBag.UserDBInfo.NameOnCard</p>
-<p>With the following card information: @ViewBag.UserDBInfo.CreditCard</p> @*ADD XXX-XXX FORMAT*@
-
-<p><a href="User/Index"</a>Return To Home Page</p>
+<a href="User/Index">Return To Home Page</a>
