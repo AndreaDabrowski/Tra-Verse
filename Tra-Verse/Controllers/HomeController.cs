@@ -28,7 +28,7 @@ namespace Tra_Verse.Controllers
         public JArray NASA()
         {
             //string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
-            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&format=json&select=pl_name,st_dist");
+            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&format=json");
             HttpWebResponse response = (HttpWebResponse)nasaRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
@@ -178,6 +178,7 @@ namespace Tra_Verse.Controllers
         {
             ViewBag.NASAInfo = NASA();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
+
             VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
             currentVacation.Price = price;
             database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
@@ -200,27 +201,36 @@ namespace Tra_Verse.Controllers
         {
             paymentInfo.UserID = UserController.currentUser.UserID;
             User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            paymentInfo.Email = findEmail.Email;
-            database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
+            findEmail.CreditCard = paymentInfo.CreditCard;
+            findEmail.CRV = paymentInfo.CRV;
+            findEmail.NameOnCard = paymentInfo.NameOnCard;
+            //paymentInfo.Email = findEmail.Email;
+            database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
 
             ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-            ViewBag.NASAInfo = NASA();
-            ViewBag.YelpInfo = Yelp();
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
+            //ViewBag.NASAInfo = NASA();
+            //ViewBag.YelpInfo = Yelp();
+            //ViewBag.Index = UserController.currentUser.CurrentIndex;
 
-            VacationLog vacationInfo = database.VacationLogs.Find(paymentInfo.OrderID);
+            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
-            ViewBag.VacationLogDBInfo = vacationInfo;
-            ViewBag.UserDBInfo = paymentInfo;
+            ViewBag.Planet = vacationInfo.PlanetName;
+            ViewBag.Rating = vacationInfo.Rating;
+            ViewBag.Price = vacationInfo.Price;
+            ViewBag.Ship = vacationInfo.ShipOption;
+            ViewBag.Start = vacationInfo.DateStart;
+            ViewBag.End = vacationInfo.DateEnd;
+            ViewBag.Name = paymentInfo.NameOnCard;
+            ViewBag.Card = paymentInfo.CreditCard;
             //method to send email automatically??
 
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
         {
             if (ModelState.IsValid)

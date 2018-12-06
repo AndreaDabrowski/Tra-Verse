@@ -9,9 +9,12 @@
 
 
 <h2>GIMME YO MONEY</h2><br />
-<form action="/User/ConfirmationPage" method="post">
+<form action="/Home/ConfirmationPage" method="post">
+    @*<input type="hidden" name="UserID" />
+    <input type="hidden" name="Email" />
+    <input type="hidden" name="Password" />*@
     <label class="control-label">Card #</label>
-    <input type="number" name="CreditCard" class="form-control" />
+    <input type="number" name="CreditCard" class="form-control"/>
 
     <label class="control-label">Name On Card</label>
     <input type="text" name="NameOnCard" class=" form-control">
