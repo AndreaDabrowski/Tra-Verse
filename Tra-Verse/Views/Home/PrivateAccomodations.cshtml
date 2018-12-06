@@ -3,10 +3,10 @@
     int pricePerDistance = ViewBag.NASAInfo[ViewBag.Index]["st_dist"] / 100 * 200000;
     string pricePerDollarSign = ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"].ToString();
 
-    //int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
     string rating = ViewBag.YelpInfo["businesses"][ViewBag.Index]["rating"].ToString();
     string planetName = ViewBag.NASAInfo[ViewBag.Index]["pl_name"].ToString();
 }
+
 <p>Price per Distance: $@pricePerDistance</p>
 <p>Price rating: $@pricePerDollarSign</p>
 <p>totalPrice</p>
