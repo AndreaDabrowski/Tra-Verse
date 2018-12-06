@@ -19,10 +19,10 @@ namespace Tra_Verse.Controllers
                 currentUser.UserID = 0;
                 currentUser.OrderID = 0;
                 ViewBag.Logout = "You've been Logged out!";
-                return View("Index");
+                return View("Index", "Home");
             }
             ViewBag.LoggedOut = "You're not logged in";
-            return View("Index");
+            return View("Index", "Home");
         }
 
         public ActionResult LoginButton(User logUser)
@@ -45,7 +45,7 @@ namespace Tra_Verse.Controllers
             }
 
             ViewBag.Error = "This is not a valid email address";
-            return View("Index");
+            return View("Index", "Home");
         }
         public ActionResult RegisterUser(User newUser)
         {
@@ -57,73 +57,14 @@ namespace Tra_Verse.Controllers
                 currentUser.LoggedIn = true;
                 currentUser.OrderID = 0;
                 TempData["AddedUser"] = "You've been registered";
-                return RedirectToAction("Index");//, added
+                return RedirectToAction("Index", "Home");//, added
             }
             else
             {
                 TempData["Error"] = "Error with adding user.";
-                return View("Index");
+                return View("Index", "Home");
             }
 
         }
-
-        //public ActionResult TaskList()//User CurrentUser
-        //{
-
-        //    ViewBag.CurrentUserUserID = currentUser.UserID;
-
-
-        //    return View();
-        //}
-
-        //    public ActionResult UpdateComplete(int taskID)
-        //    {
-        //        TaskListDBEntities ORM = new TaskListDBEntities();
-        //        Task oldTask = ORM.Tasks.Find(taskID);
-        //        if (oldTask.Complete == false)
-        //        {
-        //            oldTask.Complete = true;
-        //            ORM.Entry(oldTask).State = System.Data.Entity.EntityState.Modified;
-        //            ORM.SaveChanges();
-        //            return RedirectToAction("TaskList");
-        //        }
-        //        else
-        //        {
-        //            return RedirectToAction("TaskList");
-        //        }
-        //    }
-
-        //    public ActionResult DeleteTask(int taskID)
-        //    {
-        //        TaskListDBEntities ORM = new TaskListDBEntities();
-        //        Task found = ORM.Tasks.Find(taskID);
-        //        ORM.Tasks.Remove(found);
-        //        ORM.SaveChanges();
-        //        return RedirectToAction("TaskList");
-
-        //    }
-
-        //    public ActionResult AddTask()
-        //    {
-        //        return View();
-        //    }
-
-        //    public ActionResult AddNewTask(Task newTask)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            TaskListDBEntities ORM = new TaskListDBEntities();
-        //            newTask.UserID = currentUser.ID;
-        //            ORM.Tasks.Add(newTask);
-        //            ORM.SaveChanges();
-        //            return RedirectToAction("TaskList");
-
-        //        }
-        //        else
-        //        {
-        //            ViewBag.Error = "Error with adding task.";
-        //            return View("AddTask");
-        //        }
-        //    }
     }
 }

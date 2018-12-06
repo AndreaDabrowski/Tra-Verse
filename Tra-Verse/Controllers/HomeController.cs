@@ -33,10 +33,9 @@ namespace Tra_Verse.Controllers
             string data = rd.ReadToEnd();
 
             JArray nasaJson = JArray.Parse(data);
-            //ViewBag.Example = nasaJson;
 
             rd.Close();
-            //Session["example"] = nasaJson;  // how does this work if it will?
+
             return nasaJson;
         }
 
@@ -52,7 +51,6 @@ namespace Tra_Verse.Controllers
             string data = rd.ReadToEnd();
 
             JObject yelpJson = JObject.Parse(data);
-            //ViewBag.YelpInfo = yelpJson;
             rd.Close();
 
             return yelpJson;
@@ -104,7 +102,6 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            //ViewBag.Ship = order.ShipOption;
             int index = UserController.currentUser.CurrentIndex;
             TempData["TotalPrice"] = TotalPrice(order.ShipOption, order.Price);
 
@@ -143,12 +140,8 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Checkout(VacationLog order)
         {
-            //VacationLog ship = new VacationLog();
-            //ViewBag.Ship = ship.ShipOption;
-
-            
-            //ViewBag.Index = UC.currentUser.CurrentIndex;
-
+            ViewBag.NASAInfo = NASA();
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
             return View();//input order object here later
         }
 
@@ -161,7 +154,22 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult ConfirmationPage() { return View(); } // confirms payment and sends an auto-email
+        public ActionResult ConfirmationPage(User paymentInfo)
+        {
+            paymentInfo.UserID = UserController.currentUser.UserID;
+            User findEmail = database.Users.Find(UserController.currentUser.UserID);
+            paymentInfo.Email = findEmail.Email;
+            database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+
+            ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";
+            ViewBag.NASAInfo = NASA();
+            ViewBag.YelpInfo = Yelp();
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
+            //method to send email automatically
+
+            return View();
+        } 
 
         //public ActionResult EditConfirmationPage () { return View(); }   ???? Do we need this, or can we just use the ConfirmationPage()
     }
