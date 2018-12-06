@@ -184,7 +184,7 @@ namespace Tra_Verse.Controllers
             database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
 
-            return View();//input order object here later??
+            return View();
         }
 
         public ActionResult Error()
@@ -197,13 +197,12 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult ConfirmationPage(User paymentInfo)
+        public ActionResult ConfirmationPage(FormCollection fc)
         {
-            paymentInfo.UserID = UserController.currentUser.UserID;
             User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            findEmail.CreditCard = paymentInfo.CreditCard;
-            findEmail.CRV = paymentInfo.CRV;
-            findEmail.NameOnCard = paymentInfo.NameOnCard;
+            findEmail.CreditCard = fc["CreditCard"];
+            findEmail.CRV = int.Parse(fc["CRV"]);
+            findEmail.NameOnCard = fc["NameOnCard"];
             //paymentInfo.Email = findEmail.Email;
             database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
@@ -212,9 +211,6 @@ namespace Tra_Verse.Controllers
             //ViewBag.NASAInfo = NASA();
             //ViewBag.YelpInfo = Yelp();
             //ViewBag.Index = UserController.currentUser.CurrentIndex;
-
-            // lol okay I made the change... prick
-            // radical testing lol okay
 
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
@@ -225,8 +221,8 @@ namespace Tra_Verse.Controllers
             ViewBag.Ship = vacationInfo.ShipOption;
             ViewBag.Start = vacationInfo.DateStart;
             ViewBag.End = vacationInfo.DateEnd;
-            ViewBag.Name = paymentInfo.NameOnCard;
-            ViewBag.Card = paymentInfo.CreditCard;
+            ViewBag.Name = findEmail.NameOnCard;
+            ViewBag.Card = findEmail.CreditCard;
             //method to send email automatically??
 
             return View();
