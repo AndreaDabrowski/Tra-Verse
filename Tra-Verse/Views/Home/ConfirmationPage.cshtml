@@ -12,6 +12,17 @@
         @ViewBag.EditedConfirmationPage
         <br />
         <p>Planet Name: @ViewBag.Planet</p>
+<<<<<<< HEAD
+        <p>Destination Rating: @ViewBag.VacationLogDBInfo.Rating</p>
+        <p>Total Price: @ViewBag.VacationInfo.Price</p>
+        <p>Ship Choice:</p>
+
+        @if (ViewBag.VacationLogDBInfo.ShipOption == "1")
+        {
+            <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
+        }
+        else if (ViewBag.VacationLogDBInfo.ShipOption == "2")
+=======
         <p>Destination Rating: @ViewBag.Rating</p>
         <p>Total Price: @ViewBag.Price</p>
         <p>Ship Choice:</p>
@@ -23,6 +34,7 @@
             <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
         }
         else if (ViewBag.Ship == "2")
+>>>>>>> 3cee468de7e3beecf30bffa592ae0569310fad0a
         {
             <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
         }
@@ -44,9 +56,13 @@
     <p>*This information will send to the email associated with this account</p>
 
 
+<<<<<<< HEAD
+<a href="/Home/Index">Return To Home Page</a>
+=======
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
 
     <a href="/Home/Index">Return To Home Page</a>
 
+>>>>>>> 3cee468de7e3beecf30bffa592ae0569310fad0a

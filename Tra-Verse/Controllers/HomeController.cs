@@ -10,7 +10,6 @@ using Tra_Verse.Models;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-
 //testing this commit
 namespace Tra_Verse.Controllers
 {
@@ -106,11 +105,11 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            int index = UserController.currentUser.CurrentIndex;
-            int randPrice = UserController.currentUser.RandPrice;
-            TempData["TotalPrice"] = TotalPrice(order.ShipOption, randPrice);
+            //int index = UserController.currentUser.CurrentIndex;
+            //int randPrice = UserController.currentUser.RandPrice;
+            TempData["TotalPrice"] = TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
 
-            return RedirectToAction("PrivateAccomodations", new { index });
+            return RedirectToAction("PrivateAccomodations", new { UserController.currentUser.CurrentIndex });
         }
 
         int TripPriceRandomizer(int index)
@@ -144,33 +143,32 @@ namespace Tra_Verse.Controllers
             return pricePerDollarSign;
         }
 
-        int TotalPrice(string ship, int price)
+        int TotalPrice(string ship, int dollarSign)
         {
             var Nasa = NASA();
-            var placeholder = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
-            int PH = Convert.ToInt32(placeholder);
+            var takeDistance = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
+            int distance = Convert.ToInt32(takeDistance);
 
-            int pricePerDistance = PH / 100 * 25000;
-            int pricePerDollarSign = price * 10000;
+            int pricePerDistance = distance / 100 * 2500;
+            int pricePerDollarSign = dollarSign * 1000;
             int priceShipOption = 0;
 
             switch (ship)
             {
                 case "1":
-                    priceShipOption = 100000;
+                    priceShipOption = 10000;
                     break;
                 case "2":
-                    priceShipOption = 200000;
+                    priceShipOption = 20000;
                     break;
                 case "3":
-                    priceShipOption = 300000;
+                    priceShipOption = 30000;
                     break;
                 default:
                     break;
             }
 
             int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
-
             return totalPrice;
         }
 
