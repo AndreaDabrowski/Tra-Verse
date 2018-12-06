@@ -213,6 +213,9 @@ namespace Tra_Verse.Controllers
             //ViewBag.YelpInfo = Yelp();
             //ViewBag.Index = UserController.currentUser.CurrentIndex;
 
+
+            // radical testing lol okay
+
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
