@@ -1,34 +1,46 @@
 ﻿@model Tra_Verse.Models.EmailFormModel
-@{
-    ViewBag.Title = "Contact";
-}
-<h2>@ViewBag.Title.</h2>
+
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     <h4>Confirmation of your vacation with Traverse</h4>
     <hr />
-    <div class="form-group">
-        @Html.LabelFor(m => m.FromName, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FromName, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.FromName)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.FromEmail, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.FromEmail, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.FromEmail)
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Message, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextAreaFor(m => m.Message, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Message)
-        </div>
+
+    <div name="Message">
+        <h1>Confirmation Page</h1><br />
+        @ViewBag.EditedConfirmationPage
+        <p>*This information has been send to the email associated with this account</p>
+        <br />
+        <p>
+            Planet Name: @ViewBag.VacationLogDBInfo.PlanetName
+        </p>
+        <p>
+            Destination Rating: @ViewBag.VacationLogDBInfo.Rating
+        </p>
+        <p>
+
+            Total Price: @ViewBag.VacationInfo.Price
+        </p>
+
+        @if (ViewBag.VacationDBInfo.ShipOption == "1")
+        {
+            <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
+        }
+        else if (ViewBag.VacationDBInfo.ShipOption == "2")
+        {
+            <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
+        }
+        else
+        {
+            <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
+        }
+
+        <p name="DateStart">Start Date: @ViewBag.VacationInfo.DateStart</p>
+        <p name="DateStart">End Date: @ViewBag.VacationInfo.DateEnd</p>
+
+        <p>Charge has been made to: @ViewBag.UserDBInfo.NameOnCard</p>
+        <p>With the following card information: @ViewBag.UserDBInfo.CreditCard</p>
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">

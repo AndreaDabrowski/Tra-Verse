@@ -203,16 +203,12 @@ namespace Tra_Verse.Controllers
             ViewBag.YelpInfo = Yelp();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
 
-            //VacationLog vacation = new VacationLog();
-            //VacationLog vacation 
-
             VacationLog vacationInfo = database.VacationLogs.Find(paymentInfo.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
-            //method to send email automatically
 
             ViewBag.VacationLogDBInfo = vacationInfo;
             ViewBag.UserDBInfo = paymentInfo;
-            //method to send email automatically?
+            //method to send email automatically??
 
             return View();
         }
@@ -223,20 +219,20 @@ namespace Tra_Verse.Controllers
         {
             if (ModelState.IsValid)
             {
-                var body = "<p>Email From: {0} ({1})</p><p>Order:</p><p>{2}</p>";
+                //var body = $"{0}";
                 var message = new MailMessage();
                 message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
-                message.From = new MailAddress("TraVerseNOREPLY@gmail.com");  // replace with valid value
+                message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
                 message.Subject = "Confirmation of your vacation with Tra-Verse";
-                message.Body = string.Format(body, model.FromName, model.FromEmail, model.Message);
+                message.Body = string.Format(model.Message);
                 message.IsBodyHtml = true;
 
                 using (var smtp = new SmtpClient())
                 {
                     var credential = new NetworkCredential
                     {
-                        UserName = "Andrea.Dab@hotmail.com",  // replace with valid value
-                        Password = "PassForAndrea!"  // replace with valid value
+                        UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
+                        Password = "GucciBoi"  // replace with valid value
                     };
                     smtp.Credentials = credential;
                     smtp.Host = "smtp-mail.outlook.com";
