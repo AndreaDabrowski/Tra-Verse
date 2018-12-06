@@ -10,7 +10,6 @@ using Tra_Verse.Models;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-
 //testing this commit
 namespace Tra_Verse.Controllers
 {
@@ -28,7 +27,7 @@ namespace Tra_Verse.Controllers
         public JArray NASA()
         {
             //string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
-            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&format=json&select=pl_name,st_dist");
+            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&format=json");
             HttpWebResponse response = (HttpWebResponse)nasaRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
@@ -106,11 +105,11 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            int index = UserController.currentUser.CurrentIndex;
-            int randPrice = UserController.currentUser.RandPrice;
-            TempData["TotalPrice"] = TotalPrice(order.ShipOption, randPrice);
+            //int index = UserController.currentUser.CurrentIndex;
+            //int randPrice = UserController.currentUser.RandPrice;
+            TempData["TotalPrice"] = TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
 
-            return RedirectToAction("PrivateAccomodations", new { index });
+            return RedirectToAction("PrivateAccomodations", new { UserController.currentUser.CurrentIndex });
         }
 
         int TripPriceRandomizer(int index)
@@ -144,33 +143,32 @@ namespace Tra_Verse.Controllers
             return pricePerDollarSign;
         }
 
-        int TotalPrice(string ship, int price)
+        int TotalPrice(string ship, int dollarSign)
         {
             var Nasa = NASA();
-            var placeholder = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
-            int PH = Convert.ToInt32(placeholder);
+            var takeDistance = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
+            int distance = Convert.ToInt32(takeDistance);
 
-            int pricePerDistance = PH / 100 * 25000;
-            int pricePerDollarSign = price * 10000;
+            int pricePerDistance = distance / 100 * 2500;
+            int pricePerDollarSign = dollarSign * 1000;
             int priceShipOption = 0;
 
             switch (ship)
             {
                 case "1":
-                    priceShipOption = 100000;
+                    priceShipOption = 10000;
                     break;
                 case "2":
-                    priceShipOption = 200000;
+                    priceShipOption = 20000;
                     break;
                 case "3":
-                    priceShipOption = 300000;
+                    priceShipOption = 30000;
                     break;
                 default:
                     break;
             }
 
             int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
-
             return totalPrice;
         }
 
@@ -178,6 +176,7 @@ namespace Tra_Verse.Controllers
         {
             ViewBag.NASAInfo = NASA();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
+
             VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
             currentVacation.Price = price;
             database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
@@ -200,27 +199,39 @@ namespace Tra_Verse.Controllers
         {
             paymentInfo.UserID = UserController.currentUser.UserID;
             User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            paymentInfo.Email = findEmail.Email;
-            database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
+            findEmail.CreditCard = paymentInfo.CreditCard;
+            findEmail.CRV = paymentInfo.CRV;
+            findEmail.NameOnCard = paymentInfo.NameOnCard;
+            //paymentInfo.Email = findEmail.Email;
+            database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
 
             ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-            ViewBag.NASAInfo = NASA();
-            ViewBag.YelpInfo = Yelp();
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
+            //ViewBag.NASAInfo = NASA();
+            //ViewBag.YelpInfo = Yelp();
+            //ViewBag.Index = UserController.currentUser.CurrentIndex;
 
-            VacationLog vacationInfo = database.VacationLogs.Find(paymentInfo.OrderID);
+            // lol okay I made the change... prick
+            // radical testing lol okay
+
+            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
-            ViewBag.VacationLogDBInfo = vacationInfo;
-            ViewBag.UserDBInfo = paymentInfo;
+            ViewBag.Planet = vacationInfo.PlanetName;
+            ViewBag.Rating = vacationInfo.Rating;
+            ViewBag.Price = vacationInfo.Price;
+            ViewBag.Ship = vacationInfo.ShipOption;
+            ViewBag.Start = vacationInfo.DateStart;
+            ViewBag.End = vacationInfo.DateEnd;
+            ViewBag.Name = paymentInfo.NameOnCard;
+            ViewBag.Card = paymentInfo.CreditCard;
             //method to send email automatically??
 
             return View();
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
         {
             if (ModelState.IsValid)
