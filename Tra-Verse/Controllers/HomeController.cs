@@ -14,7 +14,7 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
-        UserController UC = new UserController();
+        //UserController UC = new UserController();
         TraVerseEntities database = new TraVerseEntities();
 
         public ActionResult Index()
@@ -36,7 +36,7 @@ namespace Tra_Verse.Controllers
             //ViewBag.Example = nasaJson;
 
             rd.Close();
-            Session["example"] = nasaJson;  // how does this work if it will?
+            //Session["example"] = nasaJson;  // how does this work if it will?
             return nasaJson;
         }
 
@@ -66,14 +66,12 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult TripDetails() { return View(); }
-
         public ActionResult PrivateAccomodations(int index)
         {
             ViewBag.YelpInfo = Yelp();
             ViewBag.NASAInfo = NASA();
-            UC.currentUser.CurrentIndex = index;
-            ViewBag.Index = UC.currentUser.CurrentIndex;
+            UserController.currentUser.CurrentIndex = index;
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
 
             return View();
         }
@@ -82,10 +80,9 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTrip() { return View(); }
 
-
-        public ActionResult Checkout(VacationLog order)
+        public ActionResult RefreshForTotal(VacationLog order)
         {
-            if (UC.currentUser.LoggedIn == false)
+            if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
             }
@@ -95,8 +92,8 @@ namespace Tra_Verse.Controllers
                 VacationLog added = database.VacationLogs.Add(order);
                 database.SaveChanges();
 
-                UC.currentUser.OrderID = added.OrderID;
-                User loggedInUser = database.Users.Find(UC.currentUser.UserID);
+                UserController.currentUser.OrderID = added.OrderID;
+                User loggedInUser = database.Users.Find(UserController.currentUser.UserID);
                 loggedInUser.OrderID = added.OrderID;
                 database.Entry(loggedInUser).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
@@ -107,9 +104,49 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            ViewBag.NASAInfo = NASA();
-            //ViewBag.YelpInfo = Yelp();
-            ViewBag.Index = UC.currentUser.CurrentIndex;
+            //ViewBag.Ship = order.ShipOption;
+            int index = UserController.currentUser.CurrentIndex;
+            TempData["TotalPrice"] = TotalPrice(order.ShipOption, order.Price);
+
+            return RedirectToAction("PrivateAccomodations", new { index });
+        }
+
+        private int TotalPrice(string ship, int price)
+        {
+            var Nasa = NASA();
+            string placeholder = Nasa[UserController.currentUser.CurrentIndex]["st_dist"].ToString();
+            int PH = int.Parse(placeholder);
+
+            int pricePerDistance = PH / 100 * 200000;
+            int pricePerDollarSign = price * 10000;
+            int priceShipOption = 0;
+
+            switch (ship)
+            {
+                case "1":
+                    priceShipOption = 100000;
+                    break;
+                case "2":
+                    priceShipOption = 200000;
+                    break;
+                case "3":
+                    priceShipOption = 300000;
+                    break;
+                default:
+                    break;
+            }
+
+            int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
+
+            return totalPrice;
+        }
+
+        public ActionResult Checkout(VacationLog order)
+        {
+            //VacationLog ship = new VacationLog();
+            //ViewBag.Ship = ship.ShipOption;
+
+            
             //ViewBag.Index = UC.currentUser.CurrentIndex;
 
             return View();//input order object here later
