@@ -13,16 +13,16 @@
         <h1>Confirmation Page</h1><br />
         @ViewBag.EditedConfirmationPage
         <br />
-        <p>Planet Name: @ViewBag.VacationLogDBInfo.PlanetName</p>
+        <p>Planet Name: @ViewBag.Planet</p>
         <p>Destination Rating: @ViewBag.VacationLogDBInfo.Rating</p>
         <p>Total Price: @ViewBag.VacationInfo.Price</p>
         <p>Ship Choice:</p>
 
-        @if (ViewBag.VacationDBInfo.ShipOption == "1")
+        @if (ViewBag.VacationLogDBInfo.ShipOption == "1")
         {
             <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
         }
-        else if (ViewBag.VacationDBInfo.ShipOption == "2")
+        else if (ViewBag.VacationLogDBInfo.ShipOption == "2")
         {
             <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
         }
@@ -50,4 +50,3 @@
 }
 
 <a href="/Home/Index">Return To Home Page</a>
-

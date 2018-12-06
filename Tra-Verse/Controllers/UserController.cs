@@ -22,7 +22,7 @@ namespace Tra_Verse.Controllers
                 return View("Index", "Home");
             }
             ViewBag.LoggedOut = "You're not logged in";
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult LoginButton(User logUser)
@@ -40,12 +40,12 @@ namespace Tra_Verse.Controllers
                         TempData["LoggedIn"] = "You've successfully logged in!";
                         return RedirectToAction("TripList", "Home");//, logUser
                     }
-                    return View("TripList", "Home");
+                    return RedirectToAction("TripList", "Home");
                 }
             }
 
             ViewBag.Error = "This is not a valid email address";
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult RegisterUser(User newUser)
         {
@@ -62,9 +62,8 @@ namespace Tra_Verse.Controllers
             else
             {
                 TempData["Error"] = "Error with adding user.";
-                return View("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
-
         }
     }
 }
