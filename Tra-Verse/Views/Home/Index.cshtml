@@ -1,5 +1,4 @@
-﻿@* MAKE THIS PAGE PRETTY *@
-
+﻿
 <h1>Tra-Verse</h1>
 <h3>Always Moving Forward</h3><br /> <br />
 
@@ -13,36 +12,39 @@
 <form action="/User/LoginButton" method="post">
 
     <label class="control-label">Email</label>
-    <input type="text" name="Email" id="loginEmail" onchange="return validate()" class="form-control" />
-    <div id="result"></div>
-
+    <input type="text" name="Email" id="loginEmail" onkeyup="testLoginEmail()" pattern="^([A-z0-9\-.]{5,})@("@")([A-z0-9\-.]+)\.([A-z]{2,5})$" class="form-control" />
+    <div id="loginEmError" style="font-weight:bold"></div>
 
     <label class="control-label">Password</label>
-    <input type="password" name="Password" id="loginPassword" onchange="return passValidate()" class=" form-control">
-    <div id="passResult"></div>
+    <input type="password" name="Password" id="loginPassword" onkeyup="testLoginPass()" pattern="^[A-z0-9]{6,}$" class=" form-control">
+    <div id="loginPassError" style="font-weight:bold"></div>
 
-    <input type="submit" value="Log In!" class="btn-default" /><!--Log in button-->
-
+    <input type="submit" value="Log In!" id="loginButton" class="btn-default" disabled /><!--Log in button-->
 </form>
 
 <h2>Register New User:</h2><br />
 <form action="/User/RegisterUser" method="post">
     <label class="control-label">Email</label>
-    <input type="text" name="Email" id="regEmail" onchange="return emailValidate()" class="form-control" />
-    <div id="regEmailResult"></div>
+    <input type="text" name="Email" id="regEmail" onkeyup="testRegisterEmail()" pattern="^([A-z0-9\-.]{5,})@("@")([A-z0-9\-.]+)\.([A-z]{2,5})$" class="form-control" />
+    <div id="regEmailError" style="font-weight:bold"></div>
 
     <label class="control-label">Password</label>
-    <input type="password" name="Password" id="regPassword" onchange="return regPassValidate()" class=" form-control">
-    <div id="regPassResult"></div>
+    <input type="password" name="Password" id="regPassword" onkeyup="testRegPass()" pattern="^[A-z0-9]{6,}$" class=" form-control">
+    <div id="regPassError" style="font-weight:bold"></div>
 
     <label class="control-label">Confirm Password</label>
-    <input type="password" id="confPass" onchange="return confPassValidate()" class=" form-control">
-    <div id="confResult"></div>
+    <input type="password" id="confPass" onkeyup="checkPassMatch()" pattern="^[A-z0-9]{6,}$" class=" form-control">
+    <div id="confPassError" style="font-weight:bold"></div>
 
-    <input type="submit" value="Register!" class="btn-default" /><!--registration button-->
+    <input type="submit" value="Register!" id="regButton" class="btn-default" disabled /><!--registration button-->
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="~/Scripts/JSValidation.js"></script>
 
+<script src="~/Scripts/LoginValidation.js"></script>
+<script src="~/Scripts/RegisterValidation.js"></script>
+
+@*</body>
+
+    </html>*@
 
