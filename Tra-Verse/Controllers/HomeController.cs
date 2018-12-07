@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Tra_Verse.Models;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Tra_Verse.Controllers
 {
@@ -370,5 +372,26 @@ namespace Tra_Verse.Controllers
         //    return View(model);
         //}
 
+
+       /* public ActionResult TripList(string price)
+        {
+            List<VacationLog> test = database.VacationLogs.ToList();
+            test.OrderBy(x => x.Price);
+            test.Reverse();
+            /*if (!string.IsNullOrEmpty(price))
+            {
+                travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
+            }*/
+            //return View();
+        //}
+
+        public ActionResult TripListDist(string distance)
+        {
+            List<VacationLog> test = database.VacationLogs.ToList();
+            test.OrderBy(x => x.Price);
+            test.Reverse();
+
+            return RedirectToAction("TripList", "Home");
+        }
     }
 }
