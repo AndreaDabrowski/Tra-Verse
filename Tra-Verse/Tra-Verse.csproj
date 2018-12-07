@@ -135,6 +135,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,6 +172,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\projectBackground.jpg" />
+    <Content Include="Content\images\traverse-rough-color-centered.png" />
     <Content Include="Content\StylingPage.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -224,7 +226,7 @@
     <Content Include="Views\Home\TripList.cshtml" />
     <Content Include="Views\Home\TripDetails.cshtml" />
     <Content Include="Views\Home\PrivateAccomodations.cshtml" />
-    <Content Include="Views\Home\PublicAccomodations.cshtml" />
+    <Content Include="Views\Public\PublicAccomodations.cshtml" />
     <Content Include="Views\Home\EditTrip.cshtml" />
     <Content Include="Views\Home\CheckOut.cshtml" />
     <Content Include="Views\Home\ConfirmationPage.cshtml" />
@@ -234,6 +236,8 @@
     <Content Include="Views\Home\LoginError.cshtml" />
     <Content Include="Views\Home\PreOrderError.cshtml" />
     <Content Include="Views\Home\YourTrip.cshtml" />
+    <Content Include="Views\Home\Redo.cshtml" />
+    <Content Include="Views\Public\PublicTripList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

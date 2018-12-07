@@ -43,4 +43,5 @@ else
 
 <br /><br /><br />
 <a href="/Home/TripList"><h3>Look at more trips</h3></a>
-<a href="/Home/DeleteTrip"><h3>Delete this current trip</h3></a>
+@*<a href="/Home/DeleteTrip"><h3>Delete this current trip</h3></a>*@
+<input type="button" value="Delete this order" onclick="location.href='@Url.Action("DeleteTrip", "Home")'" class="btn-danger" />

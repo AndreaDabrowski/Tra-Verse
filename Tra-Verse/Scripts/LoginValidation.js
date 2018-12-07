@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-﻿
-=======
 
->>>>>>> johnathan
 // login email validation
 var loginRXArray = [0, 0];
 var boolArray = [false, false];
