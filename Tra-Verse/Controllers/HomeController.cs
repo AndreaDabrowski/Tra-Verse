@@ -264,9 +264,10 @@ namespace Tra_Verse.Controllers
         public ActionResult DeleteTrip()
         {
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            database.Remove(vacationInfo);
+            database.VacationLogs.Remove(vacationInfo);
             database.SaveChanges();
-            return View();
+            TempData["deleted"] = "Your stuff has been deleted, yo";
+            return RedirectToAction("TripList");
         }
 
     }
