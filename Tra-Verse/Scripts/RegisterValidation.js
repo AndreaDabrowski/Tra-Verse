@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿var regexArray = [0, 0, 0]
+=======
+var regexArray = [0, 0, 0]
+>>>>>>> johnathan
 var testArray = [false, false, false]
 
 regexArray[0] = /^([A-z0-9\-.]{5,})@([A-z0-9\-.]+)\.([A-z]{2,5})$/;
