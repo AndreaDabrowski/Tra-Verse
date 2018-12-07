@@ -10,7 +10,6 @@ using Tra_Verse.Models;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
-//testing this commit
 namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
@@ -52,8 +51,8 @@ namespace Tra_Verse.Controllers
             string data = rd.ReadToEnd();
 
             JObject yelpJson = JObject.Parse(data);
-            rd.Close();
 
+            rd.Close();
             return yelpJson;
         }
 
@@ -66,8 +65,8 @@ namespace Tra_Verse.Controllers
         }
 
         public ActionResult PrivateAccomodations(int index)
-        { 
-            ViewBag.YelpInfo = Yelp();    
+        {
+            ViewBag.YelpInfo = Yelp();
             ViewBag.NASAInfo = NASA();
             UserController.currentUser.CurrentIndex = index;
             ViewBag.Index = UserController.currentUser.CurrentIndex;
@@ -80,7 +79,11 @@ namespace Tra_Verse.Controllers
 
         public ActionResult PublicAccomodations() { return View(); }
 
-        public ActionResult EditTrip() { return View(); }
+        public ActionResult EditTrip()
+        {
+
+            return View();
+        }
 
         public ActionResult RefreshForTotal(VacationLog order)
         {
@@ -104,7 +107,6 @@ namespace Tra_Verse.Controllers
                 Console.Write(e.EntityValidationErrors);
                 return View("Error");
             }
-
             //int randPrice = UserController.currentUser.RandPrice;
 
             TempData["TotalPrice"] = TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
@@ -183,7 +185,7 @@ namespace Tra_Verse.Controllers
             database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
 
-            return View();//input order object here later??
+            return View();
         }
 
         public ActionResult Error()
@@ -198,6 +200,7 @@ namespace Tra_Verse.Controllers
 
         public ActionResult ConfirmationPage(FormCollection fc)
         {
+
             User user = database.Users.Find(UserController.currentUser.UserID);
             if (user.CRV != null)
             {
@@ -208,11 +211,13 @@ namespace Tra_Verse.Controllers
             findEmail.CreditCard = fc["CreditCard"];
             findEmail.CRV = int.Parse(fc["CRV"]);
             findEmail.NameOnCard = fc["NameOnCard"];
+            
             //paymentInfo.Email = findEmail.Email;
             database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
+            
+            //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
 
-            ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
@@ -225,9 +230,18 @@ namespace Tra_Verse.Controllers
             ViewBag.Name = findEmail.NameOnCard;
             ViewBag.Card = findEmail.CreditCard;
             //method to send email automatically needs to be implemented still
+
             return View();
         }
 
+        public ActionResult DeleteTrip()
+        {
+            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            database.VacationLogs.Remove(vacationInfo);
+            database.SaveChanges();
+            TempData["deleted"] = "Your stuff has been deleted, yo";
+            return RedirectToAction("TripList");
+        }
 
         public ActionResult PreOrderError()
         {
@@ -271,7 +285,7 @@ namespace Tra_Verse.Controllers
         //        message.Subject = "Confirmation of your vacation with Tra-Verse";
         //        message.Body = string.Format(model.Message);
         //        message.IsBodyHtml = true;
-
+     
         //        using (var smtp = new SmtpClient())
         //        {
         //            var credential = new NetworkCredential
@@ -289,5 +303,6 @@ namespace Tra_Verse.Controllers
         //    }
         //    return View(model);
         //}
+
     }
 }
