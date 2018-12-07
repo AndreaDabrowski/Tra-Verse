@@ -198,13 +198,6 @@ namespace Tra_Verse.Controllers
 
         public ActionResult ConfirmationPage(FormCollection fc)
         {
-<<<<<<< HEAD
-            paymentInfo.UserID = UserController.currentUser.UserID;
-            User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            findEmail.CreditCard = paymentInfo.CreditCard;
-            findEmail.CRV = paymentInfo.CRV;
-            findEmail.NameOnCard = paymentInfo.NameOnCard;
-=======
             User user = database.Users.Find(UserController.currentUser.UserID);
             if (user.CRV != null)
             {
@@ -215,23 +208,11 @@ namespace Tra_Verse.Controllers
             findEmail.CreditCard = fc["CreditCard"];
             findEmail.CRV = int.Parse(fc["CRV"]);
             findEmail.NameOnCard = fc["NameOnCard"];
->>>>>>> johnathan
             //paymentInfo.Email = findEmail.Email;
             database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
 
             ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-            //ViewBag.NASAInfo = NASA();
-            //ViewBag.YelpInfo = Yelp();
-            //ViewBag.Index = UserController.currentUser.CurrentIndex;
-<<<<<<< HEAD
-
-            // lol okay I made the change... prick
-            // radical testing lol okay
-
-=======
-            
->>>>>>> johnathan
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
@@ -241,16 +222,9 @@ namespace Tra_Verse.Controllers
             ViewBag.Ship = vacationInfo.ShipOption;
             ViewBag.Start = vacationInfo.DateStart;
             ViewBag.End = vacationInfo.DateEnd;
-<<<<<<< HEAD
-            ViewBag.Name = paymentInfo.NameOnCard;
-            ViewBag.Card = paymentInfo.CreditCard;
-            //method to send email automatically??
-=======
             ViewBag.Name = findEmail.NameOnCard;
             ViewBag.Card = findEmail.CreditCard;
             //method to send email automatically needs to be implemented still
->>>>>>> johnathan
-
             return View();
         }
 
