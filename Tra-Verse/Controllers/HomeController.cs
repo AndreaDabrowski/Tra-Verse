@@ -55,6 +55,20 @@ namespace Tra_Verse.Controllers
             rd.Close();
             return yelpJson;
         }
+        public JObject Travel()
+        {
+            string travelAPIKey = System.Configuration.ConfigurationManager.AppSettings["Travel API Key"];
+            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search?apikey=DbGyrFEmyYkq5PxTOwdIymEEjmlfvFOf&origin=BOS&destination=LON&departure_date=2018-12-25");
+            HttpWebResponse response = (HttpWebResponse)travelRequest.GetResponse();
+
+            StreamReader rd = new StreamReader(response.GetResponseStream());
+            string data = rd.ReadToEnd();
+
+            JObject travelJson = JObject.Parse(data);
+
+            rd.Close();
+            return travelJson;
+        }
 
         public ActionResult TripList()
         {
@@ -338,6 +352,7 @@ namespace Tra_Verse.Controllers
 
             return View();
         }
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
