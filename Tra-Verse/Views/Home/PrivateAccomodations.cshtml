@@ -10,7 +10,7 @@
 <p>Price per Distance: $@pricePerDistance</p>
 <p>Price rating: $@dollarSigns</p>
 
-﻿<form action="/Home/RefreshForTotal" method="post">
+﻿<form action="/Home/RefreshForTotal?index=@ViewBag.Index" method="post">
 
     <span><img src=@images[ViewBag.Index] alt=@ViewBag.NASAInfo[ViewBag.Index]["pl_name"] height="100" width="100" align="left"></span>
 

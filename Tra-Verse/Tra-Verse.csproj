@@ -233,6 +233,7 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\LoginError.cshtml" />
     <Content Include="Views\Home\ConfirmationEmailFormat.cshtml" />
+    <Content Include="Views\Home\DeleteTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
