@@ -10,9 +10,7 @@
 
 <h2>GIMME YO MONEY</h2><br />
 <form action="/Home/ConfirmationPage" method="post">
-    @*<input type="hidden" name="UserID" />
-    <input type="hidden" name="Email" />
-    <input type="hidden" name="Password" />*@
+
     <label class="control-label">Card #</label>
     <input type="number" name="CreditCard" class="form-control"/>
 
@@ -25,17 +23,12 @@
     <input type="submit" value="$$$$$$$$$$gimme$$$$$$$$$$$$" class="btn-default" />
 </form>
 
-
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 @*
     Access email here for emailing confirmation page?
     Stretch goal --> add Terms and Conditions checkbox
 *@
-
 <a href="/Home/TripList">Cancel Order: Go back to list of Trips</a>
-
 @*
     - Total Price
     - BreakDown Details
@@ -50,5 +43,4 @@
     - Confirmation email (message to user)
 
     - Submit form
-
 *@
