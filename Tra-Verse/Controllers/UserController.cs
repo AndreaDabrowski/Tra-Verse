@@ -19,7 +19,7 @@ namespace Tra_Verse.Controllers
                 currentUser.UserID = 0;
                 currentUser.OrderID = 0;
                 ViewBag.Logout = "You've been Logged out!";
-                return View("Index", "Home");
+                return RedirectToAction("Index", "Home");
             }
             ViewBag.LoggedOut = "You're not logged in";
             return RedirectToAction("Index", "Home");

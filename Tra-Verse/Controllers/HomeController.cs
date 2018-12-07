@@ -81,6 +81,18 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTrip()
         {
+            VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
+
+            ViewBag.Planet = vacationToEdit.PlanetName;
+            ViewBag.Rating = vacationToEdit.Rating;
+            ViewBag.Price = vacationToEdit.Price;
+            ViewBag.Ship = vacationToEdit.ShipOption;
+            ViewBag.Start = vacationToEdit.DateStart;
+            ViewBag.End = vacationToEdit.DateEnd;
+
+            ViewBag.NASAInfo = NASA();
+            ViewBag.YelpInfo = Yelp();
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
 
             return View();
         }
@@ -91,6 +103,14 @@ namespace Tra_Verse.Controllers
             {
                 return View("LoginError");
             }
+
+            User user = database.Users.Find(UserController.currentUser.UserID);
+
+            if (user.OrderID > 0)
+            {
+                return RedirectToAction("PreOrderError");
+            }
+
             try
             {
                 VacationLog added = database.VacationLogs.Add(order);
@@ -202,11 +222,6 @@ namespace Tra_Verse.Controllers
         {
 
             User user = database.Users.Find(UserController.currentUser.UserID);
-            if (user.CRV != null)
-            {
-                return View("PreOrderError");
-            }
-
             User findEmail = user;
             findEmail.CreditCard = fc["CreditCard"];
             findEmail.CRV = int.Parse(fc["CRV"]);
@@ -231,6 +246,11 @@ namespace Tra_Verse.Controllers
             ViewBag.Card = findEmail.CreditCard;
             //method to send email automatically needs to be implemented still
 
+            //if (!(user.OrderID == -1 || (user.OrderID == (user.OrderID - 10))))
+            //{
+            //    return RedirectToAction("PreOrderError");
+            //}
+
             return View();
         }
 
@@ -238,7 +258,13 @@ namespace Tra_Verse.Controllers
         {
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             database.VacationLogs.Remove(vacationInfo);
+            User userInfo = database.Users.Find(UserController.currentUser.UserID);
+            UserController.currentUser.OrderID = 0;
+            userInfo.OrderID = -1;
+
+            database.Entry(userInfo).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
+
             TempData["deleted"] = "Your stuff has been deleted, yo";
             return RedirectToAction("TripList");
         }
@@ -272,6 +298,46 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
+        public ActionResult RefreshForEdit(VacationLog order)
+        {
+            if (UserController.currentUser.LoggedIn == false)
+            {
+                return View("LoginError");
+            }
+            try
+            {
+                VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
+                vacationToEdit.DateEnd = order.DateEnd;
+                vacationToEdit.DateStart = order.DateStart;
+                vacationToEdit.ShipOption = order.ShipOption;
+                vacationToEdit.Price = TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
+                database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.Write(e.EntityValidationErrors);
+                return View("Error");
+            }
+            return RedirectToAction("Redo");
+        }
+
+        public ActionResult Redo()
+        {
+            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
+
+            ViewBag.Planet = vacationInfo.PlanetName;
+            ViewBag.Rating = vacationInfo.Rating;
+            ViewBag.Price = vacationInfo.Price;
+            ViewBag.Ship = vacationInfo.ShipOption;
+            ViewBag.Start = vacationInfo.DateStart;
+            ViewBag.End = vacationInfo.DateEnd;
+            //ViewBag.Name = findEmail.NameOnCard;
+            //ViewBag.Card = findEmail.CreditCard;
+
+            return View();
+        }
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
@@ -285,7 +351,7 @@ namespace Tra_Verse.Controllers
         //        message.Subject = "Confirmation of your vacation with Tra-Verse";
         //        message.Body = string.Format(model.Message);
         //        message.IsBodyHtml = true;
-     
+
         //        using (var smtp = new SmtpClient())
         //        {
         //            var credential = new NetworkCredential
