@@ -232,7 +232,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\Home\LoginError.cshtml" />
-    <Content Include="Views\Home\ConfirmationEmailFormat.cshtml" />
+    <Content Include="Views\Home\PreOrderError.cshtml" />
+    <Content Include="Views\Home\YourTrip.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

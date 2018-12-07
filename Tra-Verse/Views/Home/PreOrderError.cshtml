@@ -1,0 +1,46 @@
+﻿
+<h5>You have already placed an order to take a trip. You can only book one trip at a time. NO REFUNDS AVAILABLE</h5>
+
+<h2>Your booked trip...</h2>
+<br /><br />
+
+<p>Planet Name: @ViewBag.Planet</p>
+<p>Destination Rating: @ViewBag.Rating</p>
+<p>Total Price: @ViewBag.Price</p>
+<p>Ship Choice:</p>
+
+@if (ViewBag.Ship == "1")
+{
+    <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
+}
+else if (ViewBag.Ship == "2")
+{
+    <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
+}
+else
+{
+    <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
+}
+
+<p name="DateStart">Start Date: @ViewBag.Start</p>
+<p name="DateStart">End Date: @ViewBag.End</p>
+
+<p>Charge has been made to: @ViewBag.Name</p>
+<p>With the following card information: @ViewBag.Card</p>
+
+
+
+
+
+@*ViewBag.Planet = vacationInfo.PlanetName;
+    ViewBag.Rating = vacationInfo.Rating;
+    ViewBag.Price = vacationInfo.Price;
+    ViewBag.Ship = vacationInfo.ShipOption;
+    ViewBag.Start = vacationInfo.DateStart;
+    ViewBag.End = vacationInfo.DateEnd;
+    ViewBag.Name = findEmail.NameOnCard;
+    ViewBag.Card = findEmail.CreditCard;*@
+
+<br /><br /><br />
+<a href="/Home/TripList"><h3>Look at more trips</h3></a>
+<a href="/Home/DeleteTrip"><h3>Delete this current trip</h3></a>
