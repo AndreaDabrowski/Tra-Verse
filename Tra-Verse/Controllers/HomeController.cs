@@ -234,9 +234,29 @@ namespace Tra_Verse.Controllers
 
         public ActionResult PreOrderError()
         {
+            User findEmail = database.Users.Find(UserController.currentUser.UserID);
+            //findEmail.CreditCard = fc["CreditCard"];
+            //findEmail.CRV = int.Parse(fc["CRV"]);
+            //findEmail.NameOnCard = fc["NameOnCard"];
+            //paymentInfo.Email = findEmail.Email;
+            //database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
+            //database.SaveChanges();
 
+            //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
 
+            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
+            ViewBag.Planet = vacationInfo.PlanetName;
+            ViewBag.Rating = vacationInfo.Rating;
+            ViewBag.Price = vacationInfo.Price;
+            ViewBag.Ship = vacationInfo.ShipOption;
+            ViewBag.Start = vacationInfo.DateStart;
+            ViewBag.End = vacationInfo.DateEnd;
+            ViewBag.Name = findEmail.NameOnCard;
+            ViewBag.Card = findEmail.CreditCard;
+
+            // FIX THIS LAZY CODE..........
 
             return View();
         }
