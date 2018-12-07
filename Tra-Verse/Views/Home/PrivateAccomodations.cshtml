@@ -50,9 +50,10 @@
     <input type="submit" value="Submit Vacation" />
 </form>
 
-<h1>@TempData["TotalPrice"]</h1>
+@*<h1>@TempData["TotalPrice"]</h1>*@
 
-<a href="/Home/Checkout?price=@TempData["TotalPrice"]"><h4>Continue to Payment</h4></a>
+@*<p>The price of your trip below. Click to move on to the CheckOut page.</p>*@
+<a href="/Home/Checkout?price=@TempData["TotalPrice"]"><h4>The total price of your trip: @TempData["TotalPrice"]</h4></a>
 
 @* X amount per distance
     X random number generator for dollar signs (start by million multiplier)

@@ -1,28 +1,26 @@
 ﻿@model Tra_Verse.Models.EmailFormModel
 
-<h1>Confirmation Page</h1><br />
 
 @using (Html.BeginForm())
-
 {
-    @Html.AntiForgeryToken()
-    <h4>Confirmation of your vacation with Traverse</h4>
+    @*@Html.AntiForgeryToken()*@
     <hr />
 
     <div name="Message">
         <h1>Confirmation Page</h1><br />
+        <h4>Confirmation of your vacation with Traverse</h4>
         @ViewBag.EditedConfirmationPage
         <br />
         <p>Planet Name: @ViewBag.Planet</p>
-        <p>Destination Rating: @ViewBag.VacationLogDBInfo.Rating</p>
-        <p>Total Price: @ViewBag.VacationInfo.Price</p>
+        <p>Destination Rating: @ViewBag.Rating</p>
+        <p>Total Price: @ViewBag.Price</p>
         <p>Ship Choice:</p>
 
-        @if (ViewBag.VacationLogDBInfo.ShipOption == "1")
+        @if (ViewBag.Ship == "1")
         {
             <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
         }
-        else if (ViewBag.VacationLogDBInfo.ShipOption == "2")
+        else if (ViewBag.Ship == "2")
         {
             <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
         }
@@ -31,22 +29,18 @@
             <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
         }
 
-        <p name="DateStart">Start Date: @ViewBag.VacationInfo.DateStart</p>
-        <p name="DateStart">End Date: @ViewBag.VacationInfo.DateEnd</p>
+        <p name="DateStart">Start Date: @ViewBag.Start</p>
+        <p name="DateStart">End Date: @ViewBag.End</p>
 
-        <p>Charge has been made to: @ViewBag.UserDBInfo.NameOnCard</p>
-        <p>With the following card information: @ViewBag.UserDBInfo.CreditCard</p>
+        <p>Charge has been made to: @ViewBag.Name</p>
+        <p>With the following card information: @ViewBag.Card</p>
     </div>
-    <div class="form-group">
+    @*<div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" class="btn btn-default" value="Send Confirmation Email" />
         </div>
-    </div>
+    </div>*@
 }
-        <p>*This information will send to the email associated with this account</p>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+        @*<p>*This information will send to the email associated with this account</p>*@
 
 <a href="/Home/Index">Return To Home Page</a>

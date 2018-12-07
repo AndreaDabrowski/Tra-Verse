@@ -105,11 +105,12 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            //int index = UserController.currentUser.CurrentIndex;
             //int randPrice = UserController.currentUser.RandPrice;
-            TempData["TotalPrice"] = TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
 
-            return RedirectToAction("PrivateAccomodations", new { UserController.currentUser.CurrentIndex });
+            TempData["TotalPrice"] = TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
+            int index = UserController.currentUser.CurrentIndex;
+
+            return RedirectToAction("PrivateAccomodations", new { index });
         }
 
         int TripPriceRandomizer(int index)
@@ -194,65 +195,111 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult ConfirmationPage(User paymentInfo)
+        public ActionResult ConfirmationPage(FormCollection fc)
         {
-            paymentInfo.UserID = UserController.currentUser.UserID;
-            User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            paymentInfo.Email = findEmail.Email;
-            database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
+            User user = database.Users.Find(UserController.currentUser.UserID);
+            if (user.CRV != null)
+            {
+                return View("PreOrderError");
+            }
+
+            User findEmail = user;
+            findEmail.CreditCard = fc["CreditCard"];
+            findEmail.CRV = int.Parse(fc["CRV"]);
+            findEmail.NameOnCard = fc["NameOnCard"];
+            //paymentInfo.Email = findEmail.Email;
+            database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
 
             ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-            ViewBag.NASAInfo = NASA();
-            ViewBag.YelpInfo = Yelp();
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
-
-            VacationLog vacationInfo = database.VacationLogs.Find(paymentInfo.OrderID);
-            ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, UserController.currentUser.RandPrice);
+            //ViewBag.NASAInfo = NASA();
+            //ViewBag.YelpInfo = Yelp();
+            //ViewBag.Index = UserController.currentUser.CurrentIndex;
+            
+            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
             ViewBag.Planet = vacationInfo.PlanetName;
-            ViewBag.VacationLogDBInfo = vacationInfo;
-            ViewBag.UserDBInfo = paymentInfo;
-            //method to send email automatically??
+            ViewBag.Rating = vacationInfo.Rating;
+            ViewBag.Price = vacationInfo.Price;
+            ViewBag.Ship = vacationInfo.ShipOption;
+            ViewBag.Start = vacationInfo.DateStart;
+            ViewBag.End = vacationInfo.DateEnd;
+            ViewBag.Name = findEmail.NameOnCard;
+            ViewBag.Card = findEmail.CreditCard;
+            //method to send email automatically needs to be implemented still
 
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
+        public ActionResult PreOrderError()
         {
-            if (ModelState.IsValid)
-            {
-                //var body = $"{0}";
-                var message = new MailMessage();
-                message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
-                message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
-                message.Subject = "Confirmation of your vacation with Tra-Verse";
-                message.Body = string.Format(model.Message);
-                message.IsBodyHtml = true;
 
-                using (var smtp = new SmtpClient())
-                {
-                    var credential = new NetworkCredential
-                    {
-                        UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
-                        Password = "GucciBoi"  // replace with valid value
-                    };
-                    smtp.Credentials = credential;
-                    smtp.Host = "smtp-mail.outlook.com";
-                    smtp.Port = 587;
-                    smtp.EnableSsl = true;
-                    await smtp.SendMailAsync(message);
-                    return RedirectToAction("ConfirmationPage");
-                }
-            }
-            return View(model);
-        }
 
-        public ActionResult ConfirmationEmailFormat()
-        {
+
+
             return View();
         }
+
+        //public ActionResult ConfirmationPage(User paymentInfo)
+        //{
+        //    if(paymentInfo.CRV != null)
+        //    {
+        //        return View("PreOrderError");
+        //    }
+
+        //    paymentInfo.UserID = UserController.currentUser.UserID;
+        //    User findEmail = database.Users.Find(UserController.currentUser.UserID);
+        //    paymentInfo.Email = findEmail.Email;
+        //    database.Entry(paymentInfo).State = System.Data.Entity.EntityState.Modified;
+        //    database.SaveChanges();
+
+        //    ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
+        //    ViewBag.NASAInfo = NASA();
+        //    ViewBag.YelpInfo = Yelp();
+        //    ViewBag.Index = UserController.currentUser.CurrentIndex;
+
+        //    VacationLog vacationInfo = database.VacationLogs.Find(paymentInfo.OrderID);
+        //    ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, UserController.currentUser.RandPrice);
+
+        //    ViewBag.Planet = vacationInfo.PlanetName;
+        //    ViewBag.VacationLogDBInfo = vacationInfo;
+        //    ViewBag.UserDBInfo = paymentInfo;
+        //    //method to send email automatically??
+
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        //var body = $"{0}";
+        //        var message = new MailMessage();
+        //        message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
+        //        message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
+        //        message.Subject = "Confirmation of your vacation with Tra-Verse";
+        //        message.Body = string.Format(model.Message);
+        //        message.IsBodyHtml = true;
+
+        //        using (var smtp = new SmtpClient())
+        //        {
+        //            var credential = new NetworkCredential
+        //            {
+        //                UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
+        //                Password = "GucciBoi"  // replace with valid value
+        //            };
+        //            smtp.Credentials = credential;
+        //            smtp.Host = "smtp-mail.outlook.com";
+        //            smtp.Port = 587;
+        //            smtp.EnableSsl = true;
+        //            await smtp.SendMailAsync(message);
+        //            return RedirectToAction("ConfirmationPage");
+        //        }
+        //    }
+        //    return View(model);
+        //}
     }
 }
