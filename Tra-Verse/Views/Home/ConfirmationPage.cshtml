@@ -1,14 +1,14 @@
-﻿@model Tra_Verse.Models.EmailFormModel
+﻿@*@model Tra_Verse.Models.EmailFormModel*@
 
 <h1>Confirmation Page</h1><br />
 
 
     @*@Html.AntiForgeryToken()*@
-    <h4>Confirmation of your vacation with Traverse</h4>
     <hr />
 
     <div name="Message" class="form-group">
         <h1>Confirmation Page</h1><br />
+        <h4>Confirmation of your vacation with Traverse</h4>
         @ViewBag.EditedConfirmationPage
         <br />
         <p>Planet Name: @ViewBag.Planet</p>
