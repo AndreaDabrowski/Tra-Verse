@@ -9,6 +9,8 @@ using System.Web.Mvc;
 using Tra_Verse.Models;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Tra_Verse.Controllers
 {
@@ -57,8 +59,9 @@ namespace Tra_Verse.Controllers
         }
         public JObject Travel()
         {
+        ?
             string travelAPIKey = System.Configuration.ConfigurationManager.AppSettings["Travel API Key"];
-            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search?apikey=DbGyrFEmyYkq5PxTOwdIymEEjmlfvFOf&origin=BOS&destination=LON&departure_date=2018-12-25");
+            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search");
             HttpWebResponse response = (HttpWebResponse)travelRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
@@ -95,6 +98,16 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTrip()
         {
+            User user = database.Users.Find(UserController.currentUser.OrderID);
+            if(UserController.currentUser.LoggedIn == false)
+            {
+                return View("LoginError");
+            }
+            if(user.OrderID <=0)
+            {
+                ViewBag.EditError = "You dont have an order to edit - PLEASE LEAVE THIS SITE THANK YOU.";
+                return View("Error");
+            }
             VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
 
             ViewBag.Planet = vacationToEdit.PlanetName;
@@ -122,7 +135,8 @@ namespace Tra_Verse.Controllers
 
             if (user.OrderID > 0)
             {
-                return RedirectToAction("PreOrderError");
+                TempData["OrderAlready"] = "This user already has the following order";
+                return RedirectToAction("ConfirmationPage");
             }
 
             try
@@ -231,97 +245,36 @@ namespace Tra_Verse.Controllers
         {
             return View();
         }
-
-        public ActionResult ConfirmationPage(FormCollection fc)
+        public ActionResult ProcessPayment(FormCollection fc)
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-            User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            findEmail.CreditCard = fc["CreditCard"];
-            findEmail.CRV = int.Parse(fc["CRV"]);
-            findEmail.NameOnCard = fc["NameOnCard"];
-=======
-<<<<<<< HEAD
-            paymentInfo.UserID = UserController.currentUser.UserID;
-            User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            findEmail.CreditCard = paymentInfo.CreditCard;
-            findEmail.CRV = paymentInfo.CRV;
-            findEmail.NameOnCard = paymentInfo.NameOnCard;
-=======
-            User user = database.Users.Find(UserController.currentUser.UserID);
-            if (user.CRV != null)
-            {
-                return View("PreOrderError");
-            }
-=======
->>>>>>> b8c4033891116896187b83814f4c1cf143a77026
-
             User user = database.Users.Find(UserController.currentUser.UserID);
             User findEmail = user;
             findEmail.CreditCard = fc["CreditCard"];
             findEmail.CRV = int.Parse(fc["CRV"]);
             findEmail.NameOnCard = fc["NameOnCard"];
-<<<<<<< HEAD
->>>>>>> johnathan
->>>>>>> a2e16a716476b5382cbb89f2aea089d76da1211a
-            //paymentInfo.Email = findEmail.Email;
+            
             database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
+            return RedirectToAction("ConfirmationPage");
+        }
 
-            ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-            //ViewBag.NASAInfo = NASA();
-            //ViewBag.YelpInfo = Yelp();
-            //ViewBag.Index = UserController.currentUser.CurrentIndex;
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-=======
-            // lol okay I made the change... prick
-            // radical testing lol okay
-
-=======
-            
->>>>>>> johnathan
->>>>>>> a2e16a716476b5382cbb89f2aea089d76da1211a
-=======
-            
-            //paymentInfo.Email = findEmail.Email;
-            database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
-            database.SaveChanges();
-            
+        public ActionResult ConfirmationPage()
+        {
             //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
+            
 
->>>>>>> b8c4033891116896187b83814f4c1cf143a77026
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
+            User user = database.Users.Find(UserController.currentUser.UserID);
             ViewBag.Planet = vacationInfo.PlanetName;
             ViewBag.Rating = vacationInfo.Rating;
             ViewBag.Price = vacationInfo.Price;
             ViewBag.Ship = vacationInfo.ShipOption;
             ViewBag.Start = vacationInfo.DateStart;
             ViewBag.End = vacationInfo.DateEnd;
-<<<<<<< HEAD
-<<<<<<< HEAD
-            ViewBag.Name = findEmail.NameOnCard;
-            ViewBag.Card = findEmail.CreditCard;
-=======
-<<<<<<< HEAD
-            ViewBag.Name = paymentInfo.NameOnCard;
-            ViewBag.Card = paymentInfo.CreditCard;
->>>>>>> a2e16a716476b5382cbb89f2aea089d76da1211a
-            //method to send email automatically??
-=======
-=======
->>>>>>> b8c4033891116896187b83814f4c1cf143a77026
-            ViewBag.Name = findEmail.NameOnCard;
-            ViewBag.Card = findEmail.CreditCard;
-            //method to send email automatically needs to be implemented still
-
-            //if (!(user.OrderID == -1 || (user.OrderID == (user.OrderID - 10))))
-            //{
-            //    return RedirectToAction("PreOrderError");
-            //}
+            ViewBag.Name = user.NameOnCard;
+            ViewBag.Card = user.CreditCard;
 
             return View();
         }
@@ -341,40 +294,16 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("TripList");
         }
 
-        public ActionResult PreOrderError()
-        {
-            User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            //findEmail.CreditCard = fc["CreditCard"];
-            //findEmail.CRV = int.Parse(fc["CRV"]);
-            //findEmail.NameOnCard = fc["NameOnCard"];
-            //paymentInfo.Email = findEmail.Email;
-            //database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
-            //database.SaveChanges();
-
-            //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-
-            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
-
-            ViewBag.Planet = vacationInfo.PlanetName;
-            ViewBag.Rating = vacationInfo.Rating;
-            ViewBag.Price = vacationInfo.Price;
-            ViewBag.Ship = vacationInfo.ShipOption;
-            ViewBag.Start = vacationInfo.DateStart;
-            ViewBag.End = vacationInfo.DateEnd;
-            ViewBag.Name = findEmail.NameOnCard;
-            ViewBag.Card = findEmail.CreditCard;
-
-            // FIX THIS LAZY CODE..........
-
-            return View();
-        }
-
         public ActionResult RefreshForEdit(VacationLog order)
         {
+            User user = database.Users.Find(UserController.currentUser.OrderID);
             if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
+            }
+            else if (user.OrderID<=0)
+            {
+                return View("Error");
             }
             try
             {
@@ -392,23 +321,8 @@ namespace Tra_Verse.Controllers
                 Console.Write(e.EntityValidationErrors);
                 return View("Error");
             }
-            return RedirectToAction("Redo");
-        }
-
-        public ActionResult Redo()
-        {
-            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-
-            ViewBag.Planet = vacationInfo.PlanetName;
-            ViewBag.Rating = vacationInfo.Rating;
-            ViewBag.Price = vacationInfo.Price;
-            ViewBag.Ship = vacationInfo.ShipOption;
-            ViewBag.Start = vacationInfo.DateStart;
-            ViewBag.End = vacationInfo.DateEnd;
-            //ViewBag.Name = findEmail.NameOnCard;
-            //ViewBag.Card = findEmail.CreditCard;
-
-            return View();
+            TempData["UpdatedOrder"] = "This is your updated order";
+            return RedirectToAction("Confirmation Page");
         }
 
         //[HttpPost]
@@ -443,5 +357,47 @@ namespace Tra_Verse.Controllers
         //    return View(model);
         //}
 
+
+       /* public ActionResult TripList(string price)
+        {
+            List<VacationLog> test = database.VacationLogs.ToList();
+            test.OrderBy(x => x.Price);
+            test.Reverse();
+            /*if (!string.IsNullOrEmpty(price))
+            {
+                travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
+            }*/
+            //return View();
+        //}
+
+        //public ActionResult TripListCruise(string sortOrder)
+        //{
+        //    List<VacationLog> test = database.VacationLogs.ToList();
+        //    test.OrderBy(x => x.Price);
+        //    test.Reverse();
+
+            /*switch (sortOrder)
+            {
+                case "Start Date":
+                    sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
+                    break;
+                case "Distance":
+                    sortOrder = sortOrder.OrderByDescending(x => x.Distance);
+                    break;
+                case "Rating":
+                    sortOrder = sortOrder.OrderByDescending(x => x.Rating);
+                    break;
+                case "Price":
+                    sortOrder = sortOrder.OrderByDescending(x => x.price);
+                    break;
+                case "date_desc":
+                    sortOrder = sortOrder.OrderByDescending(x => x.date);
+                    break;
+                default:
+                    break;
+            }*/
+
+        //    return RedirectToAction("TripList", "Home");
+        //}
     }
 }

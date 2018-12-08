@@ -8,7 +8,6 @@ namespace Tra_Verse.Models
 {
     public class EmailFormModel
     {
-        [Required]
         public string Message { get; set; }
     }
 }

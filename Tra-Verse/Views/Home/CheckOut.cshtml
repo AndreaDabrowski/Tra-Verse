@@ -9,21 +9,26 @@
 
 
 <h2>GIMME YO MONEY</h2><br />
-<form action="/Home/ConfirmationPage" method="post">
+<form action="/Home/ProcessPayment" method="post">
 
     <label class="control-label">Card #</label>
-    <input type="number" name="CreditCard" class="form-control"/>
+    <input type="number" name="CreditCard" id="cardNumber" onkeyup="testCreditCard()" pattern="^[0-9]{16,}$" class="form-control"/>
+    <div id="cardNumError" style="font-weight:bold"></div>
 
     <label class="control-label">Name On Card</label>
-    <input type="text" name="NameOnCard" class=" form-control">
+    <input type="text" name="NameOnCard" id="nameOnCard" onkeyup="testName()" pattern="^[A-Z][a-z]{1,10}$" class=" form-control">
+    <div id="nameError" style="font-weight:bold"></div>
 
     <label class="control-label">CVV</label>
-    <input type="password" name="CRV" class=" form-control">
+    <input type="password" name="CRV" id="cvvPass" onkeyup="testCVVCode()" pattern="^[0-9]{3,}$" class=" form-control">
+    <div id="cvvError" style="font-weight:bold"></div>
 
-    <input type="submit" value="$$$$$$$$$$gimme$$$$$$$$$$$$" class="btn-default" />
+    <input type="submit" value="$$$$$$$$$$gimme$$$$$$$$$$$$" id="checkOutbutton" class="btn-default" disabled/>
 </form>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script src="~/Scripts/CreditCardValidation.js"></script>
 @*
     Access email here for emailing confirmation page?
     Stretch goal --> add Terms and Conditions checkbox
