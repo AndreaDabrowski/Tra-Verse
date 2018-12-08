@@ -135,11 +135,14 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PrivateController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\API.cs" />
+    <Compile Include="Models\Calculation.cs" />
     <Compile Include="Models\CurrentUser.cs" />
     <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\TraVerse.Context.cs">
@@ -241,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Private\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
