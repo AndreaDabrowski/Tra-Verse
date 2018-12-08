@@ -1,14 +1,20 @@
-﻿@model Tra_Verse.Models.EmailFormModel
+﻿@*@model Tra_Verse.Models.EmailFormModel*@
 
-@*@using (Html.BeginForm())*@
-{
-    @*@Html.AntiForgeryToken()*@
-    <hr />
+@*@Html.AntiForgeryToken()*@
+@*@using (Html.BeginForm("ConfirmationPage", "Home")
+{*@
+
+<h1>@TempData["OrderAlready"]</h1>
+<h1>@TempData["UpdatedOrder"]</h1>
+@ViewBag.EditedConfirmationPage
+
+<form action="/Home/ConfirmationPage" method="post" type>
 
     <div name="Message" class="form-group">
-        <h1>Confirmation Page</h1><br />
+
+        <h1 @*@Html.ValueFor(model => model.Message)*@>Confirmation Page</h1><br />
+        <hr />
         <h4>Confirmation of your vacation with Traverse</h4>
-        @ViewBag.EditedConfirmationPage
         <br />
         <p>Planet Name: @ViewBag.Planet</p>
         <p>Destination Rating: @ViewBag.Rating</p>
@@ -35,13 +41,12 @@
         <p>Charge has been made to: @ViewBag.Name</p>
         <p>With the following card information: @ViewBag.Card</p>
 
-    @*</div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Send Confirmation Email" />
-        </div>
-    
-
-    <p>*This information will send to the email associated with this account</p>*@
     </div>
-    <a href="/Home/Index">Return To Home Page</a>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10"></div>
+        <input type="submit" class="btn btn-default" value="Send Confirmation Email" />
+        <p>*This information will send to the email associated with this account</p>
+    </div>
+</form>
+
+<a href="/Home/Index">Return To Home Page</a>
