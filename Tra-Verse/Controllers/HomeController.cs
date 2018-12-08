@@ -95,6 +95,12 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTrip()
         {
+            User user = database.Users.Find(UserController.currentUser.OrderID);
+            if(user.OrderID <=0)
+            {
+                ViewBag.EditError = "You dont have an order to edit - PLEASE LEAVE THIS SITE THANK YOU.";
+                return View("Error");
+            }
             VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
 
             ViewBag.Planet = vacationToEdit.PlanetName;
@@ -122,7 +128,8 @@ namespace Tra_Verse.Controllers
 
             if (user.OrderID > 0)
             {
-                return RedirectToAction("PreOrderError");
+                TempData["OrderAlready"] = "This user already has the following order";
+                return RedirectToAction("ConfirmationPage");
             }
 
             try
@@ -231,39 +238,36 @@ namespace Tra_Verse.Controllers
         {
             return View();
         }
-
-        public ActionResult ConfirmationPage(FormCollection fc)
+        public ActionResult ProcessPayment(FormCollection fc)
         {
-
             User user = database.Users.Find(UserController.currentUser.UserID);
             User findEmail = user;
             findEmail.CreditCard = fc["CreditCard"];
             findEmail.CRV = int.Parse(fc["CRV"]);
             findEmail.NameOnCard = fc["NameOnCard"];
             
-            //paymentInfo.Email = findEmail.Email;
             database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
-            
+            return RedirectToAction("ConfirmationPage");
+        }
+
+        public ActionResult ConfirmationPage()
+        {
             //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
+            
 
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
 
+            User user = database.Users.Find(UserController.currentUser.UserID);
             ViewBag.Planet = vacationInfo.PlanetName;
             ViewBag.Rating = vacationInfo.Rating;
             ViewBag.Price = vacationInfo.Price;
             ViewBag.Ship = vacationInfo.ShipOption;
             ViewBag.Start = vacationInfo.DateStart;
             ViewBag.End = vacationInfo.DateEnd;
-            ViewBag.Name = findEmail.NameOnCard;
-            ViewBag.Card = findEmail.CreditCard;
-            //method to send email automatically needs to be implemented still
-
-            //if (!(user.OrderID == -1 || (user.OrderID == (user.OrderID - 10))))
-            //{
-            //    return RedirectToAction("PreOrderError");
-            //}
+            ViewBag.Name = user.NameOnCard;
+            ViewBag.Card = user.CreditCard;
 
             return View();
         }
@@ -283,40 +287,16 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("TripList");
         }
 
-        public ActionResult PreOrderError()
-        {
-            User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            //findEmail.CreditCard = fc["CreditCard"];
-            //findEmail.CRV = int.Parse(fc["CRV"]);
-            //findEmail.NameOnCard = fc["NameOnCard"];
-            //paymentInfo.Email = findEmail.Email;
-            //database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
-            //database.SaveChanges();
-
-            //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-
-            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            ViewBag.TotalPrice = TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
-
-            ViewBag.Planet = vacationInfo.PlanetName;
-            ViewBag.Rating = vacationInfo.Rating;
-            ViewBag.Price = vacationInfo.Price;
-            ViewBag.Ship = vacationInfo.ShipOption;
-            ViewBag.Start = vacationInfo.DateStart;
-            ViewBag.End = vacationInfo.DateEnd;
-            ViewBag.Name = findEmail.NameOnCard;
-            ViewBag.Card = findEmail.CreditCard;
-
-            // FIX THIS LAZY CODE..........
-
-            return View();
-        }
-
         public ActionResult RefreshForEdit(VacationLog order)
         {
+            User user = database.Users.Find(UserController.currentUser.OrderID);
             if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
+            }
+            else if (user.OrderID<=0)
+            {
+                return View("Error");
             }
             try
             {
@@ -334,7 +314,8 @@ namespace Tra_Verse.Controllers
                 Console.Write(e.EntityValidationErrors);
                 return View("Error");
             }
-            return RedirectToAction("Redo");
+            TempData["UpdatedOrder"] = "This is your updated order";
+            return RedirectToAction("Confirmation Page");
         }
 
         public ActionResult Redo()
@@ -353,37 +334,37 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        //[HttpPost]
+        [HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        //var body = $"{0}";
-        //        var message = new MailMessage();
-        //        message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
-        //        message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
-        //        message.Subject = "Confirmation of your vacation with Tra-Verse";
-        //        message.Body = string.Format(model.Message);
-        //        message.IsBodyHtml = true;
+        public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //var body = $"{0}";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
+                message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
+                message.Subject = "Confirmation of your vacation with Tra-Verse";
+                message.Body = string.Format(model.Message);
+                message.IsBodyHtml = true;
 
-        //        using (var smtp = new SmtpClient())
-        //        {
-        //            var credential = new NetworkCredential
-        //            {
-        //                UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
-        //                Password = "GucciBoi"  // replace with valid value
-        //            };
-        //            smtp.Credentials = credential;
-        //            smtp.Host = "smtp-mail.outlook.com";
-        //            smtp.Port = 587;
-        //            smtp.EnableSsl = true;
-        //            await smtp.SendMailAsync(message);
-        //            return RedirectToAction("ConfirmationPage");
-        //        }
-        //    }
-        //    return View(model);
-        //}
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
+                        Password = "GucciBoi"  // replace with valid value
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp-mail.outlook.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(message);
+                    return RedirectToAction("ConfirmationPage");
+                }
+            }
+            return View(model);
+        }
 
     }
 }

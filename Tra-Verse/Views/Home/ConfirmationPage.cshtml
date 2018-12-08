@@ -6,6 +6,9 @@
     <hr />
 
     <div name="Message" class="form-group">
+        <h1>@TempData["OrderAlready"]</h1>
+        <h1>@TempData["UpdatedOrder"]</h1>
+        
         <h1>Confirmation Page</h1><br />
         <h4>Confirmation of your vacation with Traverse</h4>
         @ViewBag.EditedConfirmationPage
@@ -35,13 +38,13 @@
         <p>Charge has been made to: @ViewBag.Name</p>
         <p>With the following card information: @ViewBag.Card</p>
 
-    @*</div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Send Confirmation Email" />
-        </div>
-    
+        @*</div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btn btn-default" value="Send Confirmation Email" />
+            </div>
 
-    <p>*This information will send to the email associated with this account</p>*@
+
+        <p>*This information will send to the email associated with this account</p>*@
     </div>
     <a href="/Home/Index">Return To Home Page</a>
