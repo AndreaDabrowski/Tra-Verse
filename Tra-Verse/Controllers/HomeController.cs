@@ -57,8 +57,9 @@ namespace Tra_Verse.Controllers
         }
         public JObject Travel()
         {
+        ?
             string travelAPIKey = System.Configuration.ConfigurationManager.AppSettings["Travel API Key"];
-            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search?apikey=DbGyrFEmyYkq5PxTOwdIymEEjmlfvFOf&origin=BOS&destination=LON&departure_date=2018-12-25");
+            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search");
             HttpWebResponse response = (HttpWebResponse)travelRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
