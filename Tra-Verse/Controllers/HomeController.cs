@@ -23,10 +23,27 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public JArray NASA()
+        public JArray NASA(string sortByOption)
         {
             //string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
-            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&format=json");
+            HttpWebRequest nasaRequest;
+            if (sortByOption== "notSorted")
+            {
+                 nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist,pl_hostname,pl_discmethod,pl_masse,pl_orbper,pl_disc,pl_pelink,pl_edelink,pl_publ_date&count(*)&where=ra<30&format=json");
+            }
+            else if (sortByOption == "sortedByDistance")
+            {
+                nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&count(*)&where=ra<30&format=json&order_by=st_dist");
+            }
+            else if (sortByOption == "sortedByPlanetName")
+            {
+                nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&count(*)&where=ra<30&format=json&order_by=pl_name");
+            }
+            else
+            {
+                throw new Exception();
+            }
+        
             HttpWebResponse response = (HttpWebResponse)nasaRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
@@ -58,7 +75,7 @@ namespace Tra_Verse.Controllers
         public JObject Travel()
         {
             string travelAPIKey = System.Configuration.ConfigurationManager.AppSettings["Travel API Key"];
-            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search?apikey=DbGyrFEmyYkq5PxTOwdIymEEjmlfvFOf&origin=BOS&destination=LON&departure_date=2018-12-25");
+            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search?apikey="+travelAPIKey+"&origin=BOS&destination=LON&departure_date=2018-12-25");
             HttpWebResponse response = (HttpWebResponse)travelRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
@@ -73,7 +90,7 @@ namespace Tra_Verse.Controllers
         public ActionResult TripList()
         {
             ViewBag.YelpInfo = Yelp();
-            ViewBag.NASAInfo = NASA();
+            ViewBag.NASAInfo = NASA("notSorted");
 
             return View();
         }
@@ -81,7 +98,7 @@ namespace Tra_Verse.Controllers
         public ActionResult PrivateAccomodations(int index)
         {
             ViewBag.YelpInfo = Yelp();
-            ViewBag.NASAInfo = NASA();
+            ViewBag.NASAInfo = NASA("notSorted");
             UserController.currentUser.CurrentIndex = index;
             ViewBag.Index = UserController.currentUser.CurrentIndex;
             int randPrice = TripPriceRandomizer(index);
@@ -114,7 +131,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Start = vacationToEdit.DateStart;
             ViewBag.End = vacationToEdit.DateEnd;
 
-            ViewBag.NASAInfo = NASA();
+            ViewBag.NASAInfo = NASA("notSorted");
             ViewBag.YelpInfo = Yelp();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
 
@@ -193,7 +210,7 @@ namespace Tra_Verse.Controllers
 
         int TotalPrice(string ship, int dollarSign)
         {
-            var Nasa = NASA();
+            var Nasa = NASA("notSorted");
             var takeDistance = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
             int distance = Convert.ToInt32(takeDistance);
 
@@ -222,7 +239,7 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Checkout(int price)
         {
-            ViewBag.NASAInfo = NASA();
+            ViewBag.NASAInfo = NASA("notSorted");
             ViewBag.Index = UserController.currentUser.CurrentIndex;
 
             VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);

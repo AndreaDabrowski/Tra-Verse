@@ -13,7 +13,7 @@
 @TempData["LoggedIn"]
 @for (int i = 0; i < 25; i++)
 {
-    flightnumber=ViewBag.Travel["results"][0]["itineraries"][0]["outbound"]["flights"][0]["flight_number"];
+    flightnumber=ViewBag.Travel["results"][i]["itineraries"][0]["outbound"]["flights"][0]["flight_number"];
     while (flightnumber / 1000 == i)
     {
         <div>
