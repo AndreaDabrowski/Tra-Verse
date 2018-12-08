@@ -322,22 +322,6 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Confirmation Page");
         }
 
-        public ActionResult Redo()
-        {
-            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-
-            ViewBag.Planet = vacationInfo.PlanetName;
-            ViewBag.Rating = vacationInfo.Rating;
-            ViewBag.Price = vacationInfo.Price;
-            ViewBag.Ship = vacationInfo.ShipOption;
-            ViewBag.Start = vacationInfo.DateStart;
-            ViewBag.End = vacationInfo.DateEnd;
-            //ViewBag.Name = findEmail.NameOnCard;
-            //ViewBag.Card = findEmail.CreditCard;
-
-            return View();
-        }
-
         [HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmationPage(EmailFormModel model)

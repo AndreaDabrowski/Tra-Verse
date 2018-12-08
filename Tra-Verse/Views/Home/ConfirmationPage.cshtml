@@ -1,16 +1,18 @@
-﻿@model Tra_Verse.Models.EmailFormModel
+﻿@*@model Tra_Verse.Models.EmailFormModel*@
 
-    @*@Html.AntiForgeryToken()*@
+@*@Html.AntiForgeryToken()*@
+@*@using (Html.BeginForm("ConfirmationPage", "Home")
+{*@
 
-        <h1>@TempData["OrderAlready"]</h1>
-        <h1>@TempData["UpdatedOrder"]</h1>
-            @ViewBag.EditedConfirmationPage
+<h1>@TempData["OrderAlready"]</h1>
+<h1>@TempData["UpdatedOrder"]</h1>
+@ViewBag.EditedConfirmationPage
 
-@using (Html.BeginForm("ConfirmationPage", "Home"))
-{
+<form action="/Home/ConfirmationPage" method="post" type>
+
     <div name="Message" class="form-group">
-        
-        <h1>Confirmation Page</h1><br />
+
+        <h1 @*@Html.ValueFor(model => model.Message)*@>Confirmation Page</h1><br />
         <hr />
         <h4>Confirmation of your vacation with Traverse</h4>
         <br />
@@ -45,5 +47,6 @@
         <input type="submit" class="btn btn-default" value="Send Confirmation Email" />
         <p>*This information will send to the email associated with this account</p>
     </div>
- 
-    <a href="/Home/Index">Return To Home Page</a>
+</form>
+
+<a href="/Home/Index">Return To Home Page</a>
