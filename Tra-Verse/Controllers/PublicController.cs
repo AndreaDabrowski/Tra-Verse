@@ -12,15 +12,20 @@ namespace Tra_Verse.Controllers
         // GET: Public
         public ActionResult PublicAccomodations()
         {
-            API.Travel();
-            API.NASA();
+            ViewBag.YelpInfo = API.Travel();
+            ViewBag.NASAInfo = API.NASA();
             return View();
         }
         public ActionResult PublicTripList()
         {
-            ViewBag.Travel = API.Travel();
-            ViewBag.NASA = API.NASA();
+            ViewBag.Travel = API.Travel();//jobject
+            ViewBag.NASA = API.NASA();//jarray
+            Random rand = new Random();
+            int companyShipOption = rand.Next(1, 4);
+            ViewBag.CompanyShipOption = companyShipOption;
+
             return View();
         }
+
     }
 }

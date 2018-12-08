@@ -67,6 +67,17 @@ namespace Tra_Verse.Models
             int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
             return totalPrice;
         }
+        public static Array CreateTripList()
+        {
+            Random rand = new Random();
+            int companyShipOption = rand.Next(1, 4);
+            //int destPlanetOption = rand.Next(0, 17);
+            int numOfDestinations = rand.Next(1, 4);
+            API.NASA();
+
+
+            return (Array)
+        }
 
     }
 }

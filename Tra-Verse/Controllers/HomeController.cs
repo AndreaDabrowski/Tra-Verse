@@ -37,8 +37,6 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult PublicAccomodations() { return View(); }
-
         public ActionResult EditTrip()
         {
             User user = database.Users.Find(UserController.currentUser.OrderID);

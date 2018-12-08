@@ -13,10 +13,22 @@ namespace Tra_Verse.Models
     public class API
     {
 
-        public static JArray NASA()
+        public static JArray NASA(string sortOption)
         {
             //string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
-            HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&format=json");
+            if(sortOption == "notSorted")
+            {
+                HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&format=json");
+
+            }
+            else if (sortOption == "sortedByPlanet")
+            {
+                HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&format=json");
+            }
+            else if (sortOption == "sortedByDestination")
+            {
+
+            }
             HttpWebResponse response = (HttpWebResponse)nasaRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
@@ -49,7 +61,7 @@ namespace Tra_Verse.Models
         {
         
             string travelAPIKey = System.Configuration.ConfigurationManager.AppSettings["Travel API Key"];
-            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search");
+            HttpWebRequest travelRequest = WebRequest.CreateHttp("https://api.sandbox.amadeus.com/v1.2/flights/low-fare-search/v1.2/flights/low-fare-search?apikey=" + travelAPIKey + "&origin=BOS&destination=LON&departure_date=2018-12-25");
             HttpWebResponse response = (HttpWebResponse)travelRequest.GetResponse();
 
             StreamReader rd = new StreamReader(response.GetResponseStream());
