@@ -400,13 +400,34 @@ namespace Tra_Verse.Controllers
             //return View();
         //}
 
-        public ActionResult TripListDist(string distance)
-        {
-            List<VacationLog> test = database.VacationLogs.ToList();
-            test.OrderBy(x => x.Price);
-            test.Reverse();
+        //public ActionResult TripListCruise(string sortOrder)
+        //{
+        //    List<VacationLog> test = database.VacationLogs.ToList();
+        //    test.OrderBy(x => x.Price);
+        //    test.Reverse();
 
-            return RedirectToAction("TripList", "Home");
-        }
+            /*switch (sortOrder)
+            {
+                case "Start Date":
+                    sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
+                    break;
+                case "Distance":
+                    sortOrder = sortOrder.OrderByDescending(x => x.Distance);
+                    break;
+                case "Rating":
+                    sortOrder = sortOrder.OrderByDescending(x => x.Rating);
+                    break;
+                case "Price":
+                    sortOrder = sortOrder.OrderByDescending(x => x.price);
+                    break;
+                case "date_desc":
+                    sortOrder = sortOrder.OrderByDescending(x => x.date);
+                    break;
+                default:
+                    break;
+            }*/
+
+        //    return RedirectToAction("TripList", "Home");
+        //}
     }
 }
