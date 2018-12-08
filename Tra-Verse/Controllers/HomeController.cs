@@ -96,6 +96,10 @@ namespace Tra_Verse.Controllers
         public ActionResult EditTrip()
         {
             User user = database.Users.Find(UserController.currentUser.OrderID);
+            if(UserController.currentUser.LoggedIn == false)
+            {
+                return View("LoginError");
+            }
             if(user.OrderID <=0)
             {
                 ViewBag.EditError = "You dont have an order to edit - PLEASE LEAVE THIS SITE THANK YOU.";
@@ -342,7 +346,7 @@ namespace Tra_Verse.Controllers
             {
                 //var body = $"{0}";
                 var message = new MailMessage();
-                message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
+                message.To.Add(new MailAddress(/*UserController.currentUser.Email)*/"AnnMDabrowski@gmail.com"));  // replace with valid value 
                 message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
                 message.Subject = "Confirmation of your vacation with Tra-Verse";
                 message.Body = string.Format(model.Message);
