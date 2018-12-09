@@ -44,7 +44,7 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTrip()
         {
-            User user = database.Users.Find(UserController.currentUser.OrderID);
+            User user = database.Users.Find(UserController.currentUser.UserID);
             if(UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
@@ -185,7 +185,7 @@ namespace Tra_Verse.Controllers
 
         public ActionResult RefreshForEdit(VacationLog order)
         {
-            User user = database.Users.Find(UserController.currentUser.OrderID);
+            User user = database.Users.Find(UserController.currentUser.UserID);
             if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
