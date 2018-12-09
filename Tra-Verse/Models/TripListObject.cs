@@ -34,5 +34,6 @@ namespace Tra_Verse.Models
 
             return tripsWithShips;
         }
+
     }
 }
