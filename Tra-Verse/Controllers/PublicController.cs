@@ -12,8 +12,8 @@ namespace Tra_Verse.Controllers
         // GET: Public
         public ActionResult PublicAccomodations()
         {
-            ViewBag.YelpInfo = API.Travel();
-            ViewBag.NASAInfo = API.NASA("notSorted");
+            ViewBag.Travel = API.Travel();
+            ViewBag.NASA = API.NASA("notSorted");
             return View();
         }
         public ActionResult PublicTripList()
