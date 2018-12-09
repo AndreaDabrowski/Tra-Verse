@@ -5,6 +5,9 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 using Tra_Verse.Models;
+using System.Linq;
+using System.Collections.Generic;
+
 
 namespace Tra_Verse.Controllers
 {
@@ -18,7 +21,6 @@ namespace Tra_Verse.Controllers
             ViewBag.Title = "Always Moving Forward";
             return View();
         }
-
         public ActionResult TripList()
         {
             ViewBag.YelpInfo = API.Yelp();
@@ -212,12 +214,10 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Confirmation Page");
         }
 
-        [HttpPost]
+        //[HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmationPageEmail()
         {
-            if (ModelState.IsValid)
-            {
                 //var body = $"{0}";
                 var message = new MailMessage();
                 message.To.Add(new MailAddress("AnnMDabrowski@gmail.com"));  // replace with valid value 
@@ -244,7 +244,11 @@ namespace Tra_Verse.Controllers
             return View("ConfirmationPage");
         }
 
-
+/* List<VacationLog> test = database.VacationLogs.ToList();
+            test.OrderBy(x => x.Price);
+            test.Reverse();*/
+            /*if (!string.IsNullOrEmpty(price))
+            {
         /* public ActionResult TripList(string price)
          {
              List<VacationLog> test = database.VacationLogs.ToList();
@@ -283,7 +287,37 @@ namespace Tra_Verse.Controllers
             default:
                 break;
         }*/
+                //travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
+            //}*/
+            //return View();
+        //}
 
+        //public ActionResult TripListCruise(string sortOrder)
+        //{
+        //    List<VacationLog> test = database.VacationLogs.ToList();
+        //    test.OrderBy(x => x.Price);
+        //    test.Reverse();
+
+            /*switch (sortOrder)
+            {
+                case "Start Date":
+                    sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
+                    break;
+                case "Distance":
+                    sortOrder = sortOrder.OrderByDescending(x => x.Distance);
+                    break;
+                case "Rating":
+                    sortOrder = sortOrder.OrderByDescending(x => x.Rating);
+                    break;
+                case "Price":
+                    sortOrder = sortOrder.OrderByDescending(x => x.price);
+                    break;
+                case "date_desc":
+                    sortOrder = sortOrder.OrderByDescending(x => x.date);
+                    break;
+                default:
+                    break;
+            }*/
         //    return RedirectToAction("TripList", "Home");
         //}
     }
