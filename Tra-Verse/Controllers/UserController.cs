@@ -19,10 +19,10 @@ namespace Tra_Verse.Controllers
                 currentUser.UserID = 0;
                 currentUser.OrderID = 0;
                 ViewBag.Logout = "You've been Logged out!";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("TitlePage", "Home");
             }
             ViewBag.LoggedOut = "You're not logged in";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("TitlePage", "Home");
         }
 
         public ActionResult LoginButton(User logUser)
@@ -45,7 +45,7 @@ namespace Tra_Verse.Controllers
             }
 
             ViewBag.Error = "This is not a valid email address";
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("TitlePage", "Home");
         }
 
         public ActionResult RegisterUser(User newUser)
@@ -58,12 +58,12 @@ namespace Tra_Verse.Controllers
                 currentUser.LoggedIn = true;
                 currentUser.OrderID = 0;
                 TempData["AddedUser"] = "You've been registered";
-                return RedirectToAction("Index", "Home");//, added
+                return RedirectToAction("TitlePage", "Home");//, added
             }
             else
             {
                 TempData["Error"] = "Error with adding user.";
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("TitlePage", "Home");
             }
         }
 
@@ -78,7 +78,6 @@ namespace Tra_Verse.Controllers
             {
                 return View("LoginError", "Home");
             }
-
         }
     }
 }
