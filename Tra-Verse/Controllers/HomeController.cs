@@ -218,12 +218,27 @@ namespace Tra_Verse.Controllers
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmationPageEmail()
         {
-                //var body = $"{0}";
-                var message = new MailMessage();
-                message.To.Add(new MailAddress("AnnMDabrowski@gmail.com"));  // replace with valid value 
+            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            User user = database.Users.Find(UserController.currentUser.UserID);
+            //var body = $"{0}";
+            var message = new MailMessage();
+                message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
                 message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
                 message.Subject = "Confirmation of your vacation with Tra-Verse";
-                message.Body = string.Format(/*model.Message*/"Confirmation Test");//make a method that returns a string
+                message.Body = string.Format("<p>Confirmation of your vacation with Traverse</p>" +
+                "<p>Trip Details: </p>" +
+                "<p>Planet Name: " + vacationInfo.PlanetName.ToString() + "</p>" +
+                "<p>Vacation Rating: " + vacationInfo.Rating.ToString() + "</p>"+
+                "<p>Ship Choice: " + vacationInfo.ShipOption.ToString() +"</p>"+
+                "Departure Date: " + vacationInfo.DateStart.ToString() + "</p>" +
+                "Return Date: " + vacationInfo.DateEnd.ToString() + "</p>" +
+                "</br>"+
+                "TOTAL: " + vacationInfo.Price.ToString() + "</p>" +
+                "</br>"+
+                "<p>This amount was charged to: " + user.NameOnCard.ToString() + "</p>" +
+                "<p>Card number: " + user.CreditCard.ToString() + "</p>" +
+                "Thank you!");
+                /*XXXX-XXXX-XXXX-*/
                 message.IsBodyHtml = true;
 
                 using (var smtp = new SmtpClient())
@@ -240,8 +255,8 @@ namespace Tra_Verse.Controllers
                     await smtp.SendMailAsync(message);
                     return RedirectToAction("ConfirmationPage");
                 }
-            }
-            return View("ConfirmationPage");
+            
+            //return RedirectToAction("ConfirmationPage");
         }
 
 /* List<VacationLog> test = database.VacationLogs.ToList();
