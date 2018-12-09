@@ -41,7 +41,7 @@ namespace Tra_Verse.Models
 
         public static int TotalPrice(string ship, int dollarSign)
         {
-            var Nasa = API.NASA();
+            var Nasa = API.NASA("notSorted");
             var takeDistance = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
             int distance = Convert.ToInt32(takeDistance);
 
@@ -67,17 +67,17 @@ namespace Tra_Verse.Models
             int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
             return totalPrice;
         }
-        public static Array CreateTripList()
-        {
-            Random rand = new Random();
-            int companyShipOption = rand.Next(1, 4);
-            //int destPlanetOption = rand.Next(0, 17);
-            int numOfDestinations = rand.Next(1, 4);
-            API.NASA();
+        //public static Array CreateTripList()
+        //{
+        //    Random rand = new Random();
+        //    int companyShipOption = rand.Next(1, 4);
+        //    //int destPlanetOption = rand.Next(0, 17);
+        //    int numOfDestinations = rand.Next(1, 4);
+        //    API.NASA("notSorted");
 
-
-            return (Array)
-        }
+        //    Array tripListArray = new tripListArray[]();
+        //    return tripListArray;
+        //}
 
     }
 }

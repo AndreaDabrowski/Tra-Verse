@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Data.Entity.Validation;
+using System.Net;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using Tra_Verse.Models;
 
@@ -19,7 +22,7 @@ namespace Tra_Verse.Controllers
         public ActionResult TripList()
         {
             ViewBag.YelpInfo = API.Yelp();
-            ViewBag.NASAInfo = API.NASA();
+            ViewBag.NASAInfo = API.NASA("notSorted");
 
             return View();
         }
@@ -27,7 +30,7 @@ namespace Tra_Verse.Controllers
         public ActionResult PrivateAccomodations(int index)
         {
             ViewBag.YelpInfo = API.Yelp();
-            ViewBag.NASAInfo = API.NASA();
+            ViewBag.NASAInfo = API.NASA("notSorted");
             UserController.currentUser.CurrentIndex = index;
             ViewBag.Index = UserController.currentUser.CurrentIndex;
             int randPrice = Calculation.TripPriceRandomizer(index);
@@ -58,7 +61,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Start = vacationToEdit.DateStart;
             ViewBag.End = vacationToEdit.DateEnd;
 
-            ViewBag.NASAInfo = API.NASA();
+            ViewBag.NASAInfo = API.NASA("notSorted");
             ViewBag.YelpInfo = API.Yelp();
             ViewBag.Index = UserController.currentUser.CurrentIndex;
 
@@ -107,7 +110,7 @@ namespace Tra_Verse.Controllers
        
         public ActionResult Checkout(int price)
         {
-            ViewBag.NASAInfo = API.NASA();
+            ViewBag.NASAInfo = API.NASA("notSorted");
             ViewBag.Index = UserController.currentUser.CurrentIndex;
 
             VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
@@ -209,49 +212,49 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Confirmation Page");
         }
 
-        //[HttpPost]
+        [HttpPost]
         //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> ConfirmationPage(EmailFormModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        //var body = $"{0}";
-        //        var message = new MailMessage();
-        //        message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
-        //        message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
-        //        message.Subject = "Confirmation of your vacation with Tra-Verse";
-        //        message.Body = string.Format(model.Message);
-        //        message.IsBodyHtml = true;
-
-        //        using (var smtp = new SmtpClient())
-        //        {
-        //            var credential = new NetworkCredential
-        //            {
-        //                UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
-        //                Password = "GucciBoi"  // replace with valid value
-        //            };
-        //            smtp.Credentials = credential;
-        //            smtp.Host = "smtp-mail.outlook.com";
-        //            smtp.Port = 587;
-        //            smtp.EnableSsl = true;
-        //            await smtp.SendMailAsync(message);
-        //            return RedirectToAction("ConfirmationPage");
-        //        }
-        //    }
-        //    return View(model);
-        //}
-
-
-       /* public ActionResult TripList(string price)
+        public async Task<ActionResult> ConfirmationPageEmail()
         {
-            List<VacationLog> test = database.VacationLogs.ToList();
-            test.OrderBy(x => x.Price);
-            test.Reverse();
-            /*if (!string.IsNullOrEmpty(price))
+            if (ModelState.IsValid)
             {
-                travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
-            }*/
-            //return View();
+                //var body = $"{0}";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress("AnnMDabrowski@gmail.com"));  // replace with valid value 
+                message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
+                message.Subject = "Confirmation of your vacation with Tra-Verse";
+                message.Body = string.Format(/*model.Message*/"Confirmation Test");//make a method that returns a string
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
+                        Password = "GucciBoi"  // replace with valid value
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp-mail.outlook.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    await smtp.SendMailAsync(message);
+                    return RedirectToAction("ConfirmationPage");
+                }
+            }
+            return View("ConfirmationPage");
+        }
+
+
+        /* public ActionResult TripList(string price)
+         {
+             List<VacationLog> test = database.VacationLogs.ToList();
+             test.OrderBy(x => x.Price);
+             test.Reverse();
+             /*if (!string.IsNullOrEmpty(price))
+             {
+                 travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
+             }*/
+        //return View();
         //}
 
         //public ActionResult TripListCruise(string sortOrder)
@@ -260,26 +263,26 @@ namespace Tra_Verse.Controllers
         //    test.OrderBy(x => x.Price);
         //    test.Reverse();
 
-            /*switch (sortOrder)
-            {
-                case "Start Date":
-                    sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
-                    break;
-                case "Distance":
-                    sortOrder = sortOrder.OrderByDescending(x => x.Distance);
-                    break;
-                case "Rating":
-                    sortOrder = sortOrder.OrderByDescending(x => x.Rating);
-                    break;
-                case "Price":
-                    sortOrder = sortOrder.OrderByDescending(x => x.price);
-                    break;
-                case "date_desc":
-                    sortOrder = sortOrder.OrderByDescending(x => x.date);
-                    break;
-                default:
-                    break;
-            }*/
+        /*switch (sortOrder)
+        {
+            case "Start Date":
+                sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
+                break;
+            case "Distance":
+                sortOrder = sortOrder.OrderByDescending(x => x.Distance);
+                break;
+            case "Rating":
+                sortOrder = sortOrder.OrderByDescending(x => x.Rating);
+                break;
+            case "Price":
+                sortOrder = sortOrder.OrderByDescending(x => x.price);
+                break;
+            case "date_desc":
+                sortOrder = sortOrder.OrderByDescending(x => x.date);
+                break;
+            default:
+                break;
+        }*/
 
         //    return RedirectToAction("TripList", "Home");
         //}

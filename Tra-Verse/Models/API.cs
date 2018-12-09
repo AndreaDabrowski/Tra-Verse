@@ -13,21 +13,27 @@ namespace Tra_Verse.Models
     public class API
     {
 
-        public static JArray NASA(string sortOption)
+        public static JArray NASA(string sortOption)//API has an order_by option built in
         {
+            HttpWebRequest nasaRequest;
             //string nasaAPIKey = System.Configuration.ConfigurationManager.AppSettings["NASA API Header"];
             if(sortOption == "notSorted")
             {
-                HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&format=json");
+                nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist,pl_hostname,pl_discmethod,pl_masse,pl_orbper,pl_disc,pl_pelink,pl_edelink,pl_publ_date&count(*)&where=ra<5&format=json");
 
             }
             else if (sortOption == "sortedByPlanet")
             {
-                HttpWebRequest nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist&format=json");
+                nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist,pl_hostname,pl_discmethod,pl_masse,pl_orbper,pl_disc,pl_pelink,pl_edelink,pl_publ_date&format=json&order_by=pl_name&count(*)&where=ra<5");
             }
             else if (sortOption == "sortedByDestination")
             {
+                nasaRequest = WebRequest.CreateHttp("https://exoplanetarchive.ipac.caltech.edu/cgi-bin/nstedAPI/nph-nstedAPI?table=exoplanets&select=pl_name,st_dist,pl_hostname,pl_discmethod,pl_masse,pl_orbper,pl_disc,pl_pelink,pl_edelink,pl_publ_date&format=json&order_by=st_dist&count(*)&where=ra<5");
 
+            }
+            else
+            {
+                throw new Exception();
             }
             HttpWebResponse response = (HttpWebResponse)nasaRequest.GetResponse();
 
