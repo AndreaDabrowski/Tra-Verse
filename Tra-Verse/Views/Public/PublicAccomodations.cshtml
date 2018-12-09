@@ -1,1 +1,14 @@
-﻿
+﻿<h1>@ViewBag.NASA[1]["pl_name"]</h1>
+
+@*if null, show unkown*@
+<hr />
+<h4>Destination Description for @ViewBag.NASA[1]["pl_name"]:</h4>
+<ul>Host Star: @ViewBag.NASA[1]["pl_hostname"]</ul>
+<ul>Method of Discovery: @ViewBag.NASA[1]["pl_discmethod"]</ul>
+<ul>Mass in Units of Earth's Weight: @ViewBag.NASA[1]["pl_hostname"] Earths</ul>
+<ul>Planet's Host Star: @ViewBag.NASA[1]["pl_masse"]</ul>
+<ul>Time to Orbit Local Star: @ViewBag.NASA[1]["pl_orbper"] days</ul>
+<ul>Year of Discovery: @ViewBag.NASA[1]["pl_disc"]</ul>
+<ul>To Learn More: </ul>
+<p><p>Exoplanet Encyplopedia: @ViewBag.NASA[1]["pl_pelink"]</p></p>
+<p></p>Exoplanet Data Explorer: @ViewBag.NASA[1]["pl_edelink"]</p>
