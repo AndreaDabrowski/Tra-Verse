@@ -47,6 +47,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Error = "This is not a valid email address";
             return RedirectToAction("Index", "Home");
         }
+
         public ActionResult RegisterUser(User newUser)
         {
             if (ModelState.IsValid)

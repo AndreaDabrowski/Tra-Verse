@@ -1,9 +1,7 @@
 ﻿
 <h2>Cruise-Style Trip List</h2>
 
-
 @{
-    int flightnumber;
     string[] shipImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
 }
 
@@ -11,28 +9,28 @@
 <h3><a href="/Home/EditTrip">EDIT YOUR CURRENT TRIP</a></h3>
 
 @TempData["LoggedIn"]
-@for (int i = 25; i < 50; i++)
+@for (int i = 0; i < 29; i++)
 {
-    flightnumber=ViewBag.Travel["results"][i]["itineraries"][0]["outbound"]["flights"][0]["flight_number"];
-    
-        <div>
-            @*<img src=@shipImages[i] alt=@ViewBag.NASA[i]["pl_name"] height="200" width="200" align="left">*@
-            <span>Planet Name: @ViewBag.NASA[1]["pl_name"]</span>
-            <p>
-                Distance from Earth: @ViewBag.NASA[1]["st_dist"] parsecs
-                *Unit of distance where 1 parsec equals the distance from the Earth to Sun
-            </p>
-            <p>Departure Date: @ViewBag.Travel["results"][i]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
-            <p>Number of Days NUMBER RANDOMIZER(3-10)</p>
-            <p>Rooms remaining: @ViewBag.Travel["results"][i]["itineraries"][0]["outbound"]["flights"][0]["flight_number"]</p>
+    int j = ViewBag.TripList[i].PlanetIndex;
 
-            <p>Flight Number: @flightnumber</p>
-            @*<p>Review count: @ViewBag.YelpInfo["businesses"][i]["review_count"]</p>
-                <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>*@
+    var travel = ViewBag.Travel["results"][j]["itineraries"][0]["outbound"]["flights"][0];
 
-        </div>
-        <br />
+    <div>
+        <img src=@shipImages[9] alt=@ViewBag.NASA[j]["pl_name"] height="200" width="200" align="left">
+        <span>Planet Name: @ViewBag.NASA[j]["pl_name"]</span>
+        <p>
+            Distance from Earth: @ViewBag.NASA[j]["st_dist"] parsecs
+            *Unit of distance where 1 parsec equals the distance from the Earth to Sun
+        </p>
+        <p>Departure Date: @travel["departs_at"]</p>
+        <p>Number of Days: @ViewBag.TripList[i].NumberOfDays</p>
+        <p>Rooms remaining: @ViewBag.Travel["results"][j]["fare"]["total_fares"]</p>
+            
+        <p>Review count: @ViewBag.Yelp["businesses"][j]["review_count"]</p>
+        <p>Rating: @ViewBag.Yelp["businesses"][j]["rating"]</p>
+    </div>
+    <br />
 
-    
-
+    // array of company names, and ship images
+    // display by company index, company index
 }

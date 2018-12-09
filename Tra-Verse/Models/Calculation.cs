@@ -68,7 +68,7 @@ namespace Tra_Verse.Models
             return totalPrice;
         }
 
-        
+        //public static int 
 
         //public static Array CreateTripList()
         //{
