@@ -134,6 +134,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -143,7 +144,6 @@
     <Compile Include="Models\API.cs" />
     <Compile Include="Models\Calculation.cs" />
     <Compile Include="Models\CurrentUser.cs" />
-    <Compile Include="Models\EmailFormModel.cs" />
     <Compile Include="Models\TraVerse.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -159,6 +159,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TraVerse.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\TripListObject.cs" />
     <Compile Include="Models\User.cs">
       <DependentUpon>TraVerse.tt</DependentUpon>
     </Compile>
@@ -243,6 +244,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Email\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

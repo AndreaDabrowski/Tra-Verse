@@ -25,6 +25,5 @@ namespace Tra_Verse.Controllers
 
             return View();
         }
-
     }
 }
