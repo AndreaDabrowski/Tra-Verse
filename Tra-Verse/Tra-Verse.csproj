@@ -163,6 +163,7 @@
     <Compile Include="Models\User.cs">
       <DependentUpon>TraVerse.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserBEValidation.cs" />
     <Compile Include="Models\VacationLog.cs">
       <DependentUpon>TraVerse.tt</DependentUpon>
     </Compile>

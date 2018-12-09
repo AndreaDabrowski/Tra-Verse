@@ -65,5 +65,19 @@ namespace Tra_Verse.Controllers
                 return RedirectToAction("Index", "Home");
             }
         }
+
+        public ActionResult ValidateUser(UserBEValidation validUser)
+        {
+
+            if (ModelState.IsValid)
+            {
+                return View("TripList", "Home");
+            }
+            else
+            {
+                return View("LoginError", "Home");
+            }
+
+        }
     }
 }

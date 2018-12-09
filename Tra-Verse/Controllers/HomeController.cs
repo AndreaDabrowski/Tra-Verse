@@ -240,24 +240,25 @@ namespace Tra_Verse.Controllers
                     await smtp.SendMailAsync(message);
                     return RedirectToAction("ConfirmationPage");
                 }
-            }
-            return View("ConfirmationPage");
+            
+            //return View("ConfirmationPage");
         }
 
-/* List<VacationLog> test = database.VacationLogs.ToList();
-            test.OrderBy(x => x.Price);
-            test.Reverse();*/
-            /*if (!string.IsNullOrEmpty(price))
-            {
-        /* public ActionResult TripList(string price)
+
+        /* List<VacationLog> test = database.VacationLogs.ToList();
+                    test.OrderBy(x => x.Price);
+                    test.Reverse();*/
+        /*if (!string.IsNullOrEmpty(price))
+        {
+    /* public ActionResult TripList(string price)
+     {
+         List<VacationLog> test = database.VacationLogs.ToList();
+         test.OrderBy(x => x.Price);
+         test.Reverse();
+         /*if (!string.IsNullOrEmpty(price))
          {
-             List<VacationLog> test = database.VacationLogs.ToList();
-             test.OrderBy(x => x.Price);
-             test.Reverse();
-             /*if (!string.IsNullOrEmpty(price))
-             {
-                 travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
-             }*/
+             travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
+         }*/
         //return View();
         //}
 
@@ -287,9 +288,9 @@ namespace Tra_Verse.Controllers
             default:
                 break;
         }*/
-                //travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
-            //}*/
-            //return View();
+        //travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
+        //}*/
+        //return View();
         //}
 
         //public ActionResult TripListCruise(string sortOrder)
@@ -298,26 +299,26 @@ namespace Tra_Verse.Controllers
         //    test.OrderBy(x => x.Price);
         //    test.Reverse();
 
-            /*switch (sortOrder)
-            {
-                case "Start Date":
-                    sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
-                    break;
-                case "Distance":
-                    sortOrder = sortOrder.OrderByDescending(x => x.Distance);
-                    break;
-                case "Rating":
-                    sortOrder = sortOrder.OrderByDescending(x => x.Rating);
-                    break;
-                case "Price":
-                    sortOrder = sortOrder.OrderByDescending(x => x.price);
-                    break;
-                case "date_desc":
-                    sortOrder = sortOrder.OrderByDescending(x => x.date);
-                    break;
-                default:
-                    break;
-            }*/
+        /*switch (sortOrder)
+        {
+            case "Start Date":
+                sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
+                break;
+            case "Distance":
+                sortOrder = sortOrder.OrderByDescending(x => x.Distance);
+                break;
+            case "Rating":
+                sortOrder = sortOrder.OrderByDescending(x => x.Rating);
+                break;
+            case "Price":
+                sortOrder = sortOrder.OrderByDescending(x => x.price);
+                break;
+            case "date_desc":
+                sortOrder = sortOrder.OrderByDescending(x => x.date);
+                break;
+            default:
+                break;
+        }*/
         //    return RedirectToAction("TripList", "Home");
         //}
     }
