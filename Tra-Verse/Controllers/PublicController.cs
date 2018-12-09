@@ -10,10 +10,11 @@ namespace Tra_Verse.Controllers
     public class PublicController : Controller
     {
         // GET: Public
-        public ActionResult PublicAccomodations()
+        public ActionResult PublicAccomodations(TripListObject tripIndices)
         {
             ViewBag.Travel = API.Travel();
             ViewBag.NASA = API.NASA("notSorted");
+            ViewBag.Index = tripIndices;
             return View();
         }
         public ActionResult PublicTripList()

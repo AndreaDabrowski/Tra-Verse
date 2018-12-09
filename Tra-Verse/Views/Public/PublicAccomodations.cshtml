@@ -1,14 +1,27 @@
-﻿<h1>@ViewBag.NASA[1]["pl_name"]</h1>
+﻿@{
+    int p = ViewBag.TripIndices.PlanetIndex;
+    string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
+    string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
+    string[] PlanetImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
+}
+
+}
+
+<h1>@ViewBag.NASA[p]["pl_name"]</h1>
+<p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
+<p>Cruise Ship: @shipImages[ViewBag.TripIndices.CompanyIndex]</p>\
+<p>Total Price: </p>
+<p>Trip Rating: </p>
+<p></p>
 
 @*if null, show unkown*@
 <hr />
-<h4>Destination Description for @ViewBag.NASA[1]["pl_name"]:</h4>
-<ul>Host Star: @ViewBag.NASA[1]["pl_hostname"]</ul>
-<ul>Method of Discovery: @ViewBag.NASA[1]["pl_discmethod"]</ul>
-<ul>Mass in Units of Earth's Weight: @ViewBag.NASA[1]["pl_hostname"] Earths</ul>
-<ul>Planet's Host Star: @ViewBag.NASA[1]["pl_masse"]</ul>
-<ul>Time to Orbit Local Star: @ViewBag.NASA[1]["pl_orbper"] days</ul>
-<ul>Year of Discovery: @ViewBag.NASA[1]["pl_disc"]</ul>
+<h4>Destination Description for @ViewBag.NASA[p]["pl_name"]:</h4>
+<ul>Host Star: @ViewBag.NASA[p]["pl_hostname"]</ul>
+<ul>Method of Discovery: @ViewBag.NASA[p]["pl_discmethod"]</ul>
+<ul>Mass in Units of Earth's Weight: @ViewBag.NASA[p]["pl_masse"] Earths</ul>
+<ul>Time to Orbit Local Star: @ViewBag.NASA[p]["pl_orbper"] days</ul>
+<ul>Year of Discovery: @ViewBag.NASA[p]["pl_disc"]</ul>
 <ul>To Learn More: </ul>
-<p><p>Exoplanet Encyplopedia: @ViewBag.NASA[1]["pl_pelink"]</p></p>
-<p><p>Exoplanet Data Explorer: @ViewBag.NASA[1]["pl_edelink"]</p></p>
+<p><p>Exoplanet Encyplopedia: @ViewBag.NASA[p]["pl_pelink"]</p></p>
+<p><p>Exoplanet Data Explorer: @ViewBag.NASA[p]["pl_edelink"]</p></p>
