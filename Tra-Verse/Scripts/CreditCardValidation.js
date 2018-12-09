@@ -1,9 +1,9 @@
 ﻿var CreditRxArray = [0, 0, 0]
 var VerifyArray = [false, false, false]
 
-CreditRxArray[0] = /^[0-9]{16,}$/; //credit card regex
-CreditRxArray[1] = /^[A-Z][a-z]{1,10}$/; //Name regex
-CreditRxArray[2] = /^[0-9]{3,}$/; //CVV regex
+CreditRxArray[0] = /^[0-9]{16}$/; //credit card regex
+CreditRxArray[1] = /^[A-z]{2,}\s[A-z]{1,}\s[A-z]{2,}$/; //Name regex
+CreditRxArray[2] = /^[0-9]{3}$/; //CVV regex
 
 function testAllCredit() {
     /*test all values of testArray to find any false
