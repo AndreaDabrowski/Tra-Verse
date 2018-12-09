@@ -3,24 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
 {
     public class PublicController : Controller
     {
-        HomeController HC = new HomeController();
         // GET: Public
         public ActionResult PublicAccomodations()
         {
-            HC.Travel();
-            HC.NASA();
+            ViewBag.YelpInfo = API.Travel();
+            ViewBag.NASAInfo = API.NASA("notSorted");
             return View();
         }
         public ActionResult PublicTripList()
         {
-            ViewBag.Travel = HC.Travel();
-            ViewBag.NASA = HC.NASA();
+            ViewBag.Travel = API.Travel();//jobject
+            ViewBag.NASA = API.NASA("notSorted");//jarray
+            
+            //ViewBag.CompanyShipOption = companyShipOption;
+
             return View();
         }
+
     }
 }
