@@ -109,7 +109,6 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("PrivateAccomodations", new { index });
         }
 
-       
         public ActionResult Checkout(int price)
         {
             ViewBag.NASAInfo = API.NASA("notSorted");
@@ -255,6 +254,11 @@ namespace Tra_Verse.Controllers
                     await smtp.SendMailAsync(message);
                     return RedirectToAction("ConfirmationPage");
                 }
+        }
+
+        public ActionResult TitlePage()
+        {
+            return View();
         }
 
         /* List<VacationLog> test = database.VacationLogs.ToList();
