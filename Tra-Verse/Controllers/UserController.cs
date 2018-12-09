@@ -47,6 +47,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Error = "This is not a valid email address";
             return RedirectToAction("Index", "Home");
         }
+
         public ActionResult RegisterUser(User newUser)
         {
             if (ModelState.IsValid)
@@ -64,6 +65,20 @@ namespace Tra_Verse.Controllers
                 TempData["Error"] = "Error with adding user.";
                 return RedirectToAction("Index", "Home");
             }
+        }
+
+        public ActionResult ValidateUser(UserBEValidation validUser)
+        {
+
+            if (ModelState.IsValid)
+            {
+                return View("TripList", "Home");
+            }
+            else
+            {
+                return View("LoginError", "Home");
+            }
+
         }
     }
 }
