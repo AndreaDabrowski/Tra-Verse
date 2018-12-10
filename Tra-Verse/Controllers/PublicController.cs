@@ -14,17 +14,18 @@ namespace Tra_Verse.Controllers
         {
             ViewBag.Travel = API.Travel();
             ViewBag.NASA = API.NASA("notSorted");
-            ViewBag.Index = tripIndices;
+            ViewBag.TripIndices = tripIndices;
+            
             return View();
         }
 
         public ActionResult PublicTripList()
         {
-            ViewBag.Travel = API.Travel();//jobject
+            ViewBag.Travel = API.Travel()["results"];//jobject
             ViewBag.NASA = API.NASA("notSorted");//jarray
             ViewBag.Yelp = API.Yelp();
-
-            ViewBag.TripList = TripListObject.GenerateTrips();
+            TripListObject[] test = TripListObject.GenerateTrips();
+            ViewBag.TripList = test;
 
 
             return View();
