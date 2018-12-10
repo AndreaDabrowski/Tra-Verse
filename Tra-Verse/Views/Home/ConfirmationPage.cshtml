@@ -2,7 +2,7 @@
 
 @*@Html.AntiForgeryToken()*@
 @*@using (Html.BeginForm("ConfirmationPage", "Home")
-{*@
+    {*@
 
 <h1>@TempData["OrderAlready"]</h1>
 <h1>@TempData["UpdatedOrder"]</h1>
@@ -48,5 +48,10 @@
         <p>*This information will send to the email associated with this account</p>
     </div>
 </form>
+
+<input type="button" class="btn-default" value="Go to edit" onclick="location.href='<%: @Url.Action("EditTrip", "Home" ) %>'" />
+@*<input type="button" class="btn-danger" value="Go to delete" onclick="location.href='<%: @Url.Action("EditTrip", "Home" ) %>'" />*@
+
+@*<a href="/Home/EditTrip">EDIT YOUR CURRENT TRIP</a>*@
 
 <a href="/Home/Index">Return To Home Page</a>
