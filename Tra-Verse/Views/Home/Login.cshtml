@@ -21,6 +21,7 @@
     <label class="control-label">Password</label>
     <input type="password" name="Password" id="loginPassword" onkeyup="testLoginPass()" pattern="^[A-z0-9]{6,}$" class=" form-control">
     <div id="loginPassError" style="font-weight:bold"></div>
+    <br />
 
     <input type="submit" value="Log In!" id="loginButton" class="btn-default" disabled /><!--Log in button-->
 </form>
@@ -39,6 +40,7 @@
     <label class="control-label">Confirm Password</label>
     <input type="password" id="confPass" onkeyup="checkPassMatch()" pattern="^[A-z0-9]{6,}$" class=" form-control">
     <div id="confPassError" style="font-weight:bold"></div>
+    <br />
 
     <input type="submit" value="Register!" id="regButton" class="btn-default" disabled /><!--registration button-->
 </form>
