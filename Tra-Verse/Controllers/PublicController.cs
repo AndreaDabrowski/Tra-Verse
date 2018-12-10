@@ -24,8 +24,8 @@ namespace Tra_Verse.Controllers
             ViewBag.NASA = API.NASA("notSorted");//jarray
             ViewBag.Yelp = API.Yelp();
 
+            ViewBag.PlanetList = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
-
 
             return View();
         }

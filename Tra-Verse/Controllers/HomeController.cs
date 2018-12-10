@@ -18,6 +18,9 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Index()
         {
+            //Testtttt
+            ViewBag.PlanetList = TripListObject.Planets();
+
             ViewBag.Title = "Always Moving Forward";
             return View();
         }
@@ -260,7 +263,7 @@ namespace Tra_Verse.Controllers
         {
             return View();
         }
-
+        
         /* List<VacationLog> test = database.VacationLogs.ToList();
                     test.OrderBy(x => x.Price);
                     test.Reverse();*/
