@@ -27,7 +27,11 @@
           <Property Name="Rating" Type="float" Nullable="false" />
           <Property Name="DateStart" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="DateEnd" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="ShipOption" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ShipType" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="CompanyName" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="PlanetImage" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Refundable" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Exosuit" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TraVerseModelStoreContainer">
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
@@ -60,7 +64,11 @@
           <Property Name="Rating" Type="Double" Nullable="false" />
           <Property Name="DateStart" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DateEnd" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ShipOption" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ShipType" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CompanyName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PlanetImage" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Refundable" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Exosuit" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
         </EntityType>
         <EntityContainer Name="TraVerseEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Users" EntityType="Self.User" />
@@ -94,7 +102,11 @@
                 <ScalarProperty Name="Rating" ColumnName="Rating" />
                 <ScalarProperty Name="DateStart" ColumnName="DateStart" />
                 <ScalarProperty Name="DateEnd" ColumnName="DateEnd" />
-                <ScalarProperty Name="ShipOption" ColumnName="ShipOption" />
+                <ScalarProperty Name="ShipType" ColumnName="ShipType" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="PlanetImage" ColumnName="PlanetImage" />
+                <ScalarProperty Name="Refundable" ColumnName="Refundable" />
+                <ScalarProperty Name="Exosuit" ColumnName="Exosuit" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
