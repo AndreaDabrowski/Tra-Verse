@@ -75,7 +75,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Planet = vacationToEdit.PlanetName;
             ViewBag.Rating = vacationToEdit.Rating;
             ViewBag.Price = vacationToEdit.Price;
-            ViewBag.Ship = vacationToEdit.ShipOption;
+            ViewBag.Ship = vacationToEdit.ShipType;
             ViewBag.Start = vacationToEdit.DateStart;
             ViewBag.End = vacationToEdit.DateEnd;
 
@@ -124,7 +124,7 @@ namespace Tra_Verse.Controllers
             }
             //int randPrice = UserController.currentUser.RandPrice;
 
-            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
+            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
             int index = UserController.currentUser.CurrentIndex;
 
             return RedirectToAction("PrivateAccomodations", new { index });
@@ -173,13 +173,13 @@ namespace Tra_Verse.Controllers
             //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
 
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            ViewBag.TotalPrice = Calculation.TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
+            ViewBag.TotalPrice = Calculation.TotalPrice(vacationInfo.ShipType, vacationInfo.Price);
 
             User user = database.Users.Find(UserController.currentUser.UserID);
             ViewBag.Planet = vacationInfo.PlanetName;
             ViewBag.Rating = vacationInfo.Rating;
             ViewBag.Price = vacationInfo.Price;
-            ViewBag.Ship = vacationInfo.ShipOption;
+            ViewBag.Ship = vacationInfo.ShipType;
             ViewBag.Start = vacationInfo.DateStart;
             ViewBag.End = vacationInfo.DateEnd;
 
@@ -205,8 +205,8 @@ namespace Tra_Verse.Controllers
                 VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
                 vacationToEdit.DateEnd = order.DateEnd;
                 vacationToEdit.DateStart = order.DateStart;
-                vacationToEdit.ShipOption = order.ShipOption;
-                vacationToEdit.Price = Calculation.TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
+                vacationToEdit.ShipType = order.ShipType;
+                vacationToEdit.Price = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
                 database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
 
@@ -220,50 +220,7 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Confirmation Page");
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<ActionResult> ConfirmationPageEmail()
-        {
-            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            User user = database.Users.Find(UserController.currentUser.UserID);
-            //var body = $"{0}";
-            var message = new MailMessage();
-                message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
-                message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
-                message.Subject = "Confirmation of your vacation with Tra-Verse";
-                message.Body = string.Format("<p>Confirmation of your vacation with Traverse</p>" +
-                "<p>Trip Details: </p>" +
-                "<p>Planet Name: " + vacationInfo.PlanetName.ToString() + "</p>" +
-                "<p>Vacation Rating: " + vacationInfo.Rating.ToString() + "</p>"+
-                "<p>Ship Choice: " + vacationInfo.ShipOption.ToString() +"</p>"+
-                "Departure Date: " + vacationInfo.DateStart.ToString() + "</p>" +
-                "Return Date: " + vacationInfo.DateEnd.ToString() + "</p>" +
-                "</br>"+
-                "TOTAL: " + vacationInfo.Price.ToString() + "</p>" +
-                "</br>"+
-                "<p>This amount was charged to: " + user.NameOnCard.ToString() + "</p>" +
-                "<p>Card number: " + user.CreditCard.ToString() + "</p>" +
-                "Thank you!");
-                /*XXXX-XXXX-XXXX-*/
-                message.IsBodyHtml = true;
-
-                using (var smtp = new SmtpClient())
-                {
-                    var credential = new NetworkCredential
-                    {
-                        UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
-                        Password = "GucciBoi"  // replace with valid value
-                    };
-                    smtp.Credentials = credential;
-                    smtp.Host = "smtp-mail.outlook.com";
-                    smtp.Port = 587;
-                    smtp.EnableSsl = true;
-                    await smtp.SendMailAsync(message);
-                    return RedirectToAction("ConfirmationPage");
-                }
-        }
-
-        /* List<VacationLog> test = database.VacationLogs.ToList();
+         /* List<VacationLog> test = database.VacationLogs.ToList();
                     test.OrderBy(x => x.Price);
                     test.Reverse();*/
         /*if (!string.IsNullOrEmpty(price))

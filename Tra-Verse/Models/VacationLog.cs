@@ -20,6 +20,10 @@ namespace Tra_Verse.Models
         public double Rating { get; set; }
         public string DateStart { get; set; }
         public string DateEnd { get; set; }
-        public string ShipOption { get; set; }
+        public string ShipType { get; set; }
+        public string CompanyName { get; set; }
+        public string PlanetImage { get; set; }
+        public string Refundable { get; set; }
+        public string Exosuit { get; set; }
     }
 }
