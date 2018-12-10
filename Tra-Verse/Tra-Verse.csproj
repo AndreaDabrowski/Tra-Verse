@@ -258,8 +258,9 @@
     <Content Include="Views\Home\YourTrip.cshtml" />
     <Content Include="Views\Home\Redo.cshtml" />
     <Content Include="Views\Public\PublicTripList.cshtml" />
-    <Content Include="Views\Home\TitlePage.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\LoggedIn.cshtml" />
+    <Content Include="Views\Home\Registered.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

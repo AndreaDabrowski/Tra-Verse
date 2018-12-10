@@ -18,12 +18,10 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Index()
         {
-            //Testtttt
-            ViewBag.PlanetList = TripListObject.Planets();
-
             ViewBag.Title = "Always Moving Forward";
             return View();
         }
+
         public ActionResult TripList()
         {
             ViewBag.YelpInfo = API.Yelp();
@@ -32,7 +30,22 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult Login() { return View(); }
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult LoggedIn()
+        {
+            return View();
+        }
+
+        public ActionResult Registered()
+        {
+            return View();
+        }
+
+        
 
         public ActionResult PrivateAccomodations(int index)
         {
@@ -261,11 +274,6 @@ namespace Tra_Verse.Controllers
                 }
         }
 
-        public ActionResult TitlePage()
-        {
-            return View();
-        }
-        
         /* List<VacationLog> test = database.VacationLogs.ToList();
                     test.OrderBy(x => x.Price);
                     test.Reverse();*/
