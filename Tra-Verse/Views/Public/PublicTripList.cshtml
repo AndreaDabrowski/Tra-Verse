@@ -8,33 +8,39 @@
     var trips = ViewBag.TripList;
 }
 <h1>Choose Your Cruise-Style Vacation :)</h1>
-<h3><a href="/Home/EditTrip">EDIT YOUR CURRENT TRIP</a></h3>
 
 @TempData["LoggedIn"]
 @for (int i = 0; i < 25; i++)
 {
-    
+    //Model trip = trips[i];
     int j = trips[i].PlanetIndex;
     var travel = ViewBag.Travel[j]["itineraries"][0]["outbound"]["flights"][0];
 
-    <div>
-        <img src=@PlanetImages[9] alt=@ViewBag.NASA[j]["pl_name"] height="200" width="200" align="left">
-        <p>Company Name:@companyName[trips[i].CompanyIndex]</p>
-        <img src="@shipImages[trips[i].CompanyIndex]"/>
-        <span>Planet Name: @ViewBag.NASA[j]["pl_name"]</span>
-        <p>
-            Distance from Earth: @ViewBag.NASA[j]["st_dist"] parsecs
-            *Unit of distance where 1 parsec equals the distance from the Earth to Sun
-        </p>
-        <p>Departure Date: @ViewBag.Travel[j]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
-        <p>Number of Days: @trips[i].NumberOfDays</p>
-        <p>Rooms remaining: @ViewBag.Travel[j]["fare"]["total_fares"]</p>
-            
-        <p>Review count: @ViewBag.Yelp["businesses"][j]["review_count"]</p>
-        <p>Rating: @ViewBag.Yelp["businesses"][j]["rating"]</p>
-        <a href="/Public/PublicAccomodations?tripIndices=@ViewBag.TripList[i]" >Choose This Vacation</a>
-        <input type="button" class="btn-default" name="@trips" value="Choose this Vacay" @Url.Action("PublicAccomodations", "Public")/>
-    </div>
+<div>
+    <img src=@PlanetImages[9] alt=@ViewBag.NASA[j]["pl_name"] height="200" width="200" align="left">
+    <br />
+    <p>Company Name:@companyName[trips[i].CompanyIndex]</p>
+    <img src="@shipImages[trips[i].CompanyIndex]" height="100" width="100" align="left"/>
+    <span>Planet Name: @ViewBag.NASA[j]["pl_name"]</span>
+    <p>
+        Distance from Earth: @ViewBag.NASA[j]["st_dist"] parsecs
+        *Unit of distance where 1 parsec equals the distance from the Earth to Sun
+    </p>
+    <p>Departure Date: @ViewBag.Travel[j]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
+    <p>Number of Days: @trips[i].NumberOfDays</p>
+    <p>Rooms remaining: @ViewBag.Travel[j]["fare"]["total_fares"]</p>
+
+    <p>Review count: @ViewBag.Yelp["businesses"][j]["review_count"]</p>
+    <p>Rating: @ViewBag.Yelp["businesses"][j]["rating"]</p>
+    <form action="/Public/PublicAccomodations" method="post">
+        <input type="hidden" name="PlanetIndex" value="@trips[i].PlanetIndex">
+        <input type="hidden" name="CompanyIndex" value="@trips[i].CompanyIndex">
+        <input type="hidden" name="NumberOfDays" value="@trips[i].NumberOfDays">
+        <input type="hidden" name="TravelIndex" value="@trips[i].TravelIndex">
+        <input type="submit" value="Choose this Vacation" class="btn-default">
+    </form>
+    @*<input type="button" class="btn-default" name="@trips[i]" value="Choose" onclick= "window.location='@Url.Action("PublicAccomodations", "Public", new object { tripIndices = Model.CompanyIndex })'" />*@
+</div>
     <br />
 
     // array of company names, and ship images

@@ -1,26 +1,33 @@
 ﻿@{
-    dynamic p = ViewBag.TripIndices.PlanetIndex;
+    int p = 6/*ViewBag.TripIndices.PlanetIndex*/;
     string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
     string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
 
     string[] PlanetImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
-    int totalPrice = int.Parse(ViewBag.Travel["results"][p]["fare"]["total_fares"]) * 829;
+    string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
+    float priceBeforeTotal = float.Parse(priceString);
 }
 
 
 <h1>@ViewBag.NASA[p]["pl_name"]</h1>
 <img src=@PlanetImages[9] alt=@ViewBag.NASA[p]["pl_name"] height="200" width="200" align="left" />
+<br />
 <p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
-<p>Cruise Ship: @shipImages[ViewBag.TripIndices.CompanyIndex]</p>
-<p>Total Price: @totalPrice</p>
+<p>Cruise Ship: </p>
+<img src="@shipImages[ViewBag.TripIndices.CompanyIndex]" height="100" width="100" align="left"/>
+<br />
+<h3>Total Price: @(priceBeforeTotal*928)</h3>
 <br />
 <p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>
 <p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
 <br />
 <p>Departure Date: @ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
 <p>Number of Days: @ViewBag.TripIndices.NumberOfDays</p>
-<p>Rooms remaining: @int.Parse(ViewBag.Travel["results"][p]["fare"]["total_fares"])</p>
+<p>Rooms remaining: @ViewBag.Travel["results"][p]["fare"]["total_price"]</p>
 <br />
+<p>Refundable? @bool.Parse(ViewBag.Travel["results"][p]["fare"]["total_price"]["restrictions"]["refundable"].ToString()) </p>
+<p>Exosuit for exploration outside aircraft available? @ViewBag.Travel["results"][p]["fare"]["total_price"]["restrictions"]["change_penalties"]</p>
+
 
 @*if null, show unkown*@
 <hr />
