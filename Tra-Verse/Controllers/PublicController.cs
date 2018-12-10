@@ -12,25 +12,31 @@ namespace Tra_Verse.Controllers
         // GET: Public
         public ActionResult PublicAccomodations(TripListObject tripIndices)
         {
-            ViewBag.Travel = API.Travel();
-            ViewBag.NASA = API.NASA("notSorted");
-            ViewBag.Index = tripIndices;
-            return View();
-        }
+            if (ModelState.IsValid)
+            {
+                ViewBag.Travel = API.Travel();
+                ViewBag.NASA = API.NASA("notSorted");
+                ViewBag.Yelp = API.Yelp();
+                ViewBag.TripIndices = tripIndices;
 
+                return View();
+            }
+            else
+            {
+                ViewBag.ModelNotValid = "Model Not Valid";
+                return View("Error", "Home");
+            }
+        }
         public ActionResult PublicTripList()
         {
-            ViewBag.Travel = API.Travel();//jobject
+            ViewBag.Travel = API.Travel()["results"];//jobject
             ViewBag.NASA = API.NASA("notSorted");//jarray
             ViewBag.Yelp = API.Yelp();
-
             ViewBag.PlanetList = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
 
             return View();
         }
-
-
 
     }
 }
