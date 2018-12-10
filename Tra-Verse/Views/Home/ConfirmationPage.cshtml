@@ -49,9 +49,9 @@
     </div>
 </form>
 
-<input type="button" class="btn-default" value="Go to edit" onclick="location.href='<%: @Url.Action("EditTrip", "Home" ) %>'" />
-@*<input type="button" class="btn-danger" value="Go to delete" onclick="location.href='<%: @Url.Action("EditTrip", "Home" ) %>'" />*@
+<input type="button" value="Edit this order" onclick="location.href='@Url.Action("EditTrip", "Home")'" class="btn-default" />
+<input type="button" value="Delete this order" onclick="location.href='@Url.Action("DeleteTrip", "Home")'" class="btn-danger" />
 
 @*<a href="/Home/EditTrip">EDIT YOUR CURRENT TRIP</a>*@
-
-<a href="/Home/Index">Return To Home Page</a>
+<input type="button" value="Return Home" onclick="location.href='@Url.Action("Index", "Home")'" class="btn-default" />
+@*<a class="btn-default" href="/Home/Index">Return To Home Page</a>*@

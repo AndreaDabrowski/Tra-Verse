@@ -88,6 +88,11 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
+        public ActionResult DeleteTrip()
+        {
+            return View();
+        }
+
         public ActionResult RefreshForTotal(VacationLog order)
         {
             if (UserController.currentUser.LoggedIn == false)
@@ -183,21 +188,6 @@ namespace Tra_Verse.Controllers
             ViewBag.Card = user.CreditCard;
 
             return View();
-        }
-
-        public ActionResult DeleteTrip()
-        {
-            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            database.VacationLogs.Remove(vacationInfo);
-            User userInfo = database.Users.Find(UserController.currentUser.UserID);
-            UserController.currentUser.OrderID = 0;
-            userInfo.OrderID = -1;
-
-            database.Entry(userInfo).State = System.Data.Entity.EntityState.Modified;
-            database.SaveChanges();
-
-            TempData["deleted"] = "Your stuff has been deleted, yo";
-            return RedirectToAction("TripList");
         }
 
         public ActionResult RefreshForEdit(VacationLog order)
