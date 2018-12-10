@@ -19,10 +19,10 @@ namespace Tra_Verse.Controllers
                 currentUser.UserID = 0;
                 currentUser.OrderID = 0;
                 ViewBag.Logout = "You've been Logged out!";
-                return RedirectToAction("TitlePage", "Home");
+                return RedirectToAction("Login", "Home");
             }
             ViewBag.LoggedOut = "You're not logged in";
-            return RedirectToAction("TitlePage", "Home");
+            return RedirectToAction("Login", "Home");
         }
 
         public ActionResult LoginButton(User logUser)
@@ -32,7 +32,7 @@ namespace Tra_Verse.Controllers
             {
                 if (logUser.Email == user.Email)
                 {
-                    if (currentUser.LoggedIn == false)
+                    if (currentUser.LoggedIn == false && currentUser.Password == user.Password)
                     {
                         currentUser.LoggedIn = true;
                         currentUser.UserID = user.UserID;
@@ -40,30 +40,49 @@ namespace Tra_Verse.Controllers
                         TempData["LoggedIn"] = "You've successfully logged in!";
                         return RedirectToAction("TripList", "Home");//, logUser
                     }
-                    return RedirectToAction("TripList", "Home");
+                    if (currentUser.Password != user.Password)
+                    {
+                        TempData["InvalidLogin"] = "Invalid Username or Password";
+                        return RedirectToAction("Login", "Home");
+                    }
+                    else
+                    {
+                        return View("LoggedIn");
+                    }
                 }
             }
 
             ViewBag.Error = "This is not a valid email address";
-            return RedirectToAction("TitlePage", "Home");
+            return RedirectToAction("Login", "Home");
         }
 
         public ActionResult RegisterUser(User newUser)
         {
+            
             if (ModelState.IsValid)
             {
                 User added = database.Users.Add(newUser);
+                List<User> foundID = database.Users.ToList();
+                foreach (var user in foundID)
+                {
+                    if (currentUser.UserID == user.UserID)
+                    {
+                        TempData["AlreadyRegistered"] = "These credentials already match an existing account";
+                        return RedirectToAction("Login", "Home");
+                    }
+                }
+
                 database.SaveChanges();
                 currentUser.UserID = added.UserID;
                 currentUser.LoggedIn = true;
                 currentUser.OrderID = 0;
-                TempData["AddedUser"] = "You've been registered";
-                return RedirectToAction("TitlePage", "Home");//, added
+                
+                return RedirectToAction("Registered", "Home");//, added
             }
             else
             {
                 TempData["Error"] = "Error with adding user.";
-                return RedirectToAction("TitlePage", "Home");
+                return RedirectToAction("Login", "Home");
             }
         }
 
