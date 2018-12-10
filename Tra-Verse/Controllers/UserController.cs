@@ -28,19 +28,19 @@ namespace Tra_Verse.Controllers
         public ActionResult LoginButton(User logUser)
         {
             List<User> foundID = database.Users.ToList();
-            foreach (User user in foundID)
+            foreach (User userDB in foundID)
             {
-                if (logUser.Email == user.Email)
+                if (logUser.Email == userDB.Email)
                 {
-                    if (currentUser.LoggedIn == false && currentUser.Password == user.Password)
+                    if (currentUser.LoggedIn == false && currentUser.Password == userDB.Password)
                     {
                         currentUser.LoggedIn = true;
-                        currentUser.UserID = user.UserID;
-                        currentUser.OrderID = user.OrderID;
+                        currentUser.UserID = userDB.UserID;
+                        currentUser.OrderID = userDB.OrderID;
                         TempData["LoggedIn"] = "You've successfully logged in!";
                         return RedirectToAction("TripList", "Home");//, logUser
                     }
-                    if (currentUser.Password != user.Password)
+                    if (logUser.Password != userDB.Password || logUser.Email != userDB.Email)
                     {
                         TempData["InvalidLogin"] = "Invalid Username or Password";
                         return RedirectToAction("Login", "Home");
@@ -61,17 +61,17 @@ namespace Tra_Verse.Controllers
             
             if (ModelState.IsValid)
             {
-                User added = database.Users.Add(newUser);
                 List<User> foundID = database.Users.ToList();
                 foreach (var user in foundID)
                 {
-                    if (currentUser.UserID == user.UserID)
+                    if (newUser.Email == user.Email)
                     {
                         TempData["AlreadyRegistered"] = "These credentials already match an existing account";
                         return RedirectToAction("Login", "Home");
                     }
                 }
 
+                User added = database.Users.Add(newUser);
                 database.SaveChanges();
                 currentUser.UserID = added.UserID;
                 currentUser.LoggedIn = true;

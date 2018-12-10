@@ -45,8 +45,6 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        
-
         public ActionResult PrivateAccomodations(int index)
         {
             ViewBag.YelpInfo = API.Yelp();
@@ -149,6 +147,7 @@ namespace Tra_Verse.Controllers
         {
             return View();
         }
+
         public ActionResult ProcessPayment(FormCollection fc)
         {
 
