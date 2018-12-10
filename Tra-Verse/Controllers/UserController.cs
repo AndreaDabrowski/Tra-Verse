@@ -47,7 +47,7 @@ namespace Tra_Verse.Controllers
                     }
                     else
                     {
-                        return View("LoggedIn");
+                        return RedirectToAction("LoggedIn", "Home");
                     }
                 }
             }

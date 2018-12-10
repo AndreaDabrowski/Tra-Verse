@@ -29,7 +29,7 @@ namespace Tra_Verse.Controllers
             "<p>Trip Details: </p>" +
             "<p>Planet Name: " + vacationInfo.PlanetName.ToString() + "</p>" +
             "<p>Vacation Rating: " + vacationInfo.Rating.ToString() + "</p>" +
-            "<p>Ship Choice: " + vacationInfo.ShipOption.ToString() + "</p>" +
+            "<p>Ship Choice: " + vacationInfo.ShipType.ToString() + "</p>" +
             "Departure Date: " + vacationInfo.DateStart.ToString() + "</p>" +
             "Return Date: " + vacationInfo.DateEnd.ToString() + "</p>" +
             "</br>" +
