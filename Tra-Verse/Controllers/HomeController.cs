@@ -21,6 +21,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Title = "Always Moving Forward";
             return View();
         }
+
         public ActionResult TripList()
         {
             ViewBag.YelpInfo = API.Yelp();
@@ -28,6 +29,23 @@ namespace Tra_Verse.Controllers
 
             return View();
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult LoggedIn()
+        {
+            return View();
+        }
+
+        public ActionResult Registered()
+        {
+            return View();
+        }
+
+        
 
         public ActionResult PrivateAccomodations(int index)
         {
@@ -254,11 +272,6 @@ namespace Tra_Verse.Controllers
                     await smtp.SendMailAsync(message);
                     return RedirectToAction("ConfirmationPage");
                 }
-        }
-
-        public ActionResult TitlePage()
-        {
-            return View();
         }
 
         /* List<VacationLog> test = database.VacationLogs.ToList();

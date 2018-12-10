@@ -9,6 +9,9 @@
 @TempData["Error"]
 
 <a href="/User/Logout">Log Out</a>
+<br />
+<h4 style="color:red">@TempData["InvalidLogin"]</h4>
+
 <form action="/User/LoginButton" method="post">
 
     <label class="control-label">Email</label>
@@ -23,6 +26,7 @@
 </form>
 
 <h2>Register New User:</h2><br />
+<h4 style="color:red">@TempData["AlreadyRegistered"]</h4>
 <form action="/User/RegisterUser" method="post">
     <label class="control-label">Email</label>
     <input type="text" name="Email" id="regEmail" onkeyup="testRegisterEmail()" pattern="^([A-z0-9\-.]{5,})@("@")([A-z0-9\-.]+)\.([A-z]{2,5})$" class="form-control" />

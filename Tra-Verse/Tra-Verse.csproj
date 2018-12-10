@@ -175,8 +175,24 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\images\projectBackground.jpg" />
-    <Content Include="Content\images\traverse-rough-color-centered.png" />
+    <Content Include="Content\Images\Planets\GJ3021b.jpg" />
+    <Content Include="Content\Images\Planets\HATS34b.png" />
+    <Content Include="Content\Images\Planets\HD142b.jpg" />
+    <Content Include="Content\Images\Planets\HD142c.jpg" />
+    <Content Include="Content\Images\Planets\HD1461b.png" />
+    <Content Include="Content\Images\Planets\HD1502b.png" />
+    <Content Include="Content\Images\Planets\HD564b.jpg" />
+    <Content Include="Content\Images\Planets\HD1461c.jpg" />
+    <Content Include="Content\Images\Planets\KELT1b.jpg" />
+    <Content Include="Content\Images\Planets\Qatar4b.png" />
+    <Content Include="Content\Images\Planets\WASP136b.png" />
+    <Content Include="Content\Images\Planets\WASP158b.PNG" />
+    <Content Include="Content\Images\Planets\WASP26b.png" />
+    <Content Include="Content\Images\Planets\WASP32b.png" />
+    <Content Include="Content\Images\Planets\WASP44b.png" />
+    <Content Include="Content\Images\Planets\WASP96b.PNG" />
+    <Content Include="Content\Images\projectBackground.jpg" />
+    <Content Include="Content\Images\traverse-rough-color-centered.png" />
     <Content Include="Content\StylingPage.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -242,8 +258,9 @@
     <Content Include="Views\Home\YourTrip.cshtml" />
     <Content Include="Views\Home\Redo.cshtml" />
     <Content Include="Views\Public\PublicTripList.cshtml" />
-    <Content Include="Views\Home\TitlePage.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Home\LoggedIn.cshtml" />
+    <Content Include="Views\Home\Registered.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
