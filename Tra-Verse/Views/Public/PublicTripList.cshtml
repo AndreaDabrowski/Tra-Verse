@@ -28,7 +28,7 @@
     </p>
     <p>Departure Date: @ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
     <p>Number of Days: @trips[i].NumberOfDays</p>
-    <p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * 23)</p>
+    <p>Rooms remaining: @(ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"]* trips[i].NumberOfDays)</p>
 
     <p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>
     <p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
