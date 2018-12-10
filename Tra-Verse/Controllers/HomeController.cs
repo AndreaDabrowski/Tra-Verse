@@ -21,6 +21,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Title = "Always Moving Forward";
             return View();
         }
+
         public ActionResult TripList()
         {
             ViewBag.YelpInfo = API.Yelp();
@@ -28,6 +29,23 @@ namespace Tra_Verse.Controllers
 
             return View();
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult LoggedIn()
+        {
+            return View();
+        }
+
+        public ActionResult Registered()
+        {
+            return View();
+        }
+
+        
 
         public ActionResult PrivateAccomodations(int index)
         {
@@ -109,7 +127,6 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("PrivateAccomodations", new { index });
         }
 
-       
         public ActionResult Checkout(int price)
         {
             ViewBag.NASAInfo = API.NASA("notSorted");
