@@ -4,10 +4,10 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Tra_Verse.Models;
+using Tra_Verse.Controllers;
 using System.Linq;
 using System.Collections.Generic;
-
+using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
 {
@@ -17,7 +17,17 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.Title = "Always Moving Forward";
+            return View();
+        }
+
+        public ActionResult TripList()
+        {
+            ViewBag.Travel = API.Travel()["results"];//jobject
+            ViewBag.NASA = API.NASA("notSorted");//jarray
+            ViewBag.Yelp = API.Yelp();
+            ViewBag.PlanetPic = TripListObject.Planets();
+            ViewBag.TripList = TripListObject.GenerateTrips();
+
             return View();
         }
 
@@ -49,9 +59,15 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult DeleteTrip()
+        public ActionResult DeleteTrip(VacationLog deleteOrder)
         {
-            return View();
+            List<VacationLog> vacationList = database.VacationLogs.Where(x => x.OrderID == deleteOrder.OrderID).ToList();
+
+            VacationLog found = database.VacationLogs.Find(deleteOrder.OrderID);
+            database.VacationLogs.Remove(found);
+            database.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult RefreshForTotal(VacationLog order)
@@ -170,7 +186,7 @@ namespace Tra_Verse.Controllers
 
             return View();
         }
-
+        
         public ActionResult Error()
         {
             return View();
@@ -183,7 +199,7 @@ namespace Tra_Verse.Controllers
     }
 }
 
-    /* public ActionResult TripList(string price)
+/* public ActionResult TripList(string price)
      {
          List<VacationLog> test = database.VacationLogs.ToList();
          test.OrderBy(x => x.Price);
@@ -192,8 +208,8 @@ namespace Tra_Verse.Controllers
          {
              travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
          }*/
-    //return View();
-    //}
+//return View();
+//}
 
 //public ActionResult TripListCruise(string sortOrder)
 //{
@@ -223,5 +239,4 @@ namespace Tra_Verse.Controllers
 }*/
 //travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
 //}*/
-//return View();
-//}
+//return View();}

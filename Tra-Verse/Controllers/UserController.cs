@@ -19,10 +19,10 @@ namespace Tra_Verse.Controllers
                 currentUser.UserID = 0;
                 currentUser.OrderID = 0;
                 ViewBag.Logout = "You've been Logged out!";
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "User");
             }
             ViewBag.LoggedOut = "You're not logged in";
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Login", "User");
         }
 
         public ActionResult LoginButton(User logUser)
@@ -39,17 +39,17 @@ namespace Tra_Verse.Controllers
                         currentUser.UserID = id.UserID;
                         currentUser.OrderID = id.OrderID;
                         TempData["LoggedIn"] = "You've successfully logged in!";
-                        return RedirectToAction("Login", "Home");//, logUser
+                        return RedirectToAction("Login", "User");//, logUser
                     }
                 }
                 if (logUser.Email == currentUser.Email)
                 {
                     TempData["CurrentlyLoggedIn"] = "You are already logged in";
-                    return RedirectToAction("Login", "Home");
+                    return RedirectToAction("Login", "User");
                 }
             }
             TempData["InvalidLogin"] = "Invalid Username or Password";
-            return RedirectToAction("Login", "Home");
+            return RedirectToAction("Login", "User");
         }
 
         public ActionResult RegisterUser(User newUser)
@@ -62,7 +62,7 @@ namespace Tra_Verse.Controllers
                     if (newUser.Email == user.Email)
                     {
                         TempData["AlreadyRegistered"] = "These credentials already match an existing account";
-                        return RedirectToAction("Login", "Home");
+                        return RedirectToAction("Login", "User");
                     }
                 }
 
@@ -72,12 +72,12 @@ namespace Tra_Verse.Controllers
                 currentUser.LoggedIn = true;
                 currentUser.OrderID = 0;
                 
-                return RedirectToAction("Registered", "Home");//, added
+                return RedirectToAction("Registered", "User");//, added
             }
             else
             {
                 TempData["Error"] = "Error with adding user.";
-                return RedirectToAction("Login", "Home");
+                return RedirectToAction("Login", "User");
             }
         }
 
@@ -85,7 +85,7 @@ namespace Tra_Verse.Controllers
         {
             if (ModelState.IsValid)
             {
-                return RedirectToAction("TripList", "Home");
+                return RedirectToAction("TripList", "Private");
             }
             else
             {
