@@ -19,15 +19,18 @@
 {
     int p = trips[i].PlanetIndex;
     var travel = ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0];
+    string priceString = ViewBag.Travel[p]["fare"]["total_price"].ToString();
+    float priceBeforeTotal = float.Parse(priceString);
     <br />
     <br />
     <hr />
     <div>
-        <img src=@ViewBag.PlanetPic[p] height="200" width="200" align="left">@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
+        <img src="@ViewBag.PlanetPic[p]" height="200" width="200" align="left">@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
         <h3>Trip To "@ViewBag.NASA[p]["pl_name"]"</h3>@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
         <br />
-        <p>Company Name:@companyName[trips[i].CompanyIndex]</p>@*COMPANY INDEX 4??*@
+        @*<p>Company Name:@companyName[trips[i].CompanyIndex]</p>@*COMPANY INDEX 4??
         <img src="@shipImages[trips[i].CompanyIndex]" height="100" width="100" align="right" />@*COMPANY INDEX 4??*@
+        <h3>Base Price : $@(priceBeforeTotal * 2319)</h3>
         <p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
         <form action="/Home/PrivateAccomodations" method="post">
             <input type="hidden" name="PlanetIndex" value="@trips[i].PlanetIndex">

@@ -7,7 +7,7 @@
 
     //string[] PlanetImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
     string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
-    float priceBeforeTotal = float.Parse(priceString);
+    float priceBeforeTotal = float.Parse(priceString);//change p to travel Index??
 }
 
 
@@ -21,6 +21,7 @@
 <img src="@shipImages[ViewBag.TripIndices.CompanyIndex]" height="100" width="100" align="left" />
 <br />
 <h3>Base Price : $@(priceBeforeTotal * 2319)</h3>
+<p>*Price may be affected by customizations - refresh total below</p>
 <br />
 <p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>
 <p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
@@ -30,11 +31,16 @@
 @*<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>*@
 <br />
 <p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString() </p>
+
+<form action="/Home/RefreshForTotal?basePrice=@(priceBeforeTotal * 2319)&exoSuit=ExoSuit&shipType=ShipType">
+    @*FORM COLLECTION?*@
+</form>
+
 <form action="/Home/Checkout" method="post">
     <p>Exosuit for exploration outside aircraft? </p>
-    <p>Yes</p><input type="radio" value="Yes" name="ExoSuit" /> <br />
+    <p>Yes +500,000</p><input type="radio" value="Yes" name="ExoSuit" /> <br />
     <img src="@shipImages[1]" height="50" width="65" />
-    <p>No</p><input type="radio" value="No" name="ExoSuit" /><br />
+    <p>No +0</p><input type="radio" value="No" name="ExoSuit" /><br />
     <br />
 
     <img src="@shipImages[0]" height="50" width="65" />
