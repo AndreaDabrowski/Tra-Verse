@@ -1,38 +1,49 @@
 ﻿@{
-    int p = 6/*ViewBag.TripIndices.PlanetIndex*/;
-    string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
-    string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
     //string path = "~/Content/Images/Planets/";
     //string[] PlanetImages = new string[16] { path + "GJ 3021 b.jpg", path+"HATS-34 b.png", path+"HD 142 b.png", path+"HD 142 c.jpg", path+"HD 1461 b.png", path+"HD 1502 b.png", path+"HD 564 b.jpg", path+"HD1461c.jpg", path+"KELT-1 b.jpg", path+"Qatar-4 b.jpg", path+"WASP-136 b.png", path+"WASP-158 b.PNG", path+"WASP-26 b.png", path+"WASP-32 b.png", path+"WASP-44 b.png", path+"WASP-96 b.PNG" };
-    // THIS (commented) CODE WILL REPLACE THE CURRENT PLANET IMAGES ARRAY. IMAGE FILES ARE OF DIFFERENT SIZES... NEED FORMATTING
+    int p = ViewBag.TripIndices.PlanetIndex;
+    string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
+    string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
 
-
-    string[] PlanetImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
     string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
     float priceBeforeTotal = float.Parse(priceString);
 }
 
+@*<p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>*@
 <h1>@ViewBag.NASA[p]["pl_name"]</h1>
 <h2>@ViewBag.TripIndices.NumberOfDays-Day Trip</h2>
-<img src=@PlanetImages[9] alt=@ViewBag.NASA[p]["pl_name"] height="200" width="200" align="left" />
+<img src="@ViewBag.PlanetPic[p]" alt=@ViewBag.NASA[p]["pl_name"] height="200" width="200" align="left" />
 <br />
 <p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
 <p>Cruise Ship: </p>
-<img src="@shipImages[ViewBag.TripIndices.CompanyIndex]" height="100" width="100" align="left"/>
+<img src="@shipImages[ViewBag.TripIndices.CompanyIndex]" height="100" width="100" align="left" />
 <br />
-<h3>Total Price: $@(priceBeforeTotal*2319)</h3>
+<h3>Total Price: $@(priceBeforeTotal * 2319)</h3>
 <br />
 <p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>
-<p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
+<p name="Rating">Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
 <br />
+<p>Distance from Earth: @ViewBag.NASA[p]["st_dist"] parsecs</p>
+<p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>
 <p>Departure Date: @ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
 <p>Number of Days: @ViewBag.TripIndices.NumberOfDays</p>
-<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"]*ViewBag.TripIndices.NumberOfDays)</p>
+<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>
 <br />
 <p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString() </p>
-<p>Exosuit for exploration outside aircraft available? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()</p>
-<input type="submit" value="Proceed to Checkout"/>
-
+<p>Spacesuit for exploration outside aircraft? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()</p>
+<form action="/Home/Checkout" method="post">
+    <input type="hidden" name="PlanetName" value="@ViewBag.NASA[p]["pl_name"]">
+    <input type="hidden" name="Price" value="@(priceBeforeTotal * 2319)">
+    <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]">
+    <input type="hidden" name="DateStart" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]">@*NEED TO CHANGE*@
+    <input type="hidden" name="DateEnd" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]">@*NEED TO CHANGE*@
+    <input type="hidden" name="ShipType" value="@shipImages[ViewBag.TripIndices.CompanyIndex]">
+    <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]">
+    <input type="hidden" name="PlanetImage" value="@ViewBag.PlanetPic">
+    <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString()">
+    <input type="hidden" name="ExoSuit" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()">
+    <input type="submit" value="Proceed to Checkout" />
+</form>
 @*if null, show unkown*@
 <hr />
 <h4>Destination Description for @ViewBag.NASA[p]["pl_name"]:</h4>

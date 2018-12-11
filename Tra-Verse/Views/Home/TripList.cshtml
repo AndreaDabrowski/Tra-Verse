@@ -1,12 +1,13 @@
-﻿<h1>Choose Your Cruise-Style Vacation :)</h1>
+﻿<h2>Private-Style Trip List</h2>
 
-@{ 
-    string company = "";
+@{
+    string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
     string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
     var trips = ViewBag.TripList;
+    string[] planets = ViewBag.PlanetList;
+
 }
-
-
+<h1>Choose Your Private-Style Vacation to Customize :)</h1>
     @TempData["LoggedIn"]
     @for (int i = 0; i < 25; i++)
     {
@@ -45,21 +46,9 @@
 
     }
 
-@*<h1>Choose Your Vacation :)</h1>
-@TempData["LoggedIn"]*@
-@*@using (Html.BeginForm("TripList", "Home"))
-    {
-        @Html.TextBox("search by")
-        <input type="submit" value="submit" />
-    }*@
-@*<br />
-<br />
-<p> Distance Index: 1 Parsec = 3.26 Light-years</p>
-<br />
-<br />
-@for (int i = 0; i < 10; i++)
+@for (int i = 0; i < 15; i++)
 {
-<<<<<<< HEAD
+
 <div>
     <img src=@shipImages[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
     <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span><br />
@@ -69,17 +58,51 @@
     <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
     <a class="btn-default" href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a><br /><br /><br />
 </div>
-=======
     <div>
-        <img src=@shipImages[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
-        <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span><br /><br />
-        <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
-        <p>Trip base price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
-        <p>@ViewBag.YelpInfo["businesses"][i]["review_count"] Current Reviews</p>
-        <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
-        <a class="btn-default" href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a><br /><br /><br />
+        <img src="@ViewBag.PlanetPic[p]" height="200" width="200" align="left">@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
+        <h3>Trip To "@ViewBag.NASA[p]["pl_name"]"</h3>@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
+        <br />
+        @*<p>Company Name:@companyName[trips[i].CompanyIndex]</p>@*COMPANY INDEX 4??
+        <img src="@shipImages[trips[i].CompanyIndex]" height="100" width="100" align="right" />@*COMPANY INDEX 4??*@
+        <h3>Base Price : $@(priceBeforeTotal * 2319)</h3>
+        <p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
+        <form action="/Home/PrivateAccomodations" method="post">
+            <input type="hidden" name="PlanetIndex" value="@trips[i].PlanetIndex">
+            <input type="hidden" name="CompanyIndex" value="@trips[i].CompanyIndex">
+            <input type="hidden" name="NumberOfDays" value="@trips[i].NumberOfDays">
+            <input type="hidden" name="TravelIndex" value="@trips[i].TravelIndex">
+            <input type="submit" value="Choose this Vacation" class="btn-default">
+        </form>
     </div>
->>>>>>> f60ff9efc7976eabe9e97e718557004c422b93a7
     <br />
+}
+@*<p>Departure Date: @ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>*@
+@*<p>Rooms remaining: @(ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"]* trips[i].NumberOfDays)</p>*@
+@*<p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>*@
+@*<p>
+        Distance from Earth: @ViewBag.NASA[p]["st_dist"] parsecs
+        *Unit of distance where 1 parsec equals the distance from the Earth to Sun
+    </p>*@
 
-}*@
+@*<h1>Choose Your Vacation :)</h1>
+    @TempData["LoggedIn"]
+
+    <br />
+    <br />
+    <p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>
+    @*Search function!!!!!!!!!!!!*
+    @for (int i = 0; i < 10; i++)
+    {
+        <div>
+            <img src=@shipImages[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
+            <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span><br />
+            <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
+            <p>Trip base price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
+            <p>@ViewBag.YelpInfo["businesses"][i]["review_count"] Current Reviews</p>
+            <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
+            <a class="btn-default" href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a><br /><br /><br />
+        </div>
+        <br />
+
+    }*@
+
