@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.Entity.Validation;
 using System.Net;
 using System.Net.Mail;
@@ -143,7 +143,9 @@ namespace Tra_Verse.Controllers
         {
 
             User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            findEmail.CreditCard = fc["CreditCard"];
+            string creditCard = fc["CreditCard"];
+            // change card info as to not allow it to be retrievable from database (also for confirmation page)
+            findEmail.CreditCard = "XXXX-XXXX-XXXX-" + creditCard.Substring(11, 4);
             findEmail.CRV = int.Parse(fc["CRV"]);
             findEmail.NameOnCard = fc["NameOnCard"];
 

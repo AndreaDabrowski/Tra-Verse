@@ -1,11 +1,16 @@
-﻿using System.Web.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
 {
     public class PrivateController : Controller
     {
-        //TraVerseEntities database = new TraVerseEntities();
+        TraVerseEntities database = new TraVerseEntities();
 
         public ActionResult TripList()
         {
@@ -36,7 +41,9 @@ namespace Tra_Verse.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
+
         public ActionResult RefreshForTotal(FormCollection variables, int index)
+
         {
             TempData["ShipType"] = variables["ShipType"];
             TempData["ExoSuit"] = variables["ExoSuit"];
