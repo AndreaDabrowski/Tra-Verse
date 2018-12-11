@@ -11,6 +11,9 @@
 <a href="/User/Logout">Log Out</a>
 <br />
 <h4 style="color:red">@TempData["InvalidLogin"]</h4>
+@ViewBag.LoggedOut
+@TempData["CurrentlyLoggedIn"]
+@TempData["LoggedIn"]
 
 <form action="/User/LoginButton" method="post">
 

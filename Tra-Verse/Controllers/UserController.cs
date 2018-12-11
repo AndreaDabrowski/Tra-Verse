@@ -28,37 +28,32 @@ namespace Tra_Verse.Controllers
         public ActionResult LoginButton(User logUser)
         {
             List<User> foundID = database.Users.ToList();
-            foreach (User userDB in foundID)
+
+            foreach(var id in foundID)
             {
-                if (logUser.Email == userDB.Email)
+                if (logUser.Email == id.Email && logUser.Password == id.Password)
                 {
-                    if (currentUser.LoggedIn == false && currentUser.Password == userDB.Password)
+                    if (currentUser.LoggedIn == false)
                     {
                         currentUser.LoggedIn = true;
-                        currentUser.UserID = userDB.UserID;
-                        currentUser.OrderID = userDB.OrderID;
+                        currentUser.UserID = id.UserID;
+                        currentUser.OrderID = id.OrderID;
                         TempData["LoggedIn"] = "You've successfully logged in!";
-                        return RedirectToAction("TripList", "Home");//, logUser
-                    }
-                    if (logUser.Password != userDB.Password || logUser.Email != userDB.Email)
-                    {
-                        TempData["InvalidLogin"] = "Invalid Username or Password";
-                        return RedirectToAction("Login", "Home");
-                    }
-                    else
-                    {
-                        return RedirectToAction("LoggedIn", "Home");
+                        return RedirectToAction("Login", "Home");//, logUser
                     }
                 }
+                if (logUser.Email == currentUser.Email)
+                {
+                    TempData["CurrentlyLoggedIn"] = "You are already logged in";
+                    return RedirectToAction("Login", "Home");
+                }
             }
-
-            ViewBag.Error = "This is not a valid email address";
+            TempData["InvalidLogin"] = "Invalid Username or Password";
             return RedirectToAction("Login", "Home");
         }
 
         public ActionResult RegisterUser(User newUser)
         {
-            
             if (ModelState.IsValid)
             {
                 List<User> foundID = database.Users.ToList();
@@ -88,14 +83,13 @@ namespace Tra_Verse.Controllers
 
         public ActionResult ValidateUser(UserBEValidation validUser)
         {
-
             if (ModelState.IsValid)
             {
-                return View("TripList", "Home");
+                return RedirectToAction("TripList", "Home");
             }
             else
             {
-                return View("LoginError", "Home");
+                return RedirectToAction("LoginError", "Home");
             }
         }
     }
