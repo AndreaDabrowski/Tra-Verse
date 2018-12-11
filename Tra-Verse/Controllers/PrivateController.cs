@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,7 +10,7 @@ namespace Tra_Verse.Controllers
 {
     public class PrivateController : Controller
     {
-        //TraVerseEntities database = new TraVerseEntities();
+        TraVerseEntities database = new TraVerseEntities();
 
         public ActionResult TripList()
         {
@@ -33,6 +34,44 @@ namespace Tra_Verse.Controllers
             ViewBag.PricePerDollarSign = randPrice;
 
             return View();
+        }
+
+        public ActionResult RefreshForTotal(VacationLog order)
+        {
+            if (UserController.currentUser.LoggedIn == false)
+            {
+                return View("LoginError");
+            }
+
+            User user = database.Users.Find(UserController.currentUser.UserID);
+
+            if (user.OrderID > 0)
+            {
+                TempData["OrderAlready"] = "This user already has the following order";
+                return RedirectToAction("ConfirmationPage");
+            }
+
+            try
+            {
+                VacationLog added = database.VacationLogs.Add(order);
+                database.SaveChanges();
+
+                UserController.currentUser.OrderID = added.OrderID;
+                User loggedInUser = database.Users.Find(UserController.currentUser.UserID);
+                loggedInUser.OrderID = added.OrderID;
+                database.Entry(loggedInUser).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.Write(e.EntityValidationErrors);
+                return View("Error");
+            }
+
+            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
+            int index = UserController.currentUser.CurrentIndex;
+
+            return RedirectToAction("PrivateAccomodations", new { index });
         }
     }
 }
