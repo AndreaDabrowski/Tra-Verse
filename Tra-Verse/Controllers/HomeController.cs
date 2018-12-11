@@ -4,21 +4,19 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Tra_Verse.Models;
+using Tra_Verse.Controllers;
 using System.Linq;
 using System.Collections.Generic;
-
+using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
-        //UserController UC = new UserController();
         TraVerseEntities database = new TraVerseEntities();
 
         public ActionResult Index()
         {
-            ViewBag.Title = "Always Moving Forward";
             return View();
         }
 
@@ -31,6 +29,7 @@ namespace Tra_Verse.Controllers
             ViewBag.TripList = TripListObject.GenerateTrips();
 
             return View();
+<<<<<<< HEAD
             //ViewBag.YelpInfo = API.Yelp();
             //ViewBag.NASAInfo = API.NASA("notSorted");
 
@@ -79,16 +78,18 @@ namespace Tra_Verse.Controllers
             //ViewBag.PricePerDollarSign = randPrice;
 
             //return View();
+=======
+>>>>>>> 5b9f6b90cdb12229883a133dfcdf1a035101d46d
         }
 
         public ActionResult EditTrip()
         {
             User user = database.Users.Find(UserController.currentUser.UserID);
-            if(UserController.currentUser.LoggedIn == false)
+            if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
             }
-            if(user.OrderID <=0)
+            if (user.OrderID <= 0)
             {
                 ViewBag.EditError = "You dont have an order to edit - PLEASE LEAVE THIS SITE THANK YOU.";
                 return View("Error");
@@ -109,9 +110,15 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult DeleteTrip()
+        public ActionResult DeleteTrip(VacationLog deleteOrder)
         {
-            return View();
+            List<VacationLog> vacationList = database.VacationLogs.Where(x => x.OrderID == deleteOrder.OrderID).ToList();
+
+            VacationLog found = database.VacationLogs.Find(deleteOrder.OrderID);
+            database.VacationLogs.Remove(found);
+            database.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult RefreshForTotal(FormCollection variables)
@@ -159,24 +166,60 @@ namespace Tra_Verse.Controllers
                 Console.Write(e.EntityValidationErrors);
                 return View("Error");
             }
+<<<<<<< HEAD
             //ViewBag.NASAInfo = API.NASA("notSorted");
             //ViewBag.Index = UserController.currentUser.CurrentIndex;
+=======
+
+            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
+            int index = UserController.currentUser.CurrentIndex;
+
+            return RedirectToAction("PrivateAccomodations", new { index });
+        }
+
+        public ActionResult RefreshForEdit(VacationLog order)
+        {
+            User user = database.Users.Find(UserController.currentUser.UserID);
+            if (UserController.currentUser.LoggedIn == false)
+            {
+                return View("LoginError");
+            }
+            else if (user.OrderID <= 0)
+            {
+                return View("Error");
+            }
+
+            try
+            {
+                VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
+                vacationToEdit.DateEnd = order.DateEnd;
+                vacationToEdit.DateStart = order.DateStart;
+                vacationToEdit.ShipType = order.ShipType;
+                vacationToEdit.Price = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
+                database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                Console.Write(e.EntityValidationErrors);
+                return View("Error");
+            }
+
+            TempData["UpdatedOrder"] = "This is your updated order";
+            return RedirectToAction("Confirmation Page");
+        }
+
+        public ActionResult Checkout(int price)
+        {
+            ViewBag.NASAInfo = API.NASA("notSorted");
+            ViewBag.Index = UserController.currentUser.CurrentIndex;
+>>>>>>> 5b9f6b90cdb12229883a133dfcdf1a035101d46d
 
             VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
             TempData["CurrentVacation"] = currentVacation;
             //database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
             //database.SaveChanges();
 
-            return View();
-        }
-
-        public ActionResult Error()
-        {
-            return View();
-        }
-
-        public ActionResult LoginError()
-        {
             return View();
         }
 
@@ -189,7 +232,7 @@ namespace Tra_Verse.Controllers
             findEmail.NameOnCard = fc["NameOnCard"];
 
             ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-  
+
             database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
             return RedirectToAction("ConfirmationPage");
@@ -197,8 +240,6 @@ namespace Tra_Verse.Controllers
 
         public ActionResult ConfirmationPage()
         {
-            //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
 
             User user = database.Users.Find(UserController.currentUser.UserID);
@@ -214,9 +255,10 @@ namespace Tra_Verse.Controllers
 
             return View();
         }
-
-        public ActionResult RefreshForEdit(VacationLog order)
+        
+        public ActionResult Error()
         {
+<<<<<<< HEAD
             User user = database.Users.Find(UserController.currentUser.UserID);
             if (UserController.currentUser.LoggedIn == false)
             {
@@ -244,16 +286,19 @@ namespace Tra_Verse.Controllers
             }
             TempData["UpdatedOrder"] = "This is your updated order";
             return RedirectToAction("Confirmation Page");
+=======
+            return View();
+>>>>>>> 5b9f6b90cdb12229883a133dfcdf1a035101d46d
         }
 
-         /* List<VacationLog> test = database.VacationLogs.ToList();
-                    test.OrderBy(x => x.Price);
-                    test.Reverse();*/
-        /*if (!string.IsNullOrEmpty(price))
+        public ActionResult LoginError()
         {
-        
-        
-    /* public ActionResult TripList(string price)
+            return View();
+        }
+    }
+}
+
+/* public ActionResult TripList(string price)
      {
          List<VacationLog> test = database.VacationLogs.ToList();
          test.OrderBy(x => x.Price);
@@ -262,67 +307,35 @@ namespace Tra_Verse.Controllers
          {
              travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
          }*/
-        //return View();
-        //}
+//return View();
+//}
 
-        //public ActionResult TripListCruise(string sortOrder)
-        //{
-        //    List<VacationLog> test = database.VacationLogs.ToList();
-        //    test.OrderBy(x => x.Price);
-        //    test.Reverse();
+//public ActionResult TripListCruise(string sortOrder)
+//{
+//    List<VacationLog> test = database.VacationLogs.ToList();
+//    test.OrderBy(x => x.Price);
+//    test.Reverse();
 
-        /*switch (sortOrder)
-        {
-            case "Start Date":
-                sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
-                break;
-            case "Distance":
-                sortOrder = sortOrder.OrderByDescending(x => x.Distance);
-                break;
-            case "Rating":
-                sortOrder = sortOrder.OrderByDescending(x => x.Rating);
-                break;
-            case "Price":
-                sortOrder = sortOrder.OrderByDescending(x => x.price);
-                break;
-            case "date_desc":
-                sortOrder = sortOrder.OrderByDescending(x => x.date);
-                break;
-            default:
-                break;
-        }*/
-        //travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
-        //}*/
-        //return View();
-        //}
-
-        //public ActionResult TripListCruise(string sortOrder)
-        //{
-        //    List<VacationLog> test = database.VacationLogs.ToList();
-        //    test.OrderBy(x => x.Price);
-        //    test.Reverse();
-
-        /*switch (sortOrder)
-        {
-            case "Start Date":
-                sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
-                break;
-            case "Distance":
-                sortOrder = sortOrder.OrderByDescending(x => x.Distance);
-                break;
-            case "Rating":
-                sortOrder = sortOrder.OrderByDescending(x => x.Rating);
-                break;
-            case "Price":
-                sortOrder = sortOrder.OrderByDescending(x => x.price);
-                break;
-            case "date_desc":
-                sortOrder = sortOrder.OrderByDescending(x => x.date);
-                break;
-            default:
-                break;
-        }*/
-        //    return RedirectToAction("TripList", "Home");
-        //}
-    }
-}
+/*switch (sortOrder)
+{
+    case "Start Date":
+        sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
+        break;
+    case "Distance":
+        sortOrder = sortOrder.OrderByDescending(x => x.Distance);
+        break;
+    case "Rating":
+        sortOrder = sortOrder.OrderByDescending(x => x.Rating);
+        break;
+    case "Price":
+        sortOrder = sortOrder.OrderByDescending(x => x.price);
+        break;
+    case "date_desc":
+        sortOrder = sortOrder.OrderByDescending(x => x.date);
+        break;
+    default:
+        break;
+}*/
+//travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
+//}*/
+//return View();}

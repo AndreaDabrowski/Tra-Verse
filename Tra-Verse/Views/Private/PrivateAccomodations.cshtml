@@ -1,0 +1,114 @@
+@{
+    //string path = "~/Content/Images/Planets";
+    //string[] PlanetImages = new string[16] { path + "GJ 3021 b.jpg", path+"HATS-34 b.png", path+"HD 142 b.png", path+"HD 142 c.jpg", path+"HD 1461 b.png", path+"HD 1502 b.png", path+"HD 564 b.jpg", path+"HD1461c.jpg", path+"KELT-1 b.jpg", path+"Qatar-4 b.jpg", path+"WASP-136 b.png", path+"WASP-158 b.PNG", path+"WASP-26 b.png", path+"WASP-32 b.png", path+"WASP-44 b.png", path+"WASP-96 b.PNG" };
+    int p = ViewBag.TripIndices.PlanetIndex;
+    string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
+    string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
+
+    //string[] PlanetImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
+    string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
+    float priceBeforeTotal = float.Parse(priceString) * 2319;//change p to travel Index??
+}
+
+
+<h1>@ViewBag.NASA[ViewBag.Index]["pl_name"]</h1>
+<p>Distance from Earth: @ViewBag.NASA[ViewBag.Index]["st_dist"] parsecs</p>
+<p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>
+<img src="@ViewBag.PlanetPic[ViewBag.Index]" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="left" />
+<br />
+<p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
+<p>Cruise Ship: </p>
+<img src="@shipImages[ViewBag.TripIndices.CompanyIndex]" height="100" width="100" align="left" />
+<br />
+<h3>Base Price : $@(priceBeforeTotal)</h3>
+<p>*Price may be affected by customizations and ratings - refresh total below</p>
+<br />
+<p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>
+<p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
+<br />
+@*<p>Departure Date: @ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>*@
+@*<p>Number of Days: @ViewBag.TripIndices.NumberOfDays</p>*@
+@*<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>*@
+<br />
+<p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString() </p>
+
+<form action="/Home/RefreshForTotal" method="post">
+    <input type="hidden" name="BasePrice" value="@priceBeforeTotal" />
+    <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]" />
+        <p>Exosuit for exploration outside aircraft? </p>
+        <p>Yes +500,000</p><input type="radio" value="Yes" name="ExoSuit" /> <br />
+        <p>No +0</p><input type="radio" value="No" name="ExoSuit" /><br />
+        <br />
+        <img src="@shipImages[0]" height="50" width="65" />
+        <p>+100,000</p><input type="radio" value="1" name="ShipType" /> <br />
+        <img src="@shipImages[1]" height="50" width="65" />
+        <p>+200,000</p><input type="radio" value="2" name="ShipType" /><br />
+        <img src="@shipImages[2]" height="50" width="65" />
+        <p>+300,000</p><input type="radio" value="3" name="ShipType" /><br />
+        <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
+        <label>End Date: </label><input type="date" name="DateEnd" value="8018-12-15" /><br />
+    <input type="submit" value="Refresh Total" />
+</form>
+<h1>Total Price: @TempData["RefreshedTotal"]</h1>
+<br />
+
+@if (TempData["RefreshedTotal"] != null)
+{<br />
+
+ <form action="/Home/Checkout" method="post">
+     <input type="hidden" name="ShipType" value="@TempData["ShipType"]" />
+     <input type="hidden" name="ExoSuit" value="@TempData["ExoSuit"]" />
+     <input type="hidden" name="PlanetName" value="@ViewBag.NASA[p]["pl_name"]"/>
+     <input type="hidden" name="Price" value="@TempData["RefreshedTotal"]"/>
+     <input type="hidden" name="DateStart" value="@TempData["DStart"]" />
+     <input type="hidden" name="DateEnd" value="@TempData["DEnd"]" />
+     <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]"/>
+     @*<input type="hidden" name="ShipType" value="@shipImages[ViewBag.TripIndices.CompanyIndex]">@*INDEX AT 4?*@
+     <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]"/>@*INDEX AT 4?*@
+     <input type="hidden" name="PlanetImage" value="@ViewBag.PlanetPic[p]">
+     <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString()">
+     @*<input type="hidden" name="ExoSuit" value="">@*RADIO BUTTON INPUT*@
+     <input type="submit" value="Proceed to Checkout" />
+ </form>
+
+}
+@*if null, show unkown*@
+<hr />
+<h4>Destination Description for @ViewBag.NASA[p]["pl_name"]:</h4>
+<ul>Host Star: @ViewBag.NASA[p]["pl_hostname"]</ul>
+<ul>Method of Discovery: @ViewBag.NASA[p]["pl_discmethod"]</ul>
+<ul>Mass in Units of Earth's Weight: @ViewBag.NASA[p]["pl_masse"] Earths</ul>
+<ul>Time to Orbit Local Star: @ViewBag.NASA[p]["pl_orbper"] days</ul>
+<ul>Year of Discovery: @ViewBag.NASA[p]["pl_disc"]</ul>
+<ul>To Learn More: </ul>
+<p>Exoplanet Encyplopedia: @ViewBag.NASA[p]["pl_pelink"]</p>
+<p>Exoplanet Data Explorer: @ViewBag.NASA[p]["pl_edelink"]</p>
+
+
+
+
+@*@{
+        int pricePerDistance = ViewBag.NASAInfo[ViewBag.Index]["st_dist"] / 100 * 200000;
+        string dollarSigns = ViewBag.YelpInfo["businesses"][ViewBag.Index]["price"].ToString();
+
+        string rating = ViewBag.YelpInfo["businesses"][ViewBag.Index]["rating"].ToString();
+        string planetName = ViewBag.NASAInfo[ViewBag.Index]["pl_name"].ToString();
+        string[] images = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
+    }
+
+    <p>Price per Distance: $@pricePerDistance</p>
+    <p>Price rating: $@dollarSigns</p>
+
+    <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14"style="color:black" />
+    <label>End Date: </label><input type="date" name="DateEnd" value="9015-12-15" style="color:black" /><br />
+
+    <input type="submit" value="Submit Vacation" style="color:black" />
+</form>
+
+        <input type="submit" value="Submit Vacation" />
+    </form>
+
+    @*<h1>@TempData["TotalPrice"]</h1>*@
+
+@*<p>The price of your trip below. Click to move on to the CheckOut page.</p>*@
+

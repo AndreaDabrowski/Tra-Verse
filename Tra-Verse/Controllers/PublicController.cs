@@ -9,7 +9,6 @@ namespace Tra_Verse.Controllers
 {
     public class PublicController : Controller
     {
-        // GET: Public
         public ActionResult PublicAccomodations(TripListObject tripIndices)
         {
             if (ModelState.IsValid)

@@ -136,6 +136,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EmailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PrivateController.cs" />
     <Compile Include="Controllers\PublicController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
@@ -170,11 +171,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\background-index.css" />
     <Content Include="Content\background.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\background-vibrant.jpg" />
     <Content Include="Content\Images\Planets\GJ3021b.jpg" />
     <Content Include="Content\Images\Planets\HATS34b.png" />
     <Content Include="Content\Images\Planets\HD142b.jpg" />
@@ -243,9 +246,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\TripList.cshtml" />
-    <Content Include="Views\Home\TripDetails.cshtml" />
-    <Content Include="Views\Home\PrivateAccomodations.cshtml" />
+    <Content Include="Views\Private\PrivateAccomodations.cshtml" />
     <Content Include="Views\Public\PublicAccomodations.cshtml" />
     <Content Include="Views\Home\EditTrip.cshtml" />
     <Content Include="Views\Home\CheckOut.cshtml" />
@@ -253,15 +254,16 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
-    <Content Include="Views\Home\LoginError.cshtml" />
+    <Content Include="Views\User\LoginError.cshtml" />
     <Content Include="Views\Home\PreOrderError.cshtml" />
     <Content Include="Views\Home\YourTrip.cshtml" />
     <Content Include="Views\Home\Redo.cshtml" />
     <Content Include="Views\Public\PublicTripList.cshtml" />
-    <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\LoggedIn.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
+    <Content Include="Views\User\LoggedIn.cshtml" />
     <Content Include="Views\Home\Registered.cshtml" />
     <Content Include="Views\Home\DeleteTrip.cshtml" />
+    <Content Include="Views\Private\TripList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
