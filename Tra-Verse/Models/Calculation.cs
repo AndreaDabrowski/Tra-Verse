@@ -81,7 +81,6 @@ namespace Tra_Verse.Models
             int totalPrice = basePrice + priceShipOption + suitCharge + pricePerDollar;
             return totalPrice;
         }
-
         //public static int 
 
         //public static Array CreateTripList()
