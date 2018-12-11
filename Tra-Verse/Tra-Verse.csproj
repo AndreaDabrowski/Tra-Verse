@@ -256,7 +256,7 @@
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\User\LoginError.cshtml" />
     <Content Include="Views\Home\PreOrderError.cshtml" />
-    <Content Include="Views\Home\YourTrip.cshtml" />
+    <Content Include="Views\User\YourTrip.cshtml" />
     <Content Include="Views\Home\Redo.cshtml" />
     <Content Include="Views\Public\PublicTripList.cshtml" />
     <Content Include="Views\User\Login.cshtml" />

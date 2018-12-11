@@ -35,14 +35,28 @@ namespace Tra_Verse.Models
             return tripsWithShips;
         }
 
+        public static string[] PlanetImagingSystem()
+        {
+            string[] planetImageSystem = new string[] { "https://exoplanets.nasa.gov/newworldsatlas/4255/hd-1461-c/",
+            "https://exoplanets.nasa.gov/newworldsatlas/1269/hd-142-b/", "https://exoplanets.nasa.gov/newworldsatlas/1270/hd-142-c/",
+            "https://exoplanets.nasa.gov/newworldsatlas/5722/hd-564-b/", "https://exoplanets.nasa.gov/newworldsatlas/285/hd-1461-b/",
+            "https://exoplanets.nasa.gov/newworldsatlas/1271/hd-1502-b/", "https://exoplanets.nasa.gov/newworldsatlas/1713/kelt-1-b/",
+            "https://exoplanets.nasa.gov/newworldsatlas/1136/gj-3021-b/", "https://exoplanets.nasa.gov/newworldsatlas/5665/wasp-26-b/",
+            "https://exoplanets.nasa.gov/newworldsatlas/5668/wasp-32-b/", "https://exoplanets.nasa.gov/newworldsatlas/5676/wasp-44-b/",
+            "https://exoplanets.nasa.gov/newworldsatlas/5152/wasp-96-b/", "https://exoplanets.nasa.gov/newworldsatlas/6372/wasp-158-b/",
+            "https://exoplanets.nasa.gov/newworldsatlas/3426/hats-34-b/", "https://exoplanets.nasa.gov/newworldsatlas/3433/wasp-136-b/",
+            "https://exoplanets.nasa.gov/newworldsatlas/3487/qatar-4-b/"};
+            return planetImageSystem;
+        }
+
         public static string[] Planets()
         {
             string path = "~/Content/Images/Planets/";
-            string[] planetPhotos = new string[16] { path + "GJ 3021 b.jpg", path+"HATS-34 b.png", path+"HD 142 b.png", path+"HD 142 c.jpg", path+"HD 1461 b.png", path+"HD 1502 b.png", path+"HD 564 b.jpg", path+"HD1461c.jpg", path+"KELT-1 b.jpg", path+"Qatar-4 b.jpg", path+"WASP-136 b.png", path+"WASP-158 b.PNG", path+"WASP-26 b.png", path+"WASP-32 b.png", path+"WASP-44 b.png", path+"WASP-96 b.PNG" };
-            //string[] planetPhotos = new string[16] { "GJ3021b.jpg", "HATS34b.png", "HD142b.png", "HD142c.jpg", "HD1461b.png", "HD1502b.png", "HD564b.jpg", "HD1461c.jpg", "KELT1b.jpg", "Qatar4b.jpg", "WASP136b.png", "WASP158b.PNG", "WASP26b.png", "WASP32b.png", "WASP44b.png", "WASP96b.PNG" };
-
+            string[] planetPhotos = new string[16] { path + "HD1461c.jpg", path + "HD142b.png", path + "HD142c.jpg",
+                    path + "HD564b.jpg", path + "HD1461b.png", path + "HD1502b.png", path + "KELT1b.jpg", path + "GJ3021b.jpg",
+                    path + "WASP26b.png", path + "WASP32b.png", path + "WASP44b.png", path + "WASP96b.PNG", path + "WASP158b.PNG",
+                    path + "HATS34b.png", path + "WASP136b.png", path + "Qatar4b.jpg" };
             return planetPhotos;
         }
-
     }
 }
