@@ -52,7 +52,7 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult PrivateAccomodations(TripListObject tripIndices)
+        public ActionResult PrivateAccomodations(TripListObject tripIndices, int index)
         {
             if (ModelState.IsValid)
             {
@@ -61,6 +61,7 @@ namespace Tra_Verse.Controllers
                 ViewBag.Yelp = API.Yelp();
                 ViewBag.TripIndices = tripIndices;
                 ViewBag.PlanetPic = TripListObject.Planets();
+                ViewBag.Index = index;
 
                 return View();
             }
@@ -113,7 +114,22 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult RefreshForTotal(VacationLog order)
+        public ActionResult RefreshForTotal(FormCollection variables)
+        {
+            //current user rand price for YELP $$$ calc
+            TempData["ShipType"] = variables["ShipType"];
+            TempData["ExoSuit"] = variables["ExoSuit"];
+            TempData["Rating"] = variables["Rating"];
+            TempData["DateEnd"] = variables["DateEnd"];
+            TempData["DateStart"] = variables["DateStart"];
+            int pr = int.Parse(variables["BasePrice"]);
+            TempData["RefreshedTotal"] = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
+            //int index = UserController.currentUser.CurrentIndex;
+
+            return RedirectToAction("PrivateAccomodations");//how to send trip indices
+        }
+
+        public ActionResult Checkout(VacationLog order)
         {
             if (UserController.currentUser.LoggedIn == false)
             {
@@ -127,7 +143,6 @@ namespace Tra_Verse.Controllers
                 TempData["OrderAlready"] = "This user already has the following order";
                 return RedirectToAction("ConfirmationPage");
             }
-
             try
             {
                 VacationLog added = database.VacationLogs.Add(order);
@@ -144,23 +159,13 @@ namespace Tra_Verse.Controllers
                 Console.Write(e.EntityValidationErrors);
                 return View("Error");
             }
-            //int randPrice = UserController.currentUser.RandPrice;
-
-            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
-            int index = UserController.currentUser.CurrentIndex;
-
-            return RedirectToAction("PrivateAccomodations", new { index });
-        }
-
-        public ActionResult Checkout(int price)
-        {
-            ViewBag.NASAInfo = API.NASA("notSorted");
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
+            //ViewBag.NASAInfo = API.NASA("notSorted");
+            //ViewBag.Index = UserController.currentUser.CurrentIndex;
 
             VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            currentVacation.Price = price;
-            database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
-            database.SaveChanges();
+            TempData["CurrentVacation"] = currentVacation;
+            //database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
+            //database.SaveChanges();
 
             return View();
         }
@@ -195,7 +200,6 @@ namespace Tra_Verse.Controllers
             //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
 
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            ViewBag.TotalPrice = Calculation.TotalPrice(vacationInfo.ShipType, vacationInfo.Price);
 
             User user = database.Users.Find(UserController.currentUser.UserID);
             ViewBag.Planet = vacationInfo.PlanetName;
@@ -228,7 +232,7 @@ namespace Tra_Verse.Controllers
                 vacationToEdit.DateEnd = order.DateEnd;
                 vacationToEdit.DateStart = order.DateStart;
                 vacationToEdit.ShipType = order.ShipType;
-                vacationToEdit.Price = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
+                //vacationToEdit.Price = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
                 database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
 

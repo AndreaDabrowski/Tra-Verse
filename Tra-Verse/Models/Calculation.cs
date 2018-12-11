@@ -8,14 +8,14 @@ namespace Tra_Verse.Models
 {
     public class Calculation
     {
-        public static int TripPriceRandomizer(int index)
+        public static int TripPriceRandomizer(string dollar)
         {
-            var yelp = API.Yelp();
-            string randomPrice = yelp["businesses"][index]["price"].ToString();
+            //var yelp = API.Yelp();
+            //string randomPrice = yelp["businesses"][index]["price"].ToString();
             int pricePerDollarSign = 0;
             Random rand = new Random();
 
-            switch (randomPrice)
+            switch (dollar)
             {
                 case "$":
                     pricePerDollarSign = rand.Next(10000, 15000);
@@ -39,32 +39,46 @@ namespace Tra_Verse.Models
             return pricePerDollarSign;
         }
 
-        public static int TotalPrice(string ship, int dollarSign)
+        public static int TotalPrice(string ship, string suit, int basePrice, string dollar)
         {
-            var Nasa = API.NASA("notSorted");
-            var takeDistance = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
-            int distance = Convert.ToInt32(takeDistance);
+            int suitCharge = 0;
+            switch (suit)
+            {
+                case "Yes":
+                    suitCharge = 500001;
+                    break;
+                case "No":
+                    suitCharge = 01;
+                    break;
+                default:
+                    suitCharge = 0;
+                    break;
+            }
+            //var Nasa = API.NASA("notSorted");
+            //var takeDistance = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
+            //int distance = Convert.ToInt32(takeDistance);
 
-            int pricePerDistance = distance / 100 * 2500;
-            int pricePerDollarSign = dollarSign * 1000;
+            //int pricePerDistance = distance / 100 * 2500;
+            //int pricePerDollarSign = dollarSign * 1000;
+            int pricePerDollar = TripPriceRandomizer(dollar);
+
             int priceShipOption = 0;
-
             switch (ship)
             {
                 case "1":
-                    priceShipOption = 10000;
+                    priceShipOption = 100000;
                     break;
                 case "2":
-                    priceShipOption = 20000;
+                    priceShipOption = 200000;
                     break;
                 case "3":
-                    priceShipOption = 30000;
+                    priceShipOption = 300000;
                     break;
                 default:
                     break;
             }
-
-            int totalPrice = pricePerDistance + pricePerDollarSign + priceShipOption;
+            
+            int totalPrice = basePrice + priceShipOption + suitCharge + pricePerDollar;
             return totalPrice;
         }
 
