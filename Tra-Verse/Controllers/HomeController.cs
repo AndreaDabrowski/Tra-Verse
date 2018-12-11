@@ -24,8 +24,11 @@ namespace Tra_Verse.Controllers
 
         public ActionResult TripList()
         {
-            ViewBag.YelpInfo = API.Yelp();
-            ViewBag.NASAInfo = API.NASA("notSorted");
+            ViewBag.Travel = API.Travel()["results"];//jobject
+            ViewBag.NASA = API.NASA("notSorted");//jarray
+            ViewBag.Yelp = API.Yelp();
+            ViewBag.PlanetList = TripListObject.Planets();
+            ViewBag.TripList = TripListObject.GenerateTrips();
 
             return View();
         }
@@ -66,7 +69,7 @@ namespace Tra_Verse.Controllers
                 return View("LoginError");
             }
             if(user.OrderID <=0)
-            {
+            { 
                 ViewBag.EditError = "You dont have an order to edit - PLEASE LEAVE THIS SITE THANK YOU.";
                 return View("Error");
             }
@@ -219,13 +222,6 @@ namespace Tra_Verse.Controllers
             TempData["UpdatedOrder"] = "This is your updated order";
             return RedirectToAction("Confirmation Page");
         }
-
-         /* List<VacationLog> test = database.VacationLogs.ToList();
-                    test.OrderBy(x => x.Price);
-                    test.Reverse();*/
-        /*if (!string.IsNullOrEmpty(price))
-        {
-        
         
     /* public ActionResult TripList(string price)
      {
@@ -269,34 +265,3 @@ namespace Tra_Verse.Controllers
         //}*/
         //return View();
         //}
-
-        //public ActionResult TripListCruise(string sortOrder)
-        //{
-        //    List<VacationLog> test = database.VacationLogs.ToList();
-        //    test.OrderBy(x => x.Price);
-        //    test.Reverse();
-
-        /*switch (sortOrder)
-        {
-            case "Start Date":
-                sortOrder = sortOrder.OrderByDescending(x => x.DateStart);
-                break;
-            case "Distance":
-                sortOrder = sortOrder.OrderByDescending(x => x.Distance);
-                break;
-            case "Rating":
-                sortOrder = sortOrder.OrderByDescending(x => x.Rating);
-                break;
-            case "Price":
-                sortOrder = sortOrder.OrderByDescending(x => x.price);
-                break;
-            case "date_desc":
-                sortOrder = sortOrder.OrderByDescending(x => x.date);
-                break;
-            default:
-                break;
-        }*/
-        //    return RedirectToAction("TripList", "Home");
-        //}
-    }
-}
