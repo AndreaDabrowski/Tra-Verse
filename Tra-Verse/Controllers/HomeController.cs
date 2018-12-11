@@ -27,10 +27,14 @@ namespace Tra_Verse.Controllers
             ViewBag.Travel = API.Travel()["results"];//jobject
             ViewBag.NASA = API.NASA("notSorted");//jarray
             ViewBag.Yelp = API.Yelp();
-            ViewBag.PlanetList = TripListObject.Planets();
+            ViewBag.PlanetPic = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
 
             return View();
+            //ViewBag.YelpInfo = API.Yelp();
+            //ViewBag.NASAInfo = API.NASA("notSorted");
+
+            //return View();
         }
 
         public ActionResult Login()
@@ -48,17 +52,32 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult PrivateAccomodations(int index)
+        public ActionResult PrivateAccomodations(TripListObject tripIndices)
         {
-            ViewBag.YelpInfo = API.Yelp();
-            ViewBag.NASAInfo = API.NASA("notSorted");
-            UserController.currentUser.CurrentIndex = index;
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
-            int randPrice = Calculation.TripPriceRandomizer(index);
-            UserController.currentUser.RandPrice = randPrice;
-            ViewBag.PricePerDollarSign = randPrice;
+            if (ModelState.IsValid)
+            {
+                ViewBag.Travel = API.Travel();
+                ViewBag.NASA = API.NASA("notSorted");
+                ViewBag.Yelp = API.Yelp();
+                ViewBag.TripIndices = tripIndices;
+                ViewBag.PlanetPic = TripListObject.Planets();
 
-            return View();
+                return View();
+            }
+            else
+            {
+                ViewBag.ModelNotValid = "Model Not Valid";
+                return View("Error", "Home");
+            }
+            //ViewBag.YelpInfo = API.Yelp();
+            //ViewBag.NASAInfo = API.NASA("notSorted");
+            //UserController.currentUser.CurrentIndex = index;
+            //ViewBag.Index = UserController.currentUser.CurrentIndex;
+            //int randPrice = Calculation.TripPriceRandomizer(index);
+            //UserController.currentUser.RandPrice = randPrice;
+            //ViewBag.PricePerDollarSign = randPrice;
+
+            //return View();
         }
 
         public ActionResult EditTrip()

@@ -14,28 +14,30 @@
 {
     int p = trips[i].PlanetIndex;
     var travel = ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0];
-
-<div>
-    <h3>@trips[i].NumberOfDays-Trip To @ViewBag.NASA[p]["pl_name"]</h3>
-    <img src=@trips[i].Planets height="200" width="200" align="left">
     <br />
-    <p>Company Name:@companyName[trips[i].CompanyIndex]</p>
-    <img src="@shipImages[trips[i].CompanyIndex]" height="100" width="100" align="left" />
-    <p>Departure Date: @ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
-    <p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
-    <form action="/Public/PublicAccomodations" method="post">
-        <input type="hidden" name="PlanetIndex" value="@trips[i].PlanetIndex">
-        <input type="hidden" name="CompanyIndex" value="@trips[i].CompanyIndex">
-        <input type="hidden" name="NumberOfDays" value="@trips[i].NumberOfDays">
-        <input type="hidden" name="TravelIndex" value="@trips[i].TravelIndex">
-        <input type="submit" value="Choose this Vacation" class="btn-default">
-    </form>
-</div>
+    <br />
+    <hr />
+    <div>
+        <h3>@trips[i].NumberOfDays-Trip To @ViewBag.NASA[p]["pl_name"]</h3>
+        <img src="@ViewBag.PlanetPic[p]" height="200" width="200" align="left">
+        <br />
+        <p>Company Name:@companyName[trips[i].CompanyIndex]</p>
+        <img src="@shipImages[trips[i].CompanyIndex]" height="100" width="100" align="right" />
+        <p>Departure Date: @ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
+        <p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
+        <form action="/Public/PublicAccomodations" method="post">
+            <input type="hidden" name="PlanetIndex" value="@trips[i].PlanetIndex">
+            <input type="hidden" name="CompanyIndex" value="@trips[i].CompanyIndex">
+            <input type="hidden" name="NumberOfDays" value="@trips[i].NumberOfDays">
+            <input type="hidden" name="TravelIndex" value="@trips[i].TravelIndex">
+            <input type="submit" value="Choose this Vacation" class="btn-default">
+        </form>
+    </div>
     <br />
 }
-    @*<p>Rooms remaining: @(ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"]* trips[i].NumberOfDays)</p>*@
-    @*<p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>*@
-    @*<p>
-            Distance from Earth: @ViewBag.NASA[p]["st_dist"] parsecs
-            *Unit of distance where 1 parsec equals the distance from the Earth to Sun
-        </p>*@
+@*<p>Rooms remaining: @(ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"]* trips[i].NumberOfDays)</p>*@
+@*<p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>*@
+@*<p>
+        Distance from Earth: @ViewBag.NASA[p]["st_dist"] parsecs
+        *Unit of distance where 1 parsec equals the distance from the Earth to Sun
+    </p>*@
