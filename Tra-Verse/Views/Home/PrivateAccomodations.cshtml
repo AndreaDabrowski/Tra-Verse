@@ -89,14 +89,11 @@
     <p>Price per Distance: $@pricePerDistance</p>
     <p>Price rating: $@dollarSigns</p>
 
-            <input type="hidden" value="@ViewBag.PricePerDollarSign" name="Price">@*added trip price with randomizer*@
-@*Business Price: @dollarSigns
+    <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14"style="color:black" />
+    <label>End Date: </label><input type="date" name="DateEnd" value="9015-12-15" style="color:black" /><br />
 
-        <p>Review count: @ViewBag.YelpInfo["businesses"][ViewBag.Index]["review_count"]</p>
-            <input type="hidden" value="@double.Parse(rating)" name="Rating">
-            Rating: @double.Parse(rating)
-        </p>
-
+    <input type="submit" value="Submit Vacation" style="color:black" />
+</form>
 
         <input type="submit" value="Submit Vacation" />
     </form>

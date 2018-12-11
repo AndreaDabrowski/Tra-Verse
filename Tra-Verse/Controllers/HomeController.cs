@@ -4,10 +4,10 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Tra_Verse.Models;
+using Tra_Verse.Controllers;
 using System.Linq;
 using System.Collections.Generic;
-
+using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
 {
@@ -83,12 +83,12 @@ namespace Tra_Verse.Controllers
         public ActionResult EditTrip()
         {
             User user = database.Users.Find(UserController.currentUser.UserID);
-            if(UserController.currentUser.LoggedIn == false)
+            if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError");
             }
-            if(user.OrderID <=0)
-            { 
+            if (user.OrderID <= 0)
+            {
                 ViewBag.EditError = "You dont have an order to edit - PLEASE LEAVE THIS SITE THANK YOU.";
                 return View("Error");
             }
@@ -108,9 +108,15 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult DeleteTrip()
+        public ActionResult DeleteTrip(VacationLog deleteOrder)
         {
-            return View();
+            List<VacationLog> vacationList = database.VacationLogs.Where(x => x.OrderID == deleteOrder.OrderID).ToList();
+
+            VacationLog found = database.VacationLogs.Find(deleteOrder.OrderID);
+            database.VacationLogs.Remove(found); 
+            database.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult RefreshForTotal(VacationLog order)
@@ -184,7 +190,7 @@ namespace Tra_Verse.Controllers
             findEmail.NameOnCard = fc["NameOnCard"];
 
             ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
-  
+
             database.Entry(findEmail).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
             return RedirectToAction("ConfirmationPage");
@@ -218,7 +224,7 @@ namespace Tra_Verse.Controllers
             {
                 return View("LoginError");
             }
-            else if (user.OrderID<=0)
+            else if (user.OrderID <= 0)
             {
                 return View("Error");
             }
@@ -241,7 +247,17 @@ namespace Tra_Verse.Controllers
             TempData["UpdatedOrder"] = "This is your updated order";
             return RedirectToAction("Confirmation Page");
         }
-        
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+       
+
+        /* List<VacationLog> test = database.VacationLogs.ToList();
+                    test.OrderBy(x => x.Price);
+                    test.Reverse();*/
+        /*if (!string.IsNullOrEmpty(price))
+        {
+            
     /* public ActionResult TripList(string price)
      {
          List<VacationLog> test = database.VacationLogs.ToList();
@@ -282,5 +298,6 @@ namespace Tra_Verse.Controllers
         }*/
         //travelprice = database.VacationLogs.Where(p => p.Price >= lesserPrice && p.Price <= greaterPrice);
         //}*/
-        //return View();
-        //}
+        //return View();}
+    }
+}

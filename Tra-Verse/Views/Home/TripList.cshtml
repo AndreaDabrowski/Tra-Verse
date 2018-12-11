@@ -37,7 +37,7 @@
                 <input type="hidden" name="TravelIndex" value="@trips[i].TravelIndex">
                 <input type="submit" value="Choose this Vacation" class="btn-default">
             </form>
-            <input type="button" class="btn-default" name="@trips[i]" value="Choose" onclick= "window.location='@Url.Action("PublicAccomodations", "Public", new object { tripIndices = Model.CompanyIndex })'" />*@
+            
 </div>
         <br />
 
@@ -48,13 +48,16 @@
 
 @for (int i = 0; i < 15; i++)
 {
-    int p = trips[i].PlanetIndex;
-    var travel = ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0];
-    string priceString = ViewBag.Travel[p]["fare"]["total_price"].ToString();
-    float priceBeforeTotal = float.Parse(priceString);
-    <br />
-    <br />
-    <hr />
+
+<div>
+    <img src=@shipImages[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
+    <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span><br />
+    <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
+    <p>Trip base price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
+    <p>@ViewBag.YelpInfo["businesses"][i]["review_count"] Current Reviews</p>
+    <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
+    <a class="btn-default" href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a><br /><br /><br />
+</div>
     <div>
         <img src="@ViewBag.PlanetPic[p]" height="200" width="200" align="left">@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
         <h3>Trip To "@ViewBag.NASA[p]["pl_name"]"</h3>@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
