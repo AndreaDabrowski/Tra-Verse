@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
@@ -13,10 +9,10 @@ namespace Tra_Verse.Controllers
 
         public ActionResult TripList()
         {
-            ViewBag.Travel = API.Travel()["results"];//jobject
+            ViewBag.Travel = API.Travel();//jobject
             ViewBag.NASA = API.NASA("notSorted");//jarray
             ViewBag.Yelp = API.Yelp();
-            ViewBag.PlanetList = TripListObject.Planets();
+            ViewBag.PlanetPic = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
 
             return View();
@@ -37,12 +33,11 @@ namespace Tra_Verse.Controllers
             else
             {
                 ViewBag.ModelNotValid = "Model Not Valid";
-                return View("Error", "Home");
+                return RedirectToAction("Error", "Home");
             }
         }
-        public ActionResult RefreshForTotal(FormCollection variables)
+        public ActionResult RefreshForTotal(FormCollection variables, int index)
         {
-            //current user rand price for YELP $$$ calc
             TempData["ShipType"] = variables["ShipType"];
             TempData["ExoSuit"] = variables["ExoSuit"];
             TempData["Rating"] = variables["Rating"];
@@ -50,9 +45,15 @@ namespace Tra_Verse.Controllers
             TempData["DateStart"] = variables["DateStart"];
             int pr = int.Parse(variables["BasePrice"]);
             TempData["RefreshedTotal"] = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
-            //int index = UserController.currentUser.CurrentIndex;
 
-            return RedirectToAction("PrivateAccomodations");//how to send trip indices
+            //output the TLO back into the View
+            TripListObject tripIndices = new TripListObject();
+            tripIndices.PlanetIndex = int.Parse(variables["PlanetIndex"]);
+            tripIndices.CompanyIndex = int.Parse(variables["CompanyIndex"]);
+            tripIndices.NumberOfDays = int.Parse(variables["NumberOfDays"]);
+            tripIndices.TravelIndex = int.Parse(variables["TravelIndex"]);
+
+            return RedirectToAction("PrivateAccomodations", new { tripIndices, index });//how to send trip indices
         }
     }
 }
