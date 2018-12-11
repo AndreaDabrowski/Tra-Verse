@@ -14,6 +14,12 @@
 {
     int p = trips[i].PlanetIndex;
     var travel = ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0];
+
+
+<div>
+    <h3>@trips[i].NumberOfDays-Trip To @ViewBag.NASA[p]["pl_name"]</h3>
+    <img src=@ViewBag.PlanetPic[p] height="200" width="200" align="left">
+
     <br />
     <br />
     <hr />
@@ -34,6 +40,7 @@
         </form>
     </div>
     <br />
+</div>
 }
 @*<p>Rooms remaining: @(ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"]* trips[i].NumberOfDays)</p>*@
 @*<p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>*@
