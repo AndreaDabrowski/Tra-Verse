@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -9,7 +10,7 @@ namespace Tra_Verse.Controllers
 {
     public class PrivateController : Controller
     {
-        //TraVerseEntities database = new TraVerseEntities();
+        TraVerseEntities database = new TraVerseEntities();
 
         public ActionResult TripList()
         {
@@ -22,17 +23,38 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult PrivateAccomodations(int index)
+        public ActionResult PrivateAccomodations(TripListObject tripIndices, int index)
         {
-            ViewBag.YelpInfo = API.Yelp();
-            ViewBag.NASAInfo = API.NASA("notSorted");
-            UserController.currentUser.CurrentIndex = index;
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
-            int randPrice = Calculation.TripPriceRandomizer(index);
-            UserController.currentUser.RandPrice = randPrice;
-            ViewBag.PricePerDollarSign = randPrice;
+            if (ModelState.IsValid)
+            {
+                ViewBag.Travel = API.Travel();
+                ViewBag.NASA = API.NASA("notSorted");
+                ViewBag.Yelp = API.Yelp();
+                ViewBag.TripIndices = tripIndices;
+                ViewBag.PlanetPic = TripListObject.Planets();
+                ViewBag.Index = index;
+                return View();
+            }
+            else
+            {
+                ViewBag.ModelNotValid = "Model Not Valid";
+                return View("Error", "Home");
+            }
+        }
 
-            return View();
+        public ActionResult RefreshForTotal(FormCollection variables)
+        {
+            //current user rand price for YELP $$$ calc
+            TempData["ShipType"] = variables["ShipType"];
+            TempData["ExoSuit"] = variables["ExoSuit"];
+            TempData["Rating"] = variables["Rating"];
+            TempData["DateEnd"] = variables["DateEnd"];
+            TempData["DateStart"] = variables["DateStart"];
+            int pr = int.Parse(variables["BasePrice"]);
+            TempData["RefreshedTotal"] = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
+            //int index = UserController.currentUser.CurrentIndex;
+
+            return RedirectToAction("PrivateAccomodations");//how to send trip indices
         }
     }
 }

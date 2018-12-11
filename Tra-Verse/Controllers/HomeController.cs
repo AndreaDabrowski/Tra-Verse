@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data.Entity.Validation;
 using System.Net;
 using System.Net.Mail;
@@ -17,17 +17,6 @@ namespace Tra_Verse.Controllers
 
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult TripList()
-        {
-            ViewBag.Travel = API.Travel()["results"];//jobject
-            ViewBag.NASA = API.NASA("notSorted");//jarray
-            ViewBag.Yelp = API.Yelp();
-            ViewBag.PlanetPic = TripListObject.Planets();
-            ViewBag.TripList = TripListObject.GenerateTrips();
-
             return View();
         }
 
@@ -70,7 +59,7 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult RefreshForTotal(VacationLog order)
+        public ActionResult Checkout(VacationLog order)
         {
             if (UserController.currentUser.LoggedIn == false)
             {
@@ -84,7 +73,6 @@ namespace Tra_Verse.Controllers
                 TempData["OrderAlready"] = "This user already has the following order";
                 return RedirectToAction("ConfirmationPage");
             }
-
             try
             {
                 VacationLog added = database.VacationLogs.Add(order);
@@ -102,7 +90,6 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
             int index = UserController.currentUser.CurrentIndex;
 
             return RedirectToAction("PrivateAccomodations", new { index });
@@ -126,7 +113,6 @@ namespace Tra_Verse.Controllers
                 vacationToEdit.DateEnd = order.DateEnd;
                 vacationToEdit.DateStart = order.DateStart;
                 vacationToEdit.ShipType = order.ShipType;
-                vacationToEdit.Price = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
                 database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
             }
@@ -146,9 +132,9 @@ namespace Tra_Verse.Controllers
             ViewBag.Index = UserController.currentUser.CurrentIndex;
 
             VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            currentVacation.Price = price;
-            database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
-            database.SaveChanges();
+            TempData["CurrentVacation"] = currentVacation;
+            //database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
+            //database.SaveChanges();
 
             return View();
         }
@@ -171,7 +157,6 @@ namespace Tra_Verse.Controllers
         public ActionResult ConfirmationPage()
         {
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            ViewBag.TotalPrice = Calculation.TotalPrice(vacationInfo.ShipType, vacationInfo.Price);
 
             User user = database.Users.Find(UserController.currentUser.UserID);
             ViewBag.Planet = vacationInfo.PlanetName;
@@ -189,6 +174,7 @@ namespace Tra_Verse.Controllers
         
         public ActionResult Error()
         {
+
             return View();
         }
 
