@@ -4,10 +4,10 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web.Mvc;
-using Tra_Verse.Models;
+using Tra_Verse.Controllers;
 using System.Linq;
 using System.Collections.Generic;
-
+using Tra_Verse.Models;
 
 namespace Tra_Verse.Controllers
 {
@@ -75,7 +75,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Planet = vacationToEdit.PlanetName;
             ViewBag.Rating = vacationToEdit.Rating;
             ViewBag.Price = vacationToEdit.Price;
-            ViewBag.Ship = vacationToEdit.ShipOption;
+            ViewBag.Ship = vacationToEdit.ShipType;
             ViewBag.Start = vacationToEdit.DateStart;
             ViewBag.End = vacationToEdit.DateEnd;
 
@@ -124,7 +124,7 @@ namespace Tra_Verse.Controllers
             }
             //int randPrice = UserController.currentUser.RandPrice;
 
-            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
+            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
             int index = UserController.currentUser.CurrentIndex;
 
             return RedirectToAction("PrivateAccomodations", new { index });
@@ -173,13 +173,13 @@ namespace Tra_Verse.Controllers
             //ViewBag.EditedConfirmationPage = "The information on this Confirmation Page has been EDITED";//used in edited method
 
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            ViewBag.TotalPrice = Calculation.TotalPrice(vacationInfo.ShipOption, vacationInfo.Price);
+            ViewBag.TotalPrice = Calculation.TotalPrice(vacationInfo.ShipType, vacationInfo.Price);
 
             User user = database.Users.Find(UserController.currentUser.UserID);
             ViewBag.Planet = vacationInfo.PlanetName;
             ViewBag.Rating = vacationInfo.Rating;
             ViewBag.Price = vacationInfo.Price;
-            ViewBag.Ship = vacationInfo.ShipOption;
+            ViewBag.Ship = vacationInfo.ShipType;
             ViewBag.Start = vacationInfo.DateStart;
             ViewBag.End = vacationInfo.DateEnd;
 
@@ -205,8 +205,8 @@ namespace Tra_Verse.Controllers
                 VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
                 vacationToEdit.DateEnd = order.DateEnd;
                 vacationToEdit.DateStart = order.DateStart;
-                vacationToEdit.ShipOption = order.ShipOption;
-                vacationToEdit.Price = Calculation.TotalPrice(order.ShipOption, UserController.currentUser.RandPrice);
+                vacationToEdit.ShipType = order.ShipType;
+                vacationToEdit.Price = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
                 database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
                 database.SaveChanges();
 
@@ -235,7 +235,7 @@ namespace Tra_Verse.Controllers
                 "<p>Trip Details: </p>" +
                 "<p>Planet Name: " + vacationInfo.PlanetName.ToString() + "</p>" +
                 "<p>Vacation Rating: " + vacationInfo.Rating.ToString() + "</p>"+
-                "<p>Ship Choice: " + vacationInfo.ShipOption.ToString() +"</p>"+
+                "<p>Ship Choice: " + vacationInfo.ShipType.ToString() +"</p>"+
                 "Departure Date: " + vacationInfo.DateStart.ToString() + "</p>" +
                 "Return Date: " + vacationInfo.DateEnd.ToString() + "</p>" +
                 "</br>"+

@@ -18,15 +18,15 @@
 @*Search function!!!!!!!!!!!!*@
 @for (int i = 0; i < 10; i++)
 {
-    <div>
-        <img src=@shipImages[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
-        <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span><br />
-        <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
-        <p>Trip base price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
-        <p>@ViewBag.YelpInfo["businesses"][i]["review_count"] Current Reviews</p>
-        <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
-        <a class="btn-default" href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a><br /><br /><br />
-    </div>
+<div>
+    <img src=@shipImages[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
+    <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span><br />
+    <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
+    <p>Trip base price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
+    <p>@ViewBag.YelpInfo["businesses"][i]["review_count"] Current Reviews</p>
+    <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
+    <a class="btn-default" href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a><br /><br /><br />
+</div>
     <br />
 
 }
