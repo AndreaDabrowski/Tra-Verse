@@ -9,7 +9,6 @@ namespace Tra_Verse.Controllers
 {
     public class PublicController : Controller
     {
-        // GET: Public
         public ActionResult PublicAccomodations(TripListObject tripIndices)
         {
             if (ModelState.IsValid)
@@ -18,7 +17,7 @@ namespace Tra_Verse.Controllers
                 ViewBag.NASA = API.NASA("notSorted");
                 ViewBag.Yelp = API.Yelp();
                 ViewBag.TripIndices = tripIndices;
-                ViewBag.PlanetPic = TripListObject.Planets;
+                ViewBag.PlanetPic = TripListObject.Planets();
 
                 return View();
             }

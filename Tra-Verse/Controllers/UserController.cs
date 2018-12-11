@@ -92,5 +92,20 @@ namespace Tra_Verse.Controllers
                 return RedirectToAction("LoginError", "Home");
             }
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        public ActionResult LoggedIn()
+        {
+            return View();
+        }
+
+        public ActionResult Registered()
+        {
+            return View();
+        }
     }
 }
