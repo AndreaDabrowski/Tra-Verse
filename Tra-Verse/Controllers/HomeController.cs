@@ -19,11 +19,7 @@ namespace Tra_Verse.Controllers
         {
             return View();
         }
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> 5301582af4af636f029d7d002e12aa641d7ee320
         public ActionResult EditTrip()
         {
             User user = database.Users.Find(UserController.currentUser.UserID);
@@ -63,9 +59,6 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Index");
         }
 
-<<<<<<< HEAD
-        
-=======
         public ActionResult Checkout(VacationLog order)
         {
             if (UserController.currentUser.LoggedIn == false)
@@ -101,7 +94,6 @@ namespace Tra_Verse.Controllers
 
             return RedirectToAction("PrivateAccomodations", new { index });
         }
->>>>>>> 5301582af4af636f029d7d002e12aa641d7ee320
 
         public ActionResult RefreshForEdit(VacationLog order)
         {
