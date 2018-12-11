@@ -261,7 +261,7 @@
     <Content Include="Views\Public\PublicTripList.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\LoggedIn.cshtml" />
-    <Content Include="Views\Home\Registered.cshtml" />
+    <Content Include="Views\User\Registered.cshtml" />
     <Content Include="Views\Home\DeleteTrip.cshtml" />
     <Content Include="Views\Private\TripList.cshtml" />
   </ItemGroup>
