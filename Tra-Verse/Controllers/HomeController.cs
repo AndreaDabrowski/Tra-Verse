@@ -89,9 +89,15 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult DeleteTrip()
+        public ActionResult DeleteTrip(VacationLog deleteOrder)
         {
-            return View();
+            List<VacationLog> vacationList = database.VacationLogs.Where(x => x.OrderID == deleteOrder.OrderID).ToList();
+
+            VacationLog found = database.VacationLogs.Find(deleteOrder.OrderID);
+            database.VacationLogs.Remove(found); 
+            database.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult RefreshForTotal(VacationLog order)
