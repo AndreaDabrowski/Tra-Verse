@@ -24,8 +24,8 @@ namespace Tra_Verse.Controllers
             var message = new MailMessage();
             message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
             message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
-            message.Subject = "Confirmation of your vacation with Tra-Verse";
-            message.Body = string.Format("<p>Confirmation of your vacation with Traverse</p>" +
+            message.Subject = "Confirmation of your vacation with TraVerse";
+            message.Body = string.Format("<p>Confirmation of your vacation with TraVerse</p>" +
             "<p>Trip Details: </p>" +
             "<p>Planet Name: " + vacationInfo.PlanetName.ToString() + "</p>" +
             "<p>Vacation Rating: " + vacationInfo.Rating.ToString() + "</p>" +
@@ -53,7 +53,7 @@ namespace Tra_Verse.Controllers
                 smtp.Port = 587;
                 smtp.EnableSsl = true;
                 await smtp.SendMailAsync(message);
-                return RedirectToAction("ConfirmationPage");
+                return RedirectToAction("ConfirmationPage", "Home");
             }
             //return RedirectToAction("ConfirmationPage");
         }
