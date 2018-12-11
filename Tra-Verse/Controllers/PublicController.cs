@@ -18,7 +18,7 @@ namespace Tra_Verse.Controllers
                 ViewBag.NASA = API.NASA("notSorted");
                 ViewBag.Yelp = API.Yelp();
                 ViewBag.TripIndices = tripIndices;
-                ViewBag.PlanetPic = TripListObject.Planets;
+                ViewBag.PlanetPic = TripListObject.Planets();
 
                 return View();
             }
@@ -33,7 +33,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Travel = API.Travel()["results"];//jobject
             ViewBag.NASA = API.NASA("notSorted");//jarray
             ViewBag.Yelp = API.Yelp();
-            ViewBag.PlanetList = TripListObject.Planets();
+            ViewBag.PlanetPic = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
 
             return View();
