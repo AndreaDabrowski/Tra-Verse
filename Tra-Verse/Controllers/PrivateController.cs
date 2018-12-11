@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.Linq;
@@ -23,55 +23,38 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult PrivateAccomodations(int index)
+        public ActionResult PrivateAccomodations(TripListObject tripIndices, int index)
         {
-            ViewBag.YelpInfo = API.Yelp();
-            ViewBag.NASAInfo = API.NASA("notSorted");
-            UserController.currentUser.CurrentIndex = index;
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
-            int randPrice = Calculation.TripPriceRandomizer(index);
-            UserController.currentUser.RandPrice = randPrice;
-            ViewBag.PricePerDollarSign = randPrice;
-
-            return View();
+            if (ModelState.IsValid)
+            {
+                ViewBag.Travel = API.Travel();
+                ViewBag.NASA = API.NASA("notSorted");
+                ViewBag.Yelp = API.Yelp();
+                ViewBag.TripIndices = tripIndices;
+                ViewBag.PlanetPic = TripListObject.Planets();
+                ViewBag.Index = index;
+                return View();
+            }
+            else
+            {
+                ViewBag.ModelNotValid = "Model Not Valid";
+                return View("Error", "Home");
+            }
         }
 
-        public ActionResult RefreshForTotal(VacationLog order)
+        public ActionResult RefreshForTotal(FormCollection variables)
         {
-            if (UserController.currentUser.LoggedIn == false)
-            {
-                return View("LoginError");
-            }
+            //current user rand price for YELP $$$ calc
+            TempData["ShipType"] = variables["ShipType"];
+            TempData["ExoSuit"] = variables["ExoSuit"];
+            TempData["Rating"] = variables["Rating"];
+            TempData["DateEnd"] = variables["DateEnd"];
+            TempData["DateStart"] = variables["DateStart"];
+            int pr = int.Parse(variables["BasePrice"]);
+            TempData["RefreshedTotal"] = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
+            //int index = UserController.currentUser.CurrentIndex;
 
-            User user = database.Users.Find(UserController.currentUser.UserID);
-
-            if (user.OrderID > 0)
-            {
-                TempData["OrderAlready"] = "This user already has the following order";
-                return RedirectToAction("ConfirmationPage");
-            }
-
-            try
-            {
-                VacationLog added = database.VacationLogs.Add(order);
-                database.SaveChanges();
-
-                UserController.currentUser.OrderID = added.OrderID;
-                User loggedInUser = database.Users.Find(UserController.currentUser.UserID);
-                loggedInUser.OrderID = added.OrderID;
-                database.Entry(loggedInUser).State = System.Data.Entity.EntityState.Modified;
-                database.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                Console.Write(e.EntityValidationErrors);
-                return View("Error");
-            }
-
-            TempData["TotalPrice"] = Calculation.TotalPrice(order.ShipType, UserController.currentUser.RandPrice);
-            int index = UserController.currentUser.CurrentIndex;
-
-            return RedirectToAction("PrivateAccomodations", new { index });
+            return RedirectToAction("PrivateAccomodations");//how to send trip indices
         }
     }
 }
