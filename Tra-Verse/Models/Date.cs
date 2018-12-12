@@ -27,8 +27,7 @@ namespace Tra_Verse.Models
                 startDate[i] = finalStartDate;
             }
 
-            return startDate;
-            //int range = (start).Days;            
+            return startDate;            
         }
     }
 }
