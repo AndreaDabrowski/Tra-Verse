@@ -45,8 +45,8 @@
         <p>+200,000</p><input type="radio" value="2" name="ShipType" /><br />
         <img src="@shipImages[2]" height="50" width="65" />
         <p>+300,000</p><input type="radio" value="3" name="ShipType" /><br />
-        <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
-        <label>End Date: </label><input type="date" name="DateEnd" value="8018-12-15" /><br />
+        <label>Start Date: </label><input type="date" name="DateStart" value="@ViewBag.Date.StartDate" />@*CHANGE TO DATE TIME FOR CALC*@
+        <label>End Date: </label><input type="date" name="DateEnd" value="@ViewBag.Date.EndDate" /><br />
     <input type="submit" value="Refresh Total" />
 </form>
 <h1>Total Price: @TempData["RefreshedTotal"]</h1>

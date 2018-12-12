@@ -145,6 +145,7 @@
     <Compile Include="Models\API.cs" />
     <Compile Include="Models\Calculation.cs" />
     <Compile Include="Models\CurrentUser.cs" />
+    <Compile Include="Models\Date.cs" />
     <Compile Include="Models\TraVerse.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

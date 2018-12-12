@@ -27,12 +27,14 @@ namespace Tra_Verse.Controllers
         {
             if (ModelState.IsValid)
             {
+                Date test = new Date();
                 ViewBag.Travel = API.Travel();
                 ViewBag.NASA = API.NASA("notSorted");
                 ViewBag.Yelp = API.Yelp();
                 ViewBag.TripIndices = tripIndices;
                 ViewBag.PlanetPic = TripListObject.Planets();
                 ViewBag.Index = index;
+                ViewBag.Date = test;
                 return View();
             }
             else
