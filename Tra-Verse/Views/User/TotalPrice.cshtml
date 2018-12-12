@@ -1,18 +1,18 @@
 ﻿<br /><br />
-@*<h1>@ViewBag.RefreshedTotal</h1>*@
+@ViewBag.RefreshedTotal
 
-@ViewBag.TotalPrice
+@*@ViewBag.TotalPrice*@
 
-@*<form action="/Home/Checkout" method="post">
-    <input type="hidden" name="ShipType" value="@ViewBag.ShipType.ToString()" />
-    <input type="hidden" name="Exosuit" value="@ViewBag.Exosuit.ToString()" />
-    <input type="hidden" name="PlanetName" value="@ViewBag.PlanetName.ToString()" />
-    <input type="hidden" name="Price" value="@int.Parse(ViewBag.RefreshedTotal)" />
-    <input type="hidden" name="DateStart" value="@ViewBag.DateStart.ToString()" />
-    <input type="hidden" name="DateEnd" value="@ViewBag.DateEnd.ToString()" />
-    <input type="hidden" name="Rating" value="@double.Parse(ViewBag.Rating)" />
-    <input type="hidden" name="CompanyName" value="@ViewBag.CompanyName.ToString()" />@*INDEX AT 4?*@
-    @*<input type="hidden" name="PlanetImage" value="Planet Picture" />*@@*@ViewBag.PlanetPic[ViewBag.PlanetIndex].ToString()*@
-    @*<input type="hidden" name="Refundable" value="@ViewBag.Refundable.ToString()" />
+<form action="/Home/Checkout" method="post">
+    <input type="hidden" name="ShipType" value="@ViewBag.ShipType" />
+    <input type="hidden" name="Exosuit" value="@ViewBag.Exosuit" />
+    <input type="hidden" name="PlanetName" value="@ViewBag.PlanetName" />
+    <input type="hidden" name="Price" value="@ViewBag.RefreshedTotal" />
+    <input type="hidden" name="DateStart" value="@ViewBag.DateStart" />
+    <input type="hidden" name="DateEnd" value="@ViewBag.DateEnd" />
+    <input type="hidden" name="Rating" value="@ViewBag.Rating" />
+    <input type="hidden" name="CompanyName" value="@ViewBag.CompanyName" />@*INDEX AT 4?*@
+    <input type="hidden" name="PlanetImage" value="Planet Picture" />@*@ViewBag.PlanetPic[ViewBag.PlanetIndex].ToString()*@
+    <input type="hidden" name="Refundable" value="@ViewBag.Refundable" />
     <input type="submit" value="Proceed to Checkout" />
-</form>*@
+</form>
