@@ -174,5 +174,9 @@ namespace Tra_Verse.Controllers
         {
             return View();
         }
+        public ActionResult LoginError()
+        {
+            return View();
+        }
     }
 }
