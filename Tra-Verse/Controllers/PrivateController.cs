@@ -43,26 +43,5 @@ namespace Tra_Verse.Controllers
                 return RedirectToAction("Error", "Home");
             }
         }
-
-        public ActionResult RefreshForTotal(FormCollection variables, int index)
-
-        {
-            TempData["ShipType"] = variables["ShipType"];
-            TempData["ExoSuit"] = variables["ExoSuit"];
-            TempData["Rating"] = variables["Rating"];
-            TempData["DateEnd"] = variables["DateEnd"];
-            TempData["DateStart"] = variables["DateStart"];
-            int pr = int.Parse(variables["BasePrice"]);
-            TempData["RefreshedTotal"] = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
-
-            //output the TLO back into the View
-            TripListObject tripIndices = new TripListObject();
-            tripIndices.PlanetIndex = int.Parse(variables["PlanetIndex"]);
-            tripIndices.CompanyIndex = int.Parse(variables["CompanyIndex"]);
-            tripIndices.NumberOfDays = int.Parse(variables["NumberOfDays"]);
-            tripIndices.TravelIndex = int.Parse(variables["TravelIndex"]);
-
-            return RedirectToAction("PrivateAccomodations", new { tripIndices, index });//how to send trip indices
-        }
     }
 }
