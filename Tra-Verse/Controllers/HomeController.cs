@@ -36,7 +36,7 @@ namespace Tra_Verse.Controllers
             if (vacationToEdit.ShipType == "Public")
             {
                 ViewBag.ChooseNewVacation = "You can't customize cruise-style Vacations, Please choose a new trip";
-                return RedirectToAction("PublicTripList", "User");
+                return RedirectToAction("PublicTripList", "Public");
             }
             else if (vacationToEdit.ShipType == "1" || vacationToEdit.ShipType == "2"|| vacationToEdit.ShipType == "3")
             {
