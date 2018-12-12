@@ -10,7 +10,6 @@ namespace Tra_Verse.Controllers
 {
     public class UserController : Controller
     {
-        TraVerseEntities database = new TraVerseEntities();
         public static CurrentUser currentUser = new CurrentUser();
 
         public ActionResult Logout()
@@ -29,6 +28,8 @@ namespace Tra_Verse.Controllers
 
         public ActionResult LoginButton(User logUser)
         {
+            TraVerseEntities database = new TraVerseEntities();
+
             List<User> userList = database.Users.ToList();
             logUser.Password = CurrentUser.HashPassword(logUser.Password);
 
@@ -58,6 +59,8 @@ namespace Tra_Verse.Controllers
 
         public ActionResult RegisterUser(User newUser)
         {
+            TraVerseEntities database = new TraVerseEntities();
+
             if (ModelState.IsValid)
             {
                 List<User> foundID = database.Users.ToList();

@@ -25,8 +25,9 @@
 <br />
 <p>Distance from Earth: @ViewBag.NASA[p]["st_dist"] parsecs</p>
 <p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>
-<p>Departure Date: @ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
+<p>Departure Date: @ViewBag.TripIndices.DepartureDate</p>
 <p>Number of Days: @ViewBag.TripIndices.NumberOfDays</p>
+<p>Return Date: @ViewBag.ReturnDate</p>
 <p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>
 <br />
 <p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString() </p>
@@ -35,7 +36,7 @@
     <input type="hidden" name="PlanetName" value="@ViewBag.NASA[p]["pl_name"].ToString()">
     <input type="hidden" name="Price" value="@((int)priceBeforeTotal * 2319)">
     <input type="hidden" name="Rating" value="@float.Parse("4.5")">@*@float.Parse(ViewBag.Yelp["businesses"][p]["rating"])*@
-    <input type="hidden" name="DateStart" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"].ToString()">@*NEED TO CHANGE*@
+    <input type="hidden" name="DateStart" value="@ViewBag.TripIndices.DepartureDate">@*NEED TO CHANGE*@
     <input type="hidden" name="DateEnd" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"].ToString()">@*NEED TO CHANGE*@
     <input type="hidden" name="ShipType" value="Public" /> @*CHANGE PRIVATE SHIP TYPE TO PRIVATE*@
     <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex].ToString()">

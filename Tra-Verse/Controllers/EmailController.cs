@@ -12,16 +12,15 @@ namespace Tra_Verse.Controllers
 {
     public class EmailController : Controller
     {
-        TraVerseEntities database = new TraVerseEntities();
-
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         public async Task<ActionResult> ConfirmationPageEmail()
         {
+            TraVerseEntities database = new TraVerseEntities();
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             User user = database.Users.Find(UserController.currentUser.UserID);
             var message = new MailMessage();
-            message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
+            message.To.Add(new MailAddress(user.Email));  // replace with valid value 
             message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
             message.Subject = "Confirmation of your vacation with TraVerse";
             message.Body = string.Format("<p>Confirmation of your vacation with TraVerse</p>" +

@@ -10,7 +10,6 @@ namespace Tra_Verse.Controllers
 {
     public class PrivateController : Controller
     {
-        TraVerseEntities database = new TraVerseEntities();
 
         public ActionResult TripList()
         {
