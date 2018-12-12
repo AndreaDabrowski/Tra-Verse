@@ -266,6 +266,7 @@
     <Content Include="Views\Home\DeleteTrip.cshtml" />
     <Content Include="Views\Private\TripList.cshtml" />
     <Content Include="Views\User\TotalPrice.cshtml" />
+    <Content Include="Views\Home\PrivateEditPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

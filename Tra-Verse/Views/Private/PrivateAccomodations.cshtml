@@ -14,7 +14,7 @@
 <h1>@ViewBag.NASA[ViewBag.Index]["pl_name"]</h1>
 <p>Distance from Earth: @ViewBag.NASA[ViewBag.Index]["st_dist"] parsecs</p>
 <p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>
-<img src="@ViewBag.PlanetPic[ViewBag.Index]" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="left" />
+<img src="@path + @ViewBag.PlanetPic[ViewBag.Index]" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="left" />
 <br />
 <p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
 <br />

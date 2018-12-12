@@ -20,9 +20,10 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult EditTrip()
+        public ActionResult EditTripButton()
         {
             User user = database.Users.Find(UserController.currentUser.UserID);
+            VacationLog vacationToEdit = database.VacationLogs.Find(user.OrderID);
             if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError", "User");
@@ -32,30 +33,61 @@ namespace Tra_Verse.Controllers
                 ViewBag.EditError = "You dont have an order to edit - PLEASE LEAVE THIS SITE THANK YOU.";
                 return View("Error");
             }
-            VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            if (vacationToEdit.ShipType == "Public")
+            {
+                ViewBag.ChooseNewVacation = "You can't customize cruise-style Vacations, Please choose a new trip";
+                return RedirectToAction("PublicTripList");
+            }
+            else if (vacationToEdit.ShipType == "1" || vacationToEdit.ShipType == "2"|| vacationToEdit.ShipType == "3")
+            {
+                ViewBag.EditPrivate = "Please edit the Options Below";
+                return RedirectToAction("PrivateEditPage");
+            }
+            else
+            {
+                ViewBag.SomethingHappened = "Something went wrong but I don't know how you made it here";
+                return View("Error");
+            }
 
-            ViewBag.Planet = vacationToEdit.PlanetName;
-            ViewBag.Rating = vacationToEdit.Rating;
-            ViewBag.Price = vacationToEdit.Price;
-            ViewBag.Ship = vacationToEdit.ShipType;
-            ViewBag.Start = vacationToEdit.DateStart;
-            ViewBag.End = vacationToEdit.DateEnd;
-
-            ViewBag.NASAInfo = API.NASA("notSorted");
-            ViewBag.YelpInfo = API.Yelp();
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
+        }
+        public ActionResult EditTripInDB(//form collection)
+        {
+            //edit deets
+            //vb to show updated order
+            return RedirectToAction("ConfirmationPage");
+        }
+        public ActionResult PrivateEditPage()
+        {
+            User user = database.Users.Find(UserController.currentUser.UserID);
+            VacationLog vacationToEdit = database.VacationLogs.Find(user.OrderID);
+            ViewBag.Vacation = vacationToEdit;
 
             return View();
         }
 
-        public ActionResult DeleteTrip(VacationLog deleteOrder)
+        public ActionResult DeleteTrip()
         {
-            List<VacationLog> vacationList = database.VacationLogs.Where(x => x.OrderID == deleteOrder.OrderID).ToList();
+            if (UserController.currentUser.LoggedIn == false)
+            {
+                return View("LoginError", "User");
+            }
 
-            VacationLog found = database.VacationLogs.Find(deleteOrder.OrderID);
+            User user = database.Users.Find(UserController.currentUser.UserID);
+
+            if (user.OrderID < 0)
+            {
+                TempData["NoOrder"] = "This user does not have an order placed...YET";
+                return RedirectToAction("ConfirmationPage");
+            }
+            //List<VacationLog> vacationList = database.VacationLogs.Where(x => x.OrderID == deleteOrder.OrderID).ToList();
+            User thisDBUser = database.Users.Find(UserController.currentUser.UserID);
+            VacationLog found = database.VacationLogs.Find(thisDBUser.OrderID);
             database.VacationLogs.Remove(found);
+            thisDBUser.OrderID = 0;
+            database.Entry(thisDBUser).State = System.Data.Entity.EntityState.Modified;
             database.SaveChanges();
 
+            UserController.currentUser.OrderID = 0;
             return RedirectToAction("Index");
         }
 
@@ -71,7 +103,7 @@ namespace Tra_Verse.Controllers
             if (user.OrderID > 0)
             {
                 TempData["OrderAlready"] = "This user already has the following order";
-                return RedirectToAction("ConfirmationPage");
+                return RedirectToAction("Error");
             }
             try
             {
@@ -86,7 +118,7 @@ namespace Tra_Verse.Controllers
             }
             catch (DbEntityValidationException e)
             {
-                Console.Write(e.EntityValidationErrors);
+                ViewBag.DBError = e.EntityValidationErrors;
                 return View("Error");
             }
 
