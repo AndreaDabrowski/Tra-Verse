@@ -27,7 +27,7 @@
     <br />
     <hr />
 <div>
-    <img src="@path  + @ViewBag.PlanetPic[i]" height="200" width="200" align="left">@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
+    <img src="@String.Concat(path, ViewBag.PlanetPic[i])" height="200" width="200" align="left">@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
     <h3>Trip To "@ViewBag.NASA[i]["pl_name"]"</h3>@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
     @*<h2>NASA 3d Imaging: @ViewBag.PlanetNasaLink[i]</h2>*@
     <br />
