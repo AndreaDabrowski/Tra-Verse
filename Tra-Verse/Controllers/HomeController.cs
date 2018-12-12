@@ -13,7 +13,6 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
-
         public ActionResult Index()
         {
             return View();
@@ -48,7 +47,6 @@ namespace Tra_Verse.Controllers
                 ViewBag.SomethingHappened = "Something went wrong but I don't know how you made it here";
                 return View("Error");
             }
-
         }
 
         public ActionResult EditTripInDB(FormCollection fc)

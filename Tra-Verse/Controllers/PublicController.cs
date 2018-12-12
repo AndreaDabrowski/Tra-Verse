@@ -31,6 +31,7 @@ namespace Tra_Verse.Controllers
                 return View("Error", "Home");
             }
         }
+
         public ActionResult PublicTripList()
         {
             ViewBag.Travel = API.Travel()["results"];//jobject
