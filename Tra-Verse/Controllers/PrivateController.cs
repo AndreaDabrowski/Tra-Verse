@@ -28,6 +28,7 @@ namespace Tra_Verse.Controllers
         {
             if (ModelState.IsValid)
             {
+                Date test = new Date();
                 ViewBag.Travel = API.Travel();
                 ViewBag.NASA = API.NASA("notSorted");
                 ViewBag.Yelp = API.Yelp();
@@ -35,6 +36,7 @@ namespace Tra_Verse.Controllers
                 ViewBag.PlanetPic = TripListObject.Planets();
                 ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
                 ViewBag.Index = index;
+                ViewBag.Date = test;
                 return View();
             }
             else

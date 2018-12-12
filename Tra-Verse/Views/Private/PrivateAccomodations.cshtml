@@ -28,7 +28,7 @@
 @*<p>Number of Days: @ViewBag.TripIndices.NumberOfDays</p>*@
 @*<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>*@
 
-<<<<<<< HEAD
+
 <form action="/User/TotalPrice" method="post">
     <input type="hidden" name="BasePrice" value="@priceBeforeTotal" />
 
@@ -51,7 +51,8 @@
     <input type="hidden" name="CompanyIndex" value="@ViewBag.TripIndices.CompanyIndex">
     <input type="hidden" name="NumberOfDays" value="@ViewBag.TripIndices.NumberOfDays">
     <input type="hidden" name="TravelIndex" value="@ViewBag.TripIndices.TravelIndex">
-    <input type="submit" value="Refresh Total" />
+
+    <input type="submit" value="Total Price" />
 </form>
 <h1>Total Price: @TempData["RefreshedTotal"]</h1>
 <br />
