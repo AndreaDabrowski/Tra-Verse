@@ -22,7 +22,7 @@
 <br />
 <p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString() </p>
 <br />
-<h3>Base Price : $@(priceBeforeTotal)</h3>
+<h3>Base Price : $@priceBeforeTotal</h3>
 <p>*Price may be affected by customizations and ratings - refresh total below</p>
 <br />
 @*<p>Departure Date: @ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>*@
@@ -30,13 +30,13 @@
 @*<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>*@
 
 
-<form action="/User/TotalPrice" method="post">
+<form action="/User/TotalPrice?index=@ViewBag.Index" method="post">
     @*<form action="/Private/RefreshForTotal?index=@ViewBag.Index" method="post">*@
     <input type="hidden" name="BasePrice" value="@priceBeforeTotal" />
-    <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"].ToString()" />
-    <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString()" />
-    <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex].ToString()" />
-    <input type="hidden" name="PlanetName" value="@ViewBag.NASA[ViewBag.Index]["pl_name"].ToString()" />
+    <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]" />
+    <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"]" />
+    <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]" />
+    <input type="hidden" name="PlanetName" value="@ViewBag.NASA[ViewBag.Index]["pl_name"]" />
 
     <p>Exosuit for exploration outside aircraft? </p>
     <input type="radio" value="Yes" name="ExoSuit" /><span>Yes +$500,000</span> <br />
@@ -53,14 +53,13 @@
     <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
     <label>End Date: </label><input type="date" name="DateEnd" value="8018-12-15" /><br />
 
-    <input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
+    @*<input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
     <input type="hidden" name="CompanyIndex" value="@ViewBag.TripIndices.CompanyIndex">
     <input type="hidden" name="NumberOfDays" value="@ViewBag.TripIndices.NumberOfDays">
-    <input type="hidden" name="TravelIndex" value="@ViewBag.TripIndices.TravelIndex">
+    <input type="hidden" name="TravelIndex" value="@ViewBag.TripIndices.TravelIndex">*@
 
     <input type="submit" value="Total Price Page" />
 </form>
-<h1>Total Price: @TempData["RefreshedTotal"]</h1>
 <br />
 
 <hr />
