@@ -10,7 +10,6 @@ namespace Tra_Verse.Controllers
 {
     public class UserController : Controller
     {
-        TraVerseEntities database = new TraVerseEntities();
         public static CurrentUser currentUser = new CurrentUser();
 
         public ActionResult Logout()
@@ -29,6 +28,8 @@ namespace Tra_Verse.Controllers
 
         public ActionResult LoginButton(User logUser)
         {
+            TraVerseEntities database = new TraVerseEntities();
+
             List<User> userList = database.Users.ToList();
             logUser.Password = CurrentUser.HashPassword(logUser.Password);
 
@@ -57,6 +58,8 @@ namespace Tra_Verse.Controllers
 
         public ActionResult RegisterUser(User newUser)
         {
+            TraVerseEntities database = new TraVerseEntities();
+
             if (ModelState.IsValid)
             {
                 List<User> foundID = database.Users.ToList();
@@ -135,7 +138,7 @@ namespace Tra_Verse.Controllers
             ViewBag.Exosuit = variables["ExoSuit"];
             ViewBag.DateEnd = variables["DateEnd"];
             ViewBag.DateStart = variables["DateStart"];
-            ViewBag.Rating = variables["Rating"];//need
+            ViewBag.Rating = variables["Rating"];
             ViewBag.PlanetName = variables["PlanetName"];
             ViewBag.Refundable = variables["Refundable"];
             ViewBag.CompanyName = variables["CompanyName"];
