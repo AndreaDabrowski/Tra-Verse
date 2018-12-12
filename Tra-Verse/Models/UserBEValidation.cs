@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using System.Web;
 
 namespace Tra_Verse.Models
@@ -28,40 +30,22 @@ namespace Tra_Verse.Models
         [RegularExpression(@"^[A-z0-9]{2,}$")]
         public string ConfPass { set; get; }
 
-
-
         public UserBEValidation()
-
         {
-
             LoginEmail = "";
-
             LoginPassword = "";
-
             RegEmail = "";
-
             RegPassword = "";
-
             ConfPass = "";
-
         }
 
-        public UserBEValidation(string le, string lp, string re, string rp, string cp)
-
+        public UserBEValidation(string email, string password, string registerEmail, string registerPassword, string confirmPassword)
         {
-
-            LoginEmail = le;
-
-            LoginPassword = lp;
-
-            RegEmail = re;
-
-            RegPassword = rp;
-
-            ConfPass = cp;
-
-
-
+            LoginEmail = email;
+            LoginPassword = password;
+            RegEmail = registerEmail;
+            RegPassword = registerPassword;
+            ConfPass = confirmPassword;
         }
     }
 }
