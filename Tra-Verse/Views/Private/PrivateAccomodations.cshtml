@@ -51,16 +51,16 @@
     <input type="radio" value="2" name="ShipType" /><span>+$200,000</span><br />
     <img src="@shipImages[2]" height="50" width="65" />
     <input type="radio" value="3" name="ShipType" /><span>+$300,000</span><br />
+    <label>Start Date: </label><input type="date" name="DateStart" style="color: black" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
+    <label>End Date: </label><input type="date" name="DateEnd" style="color: black" value="8018-12-15" /><br />
+    <input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
 
-    <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
-    <label>End Date: </label><input type="date" name="DateEnd" value="8018-12-15" /><br />
-
-    @*<input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
     <input type="hidden" name="CompanyIndex" value="@ViewBag.TripIndices.CompanyIndex">
     <input type="hidden" name="NumberOfDays" value="@ViewBag.TripIndices.NumberOfDays">
     <input type="hidden" name="TravelIndex" value="@ViewBag.TripIndices.TravelIndex">*@
 
-    <input type="submit" value="Total Price Page" />
+    <input type="submit" value="Total Price" style="color: black" />
+
 </form>
 <br />
 

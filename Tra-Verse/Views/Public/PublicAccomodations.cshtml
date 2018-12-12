@@ -44,7 +44,7 @@
     <input type="hidden" name="PlanetImage" value="Planet Pic">@*@ViewBag.PlanetPic[p]*@
     <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString()">
     <input type="hidden" name="Exosuit" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()">
-    <input type="submit" value="Proceed to Checkout" />
+    <input type="submit" style="color: black" value="Proceed to Checkout" />
 </form>
 @*if null, show unkown*@
 <hr />
