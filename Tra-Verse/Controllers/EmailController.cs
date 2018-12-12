@@ -20,7 +20,6 @@ namespace Tra_Verse.Controllers
         {
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             User user = database.Users.Find(UserController.currentUser.UserID);
-            //var body = $"{0}";
             var message = new MailMessage();
             message.To.Add(new MailAddress(UserController.currentUser.Email));  // replace with valid value 
             message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
@@ -29,7 +28,7 @@ namespace Tra_Verse.Controllers
             "<p>Trip Details: </p>" +
             "<p>Planet Name: " + vacationInfo.PlanetName.ToString() + "</p>" +
             "<p>Vacation Rating: " + vacationInfo.Rating.ToString() + "</p>" +
-            "<p>Ship Choice: " + vacationInfo.ShipType.ToString() + "</p>" +
+            "<p>Space Suit Available? "+vacationInfo.Exosuit.ToString()+"</p>"+
             "Departure Date: " + vacationInfo.DateStart.ToString() + "</p>" +
             "Return Date: " + vacationInfo.DateEnd.ToString() + "</p>" +
             "</br>" +
@@ -37,8 +36,9 @@ namespace Tra_Verse.Controllers
             "</br>" +
             "<p>This amount was charged to: " + user.NameOnCard.ToString() + "</p>" +
             "<p>Card number: " + user.CreditCard.ToString() + "</p>" +
-            "Thank you!");
-            /*XXXX-XXXX-XXXX-*/
+            "<p>Refunds allowed? " + vacationInfo.Refundable.ToString() + "</p>"+
+            "Thank you! :)");
+            
             message.IsBodyHtml = true;
 
             using (var smtp = new SmtpClient())

@@ -159,17 +159,9 @@ namespace Tra_Verse.Controllers
         public ActionResult ConfirmationPage()
         {
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-
             User user = database.Users.Find(UserController.currentUser.UserID);
-            ViewBag.Planet = vacationInfo.PlanetName;
-            ViewBag.Rating = vacationInfo.Rating;
-            ViewBag.Price = vacationInfo.Price;
-            ViewBag.Ship = vacationInfo.ShipType;
-            ViewBag.Start = vacationInfo.DateStart;
-            ViewBag.End = vacationInfo.DateEnd;
-
-            ViewBag.Name = user.NameOnCard;
-            ViewBag.Card = user.CreditCard;
+            ViewBag.Vacation = vacationInfo;
+            ViewBag.User = user;
 
             return View();
         }
