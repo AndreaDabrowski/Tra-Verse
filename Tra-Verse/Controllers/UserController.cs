@@ -12,20 +12,6 @@ namespace Tra_Verse.Controllers
     {
         public static CurrentUser currentUser = new CurrentUser();
 
-        public ActionResult Logout()
-        {
-            if (currentUser.LoggedIn == true)
-            {
-                currentUser.LoggedIn = false;
-                currentUser.UserID = 0;
-                currentUser.OrderID = 0;
-                ViewBag.Logout = "You've been Logged out!";
-                return RedirectToAction("Login", "User");
-            }
-            ViewBag.LoggedOut = "You're not logged in";
-            return RedirectToAction("Login", "User");
-        }
-
         public ActionResult LoginButton(User logUser)
         {
             TraVerseEntities database = new TraVerseEntities();
@@ -36,7 +22,11 @@ namespace Tra_Verse.Controllers
             if (logUser.Email == currentUser.Email && logUser.Password == currentUser.Password)
             {
                 TempData["CurrentlyLoggedIn"] = "You are already logged in";
-                return RedirectToAction("Login", "User");
+                return RedirectToAction("Login");
+            }
+            if (logUser.Email != currentUser.Email || logUser.Password != currentUser.Password)
+            {
+                TempData["InvalidLogin"] = "Invalid Username or Password";
             }
 
             foreach (var id in userList)
@@ -49,12 +39,25 @@ namespace Tra_Verse.Controllers
                         currentUser.UserID = id.UserID;
                         currentUser.OrderID = id.OrderID;
                         TempData["LoggedIn"] = "You've successfully logged in!";
-                        return RedirectToAction("Login", "User");//, logUser
+                        return RedirectToAction("Login");//, logUser
                     }
                 }
             }
-            TempData["InvalidLogin"] = "Invalid Username or Password";
-            return RedirectToAction("Login", "User");
+            return RedirectToAction("Login");
+        }
+
+        public ActionResult Logout()
+        {
+            if (currentUser.LoggedIn == true)
+            {
+                currentUser.LoggedIn = false;
+                currentUser.UserID = 0;
+                currentUser.OrderID = 0;
+                ViewBag.Logout = "You've been Logged out!";
+                return RedirectToAction("Login");
+            }
+            ViewBag.LoggedOut = "You're not logged in";
+            return RedirectToAction("Login");
         }
 
         public ActionResult RegisterUser(User newUser)
@@ -69,7 +72,7 @@ namespace Tra_Verse.Controllers
                     if (newUser.Email == user.Email)
                     {
                         TempData["AlreadyRegistered"] = "These credentials already match an existing account";
-                        return RedirectToAction("Login", "User");
+                        return RedirectToAction("Login");
                     }
                 }
 
@@ -81,12 +84,12 @@ namespace Tra_Verse.Controllers
                 currentUser.LoggedIn = true;
                 currentUser.OrderID = 0;
                 
-                return RedirectToAction("Registered", "User");//, added
+                return RedirectToAction("Registered");//, added
             }
             else
             {
                 TempData["Error"] = "Error with adding user.";
-                return RedirectToAction("Login", "User");
+                return RedirectToAction("Login");
             }
         }
 
