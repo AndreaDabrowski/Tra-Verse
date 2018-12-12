@@ -41,7 +41,7 @@
     <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]">
     <input type="hidden" name="PlanetImage" value="@ViewBag.PlanetPic">
     <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString()">
-    <input type="hidden" name="ExoSuit" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()">
+    <input type="hidden" name="Exosuit" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()">
     <input type="submit" value="Proceed to Checkout" />
 </form>
 @*if null, show unkown*@
@@ -53,5 +53,6 @@
 <ul>Time to Orbit Local Star: @ViewBag.NASA[p]["pl_orbper"] days</ul>
 <ul>Year of Discovery: @ViewBag.NASA[p]["pl_disc"]</ul>
 <ul>To Learn More: </ul>
-<p>Exoplanet Encyplopedia: @ViewBag.NASA[p]["pl_pelink"]</p>
-<p>Exoplanet Data Explorer: @ViewBag.NASA[p]["pl_edelink"]</p>
+<a href="@ViewBag.PlanetNasaLink[p]"><h2>NASA 3d Imaging</h2></a>
+@*<p>Exoplanet Encyplopedia: @ViewBag.NASA[p]["pl_pelink"]</p>*@
+@*<p>Exoplanet Data Explorer: @ViewBag.NASA[p]["pl_edelink"]</p>*@

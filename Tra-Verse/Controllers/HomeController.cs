@@ -25,7 +25,7 @@ namespace Tra_Verse.Controllers
             User user = database.Users.Find(UserController.currentUser.UserID);
             if (UserController.currentUser.LoggedIn == false)
             {
-                return View("LoginError");
+                return View("LoginError", "User");
             }
             if (user.OrderID <= 0)
             {
@@ -63,7 +63,7 @@ namespace Tra_Verse.Controllers
         {
             if (UserController.currentUser.LoggedIn == false)
             {
-                return View("LoginError");
+                return View("LoginError", "User");
             }
 
             User user = database.Users.Find(UserController.currentUser.UserID);
@@ -90,9 +90,10 @@ namespace Tra_Verse.Controllers
                 return View("Error");
             }
 
-            int index = UserController.currentUser.CurrentIndex;
+            VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            TempData["CurrentVacation"] = currentVacation;
 
-            return RedirectToAction("PrivateAccomodations", new { index });
+            return View();
         }
 
         public ActionResult RefreshForEdit(VacationLog order)
@@ -100,9 +101,9 @@ namespace Tra_Verse.Controllers
             User user = database.Users.Find(UserController.currentUser.UserID);
             if (UserController.currentUser.LoggedIn == false)
             {
-                return View("LoginError");
+                return View("LoginError", "User");
             }
-            else if (user.OrderID <= 0)
+            else if (user.OrderID <= 0)//Does this need to be here?????
             {
                 return View("Error");
             }
@@ -126,24 +127,25 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Confirmation Page");
         }
 
-        public ActionResult Checkout(int price)
-        {
-            ViewBag.NASAInfo = API.NASA("notSorted");
-            ViewBag.Index = UserController.currentUser.CurrentIndex;
+        //public ActionResult Checkout(int price)
+        //{
+        //    ViewBag.NASAInfo = API.NASA("notSorted");
+        //    ViewBag.Index = UserController.currentUser.CurrentIndex;
 
-            VacationLog currentVacation = database.VacationLogs.Find(UserController.currentUser.OrderID);
-            TempData["CurrentVacation"] = currentVacation;
-            //database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
-            //database.SaveChanges();
+            
+        //    //database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
+        //    //database.SaveChanges();
 
-            return View();
-        }
+        //    return View();
+        //}
 
         public ActionResult ProcessPayment(FormCollection fc)
         {
 
             User findEmail = database.Users.Find(UserController.currentUser.UserID);
-            findEmail.CreditCard = fc["CreditCard"];
+            string creditCard = fc["CreditCard"];
+            // change card info as to not allow it to be retrievable from database (also for confirmation page)
+            findEmail.CreditCard = "XXXX-XXXX-XXXX-" + creditCard.Substring(11, 4);
             findEmail.CRV = int.Parse(fc["CRV"]);
             findEmail.NameOnCard = fc["NameOnCard"];
 
@@ -157,17 +159,9 @@ namespace Tra_Verse.Controllers
         public ActionResult ConfirmationPage()
         {
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
-
             User user = database.Users.Find(UserController.currentUser.UserID);
-            ViewBag.Planet = vacationInfo.PlanetName;
-            ViewBag.Rating = vacationInfo.Rating;
-            ViewBag.Price = vacationInfo.Price;
-            ViewBag.Ship = vacationInfo.ShipType;
-            ViewBag.Start = vacationInfo.DateStart;
-            ViewBag.End = vacationInfo.DateEnd;
-
-            ViewBag.Name = user.NameOnCard;
-            ViewBag.Card = user.CreditCard;
+            ViewBag.Vacation = vacationInfo;
+            ViewBag.User = user;
 
             return View();
         }

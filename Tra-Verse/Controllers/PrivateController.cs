@@ -14,10 +14,11 @@ namespace Tra_Verse.Controllers
 
         public ActionResult TripList()
         {
-            ViewBag.Travel = API.Travel()["results"];//jobject
+            ViewBag.Travel = API.Travel();//jobject
             ViewBag.NASA = API.NASA("notSorted");//jarray
             ViewBag.Yelp = API.Yelp();
-            ViewBag.PlanetList = TripListObject.Planets();
+            ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
+            ViewBag.PlanetPic = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
 
             return View();
@@ -33,6 +34,7 @@ namespace Tra_Verse.Controllers
                 ViewBag.Yelp = API.Yelp();
                 ViewBag.TripIndices = tripIndices;
                 ViewBag.PlanetPic = TripListObject.Planets();
+                ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
                 ViewBag.Index = index;
                 ViewBag.Date = test;
                 return View();
@@ -40,23 +42,8 @@ namespace Tra_Verse.Controllers
             else
             {
                 ViewBag.ModelNotValid = "Model Not Valid";
-                return View("Error", "Home");
+                return RedirectToAction("Error", "Home");
             }
-        }
-
-        public ActionResult RefreshForTotal(FormCollection variables)
-        {
-            //current user rand price for YELP $$$ calc
-            TempData["ShipType"] = variables["ShipType"];
-            TempData["ExoSuit"] = variables["ExoSuit"];
-            TempData["Rating"] = variables["Rating"];
-            TempData["DateEnd"] = variables["DateEnd"];
-            TempData["DateStart"] = variables["DateStart"];
-            int pr = int.Parse(variables["BasePrice"]);
-            TempData["RefreshedTotal"] = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
-            //int index = UserController.currentUser.CurrentIndex;
-
-            return RedirectToAction("PrivateAccomodations");//how to send trip indices
         }
     }
 }

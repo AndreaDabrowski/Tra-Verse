@@ -1,0 +1,29 @@
+﻿<br /><br />
+
+@{
+    //string path = "~/Content/Images/Planets";
+    //string[] PlanetImages = new string[16] { path + "GJ 3021 b.jpg", path+"HATS-34 b.png", path+"HD 142 b.png", path+"HD 142 c.jpg", path+"HD 1461 b.png", path+"HD 1502 b.png", path+"HD 564 b.jpg", path+"HD1461c.jpg", path+"KELT-1 b.jpg", path+"Qatar-4 b.jpg", path+"WASP-136 b.png", path+"WASP-158 b.PNG", path+"WASP-26 b.png", path+"WASP-32 b.png", path+"WASP-44 b.png", path+"WASP-96 b.PNG" };
+    int p = ViewBag.TripIndices.PlanetIndex;
+    string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
+    string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
+
+    //string[] PlanetImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
+    string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
+    float priceBeforeTotal = float.Parse(priceString) * 2319;//change p to travel Index??
+}
+
+<form action="/Home/Checkout" method="post">
+    <input type="hidden" name="ShipType" value="@TempData["ShipType"]" />
+    <input type="hidden" name="ExoSuit" value="@TempData["ExoSuit"]" />
+    <input type="hidden" name="PlanetName" value="@ViewBag.NASA[p]["pl_name"]" />
+    <input type="hidden" name="Price" value="@TempData["RefreshedTotal"]" />
+    <input type="hidden" name="DateStart" value="@TempData["DStart"]" />
+    <input type="hidden" name="DateEnd" value="@TempData["DEnd"]" />
+    <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]" />
+    @*<input type="hidden" name="ShipType" value="@shipImages[ViewBag.TripIndices.CompanyIndex]">@*INDEX AT 4?*@
+    <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]" />@*INDEX AT 4?*@
+    <input type="hidden" name="PlanetImage" value="@ViewBag.PlanetPic[p]">
+    <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString()">
+    @*<input type="hidden" name="ExoSuit" value="">@*RADIO BUTTON INPUT*@
+    <input type="submit" value="Proceed to Checkout" />
+</form>

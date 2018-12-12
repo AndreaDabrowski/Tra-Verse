@@ -34,9 +34,9 @@ namespace Tra_Verse.Controllers
             ViewBag.Yelp = API.Yelp();
             ViewBag.PlanetPic = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
+            ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
 
             return View();
         }
-
     }
 }
