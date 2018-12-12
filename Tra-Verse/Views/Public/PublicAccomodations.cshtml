@@ -4,7 +4,9 @@
     int p = ViewBag.TripIndices.PlanetIndex;
     string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
     string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
-
+    string path = "/Content/Images/Planets/";
+    var planetPic = ViewBag.PlanetPic[p];
+    var displayPlanetPic = planetPic + path;
     string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
     float priceBeforeTotal = float.Parse(priceString);
 }
@@ -32,14 +34,14 @@
 <p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString() </p>
 <p>Spacesuit for exploration outside aircraft? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()</p>
 <form action="/Home/Checkout" method="post">
-    <input type="hidden" name="PlanetName" value="@ViewBag.NASA[p]["pl_name"]">
-    <input type="hidden" name="Price" value="@(priceBeforeTotal * 2319)">
-    <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]">
-    <input type="hidden" name="DateStart" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]">@*NEED TO CHANGE*@
-    <input type="hidden" name="DateEnd" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]">@*NEED TO CHANGE*@
-    <input type="hidden" name="ShipType" value="@shipImages[ViewBag.TripIndices.CompanyIndex]">
-    <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]">
-    <input type="hidden" name="PlanetImage" value="@ViewBag.PlanetPic">
+    <input type="hidden" name="PlanetName" value="@ViewBag.NASA[p]["pl_name"].ToString()">
+    <input type="hidden" name="Price" value="@((int)priceBeforeTotal * 2319)">
+    <input type="hidden" name="Rating" value="@float.Parse("4.5")">@*@float.Parse(ViewBag.Yelp["businesses"][p]["rating"])*@
+    <input type="hidden" name="DateStart" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"].ToString()">@*NEED TO CHANGE*@
+    <input type="hidden" name="DateEnd" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"].ToString()">@*NEED TO CHANGE*@
+    <input type="hidden" name="ShipType" value="Public" /> @*CHANGE PRIVATE SHIP TYPE TO PRIVATE*@
+    <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex].ToString()">
+    <input type="hidden" name="PlanetImage" value="Planet Pic">@*@ViewBag.PlanetPic[p]*@
     <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString()">
     <input type="hidden" name="Exosuit" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()">
     <input type="submit" style="color: black" value="Proceed to Checkout" />
@@ -52,7 +54,7 @@
 <ul>Mass in Units of Earth's Weight: @ViewBag.NASA[p]["pl_masse"] Earths</ul>
 <ul>Time to Orbit Local Star: @ViewBag.NASA[p]["pl_orbper"] days</ul>
 <ul>Year of Discovery: @ViewBag.NASA[p]["pl_disc"]</ul>
-<ul>To Learn More: </ul>
-<a href="@ViewBag.PlanetNasaLink[p]"><h2>NASA 3d Imaging</h2></a>
+<ul>To Learn More: </ul> <a href="@ViewBag.PlanetNasaLink[p]">NASA 3d Imaging</a>
+<a href="@ViewBag.PlanetNasaLink[p]">NASA 3d Imaging</a>
 @*<p>Exoplanet Encyplopedia: @ViewBag.NASA[p]["pl_pelink"]</p>*@
 @*<p>Exoplanet Data Explorer: @ViewBag.NASA[p]["pl_edelink"]</p>*@

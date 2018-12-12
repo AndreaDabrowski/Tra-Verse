@@ -8,7 +8,7 @@
 
 }
 <h1>Choose Your Cruise-Style Vacation :)</h1>
-
+@ViewBag.ChooseNewVacation
 @TempData["LoggedIn"]
 @for (int i = 0; i < 29; i++)
 {
@@ -20,7 +20,7 @@
     <br />
     <hr />
     <div>
-        <h3>@trips[i].NumberOfDays-Trip To @ViewBag.NASA[p]["pl_name"]</h3>
+        <h3>@trips[i].NumberOfDays-Day Trip To @ViewBag.NASA[p]["pl_name"]</h3>
         <img src="@ViewBag.PlanetPic[p]" height="200" width="200" align="left">
         <br />
         <p>Company Name:@companyName[trips[i].CompanyIndex]</p>

@@ -6,13 +6,16 @@
     //string[] PlanetImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
     string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
     float priceBeforeTotal = float.Parse(priceString) * 2319;//change p to travel Index??
+    string path = "/Content/Images/Planets/";
+
+
 }
 
 
 <h1>@ViewBag.NASA[ViewBag.Index]["pl_name"]</h1>
 <p>Distance from Earth: @ViewBag.NASA[ViewBag.Index]["st_dist"] parsecs</p>
 <p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>
-<img src="@ViewBag.PlanetPic[ViewBag.Index]" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="left" />
+<img src="@path + @ViewBag.PlanetPic[ViewBag.Index]" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="left" />
 <br />
 <p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
 <br />
@@ -21,7 +24,7 @@
 <br />
 <p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString() </p>
 <br />
-<h3>Base Price : $@(priceBeforeTotal)</h3>
+<h3>Base Price : $@priceBeforeTotal</h3>
 <p>*Price may be affected by customizations and ratings - refresh total below</p>
 <br />
 @*<p>Departure Date: @ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>*@
@@ -29,16 +32,19 @@
 @*<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>*@
 
 
-<form action="/User/TotalPrice" method="post">
+<form action="/User/TotalPrice?index=@ViewBag.Index" method="post">
+    @*<form action="/Private/RefreshForTotal?index=@ViewBag.Index" method="post">*@
     <input type="hidden" name="BasePrice" value="@priceBeforeTotal" />
-
-@*<form action="/Private/RefreshForTotal?index=@ViewBag.Index" method="post">*@  
-    <input type="hidden" name="BasePrice" value="@priceBeforeTotal.ToString()" />
     <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]" />
+    <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"]" />
+    <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]" />
+    <input type="hidden" name="PlanetName" value="@ViewBag.NASA[ViewBag.Index]["pl_name"]" />
+
     <p>Exosuit for exploration outside aircraft? </p>
     <input type="radio" value="Yes" name="ExoSuit" /><span>Yes +$500,000</span> <br />
     <input type="radio" value="No" name="ExoSuit" /><span>No +$0</span><br />
     <br />
+
     <img src="@shipImages[0]" height="50" width="65" />
     <input type="radio" value="1" name="ShipType" /> <span>+$100,000</span><br />
     <img src="@shipImages[1]" height="50" width="65" />
@@ -48,13 +54,14 @@
     <label>Start Date: </label><input type="date" name="DateStart" style="color: black" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
     <label>End Date: </label><input type="date" name="DateEnd" style="color: black" value="8018-12-15" /><br />
     <input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
+
     <input type="hidden" name="CompanyIndex" value="@ViewBag.TripIndices.CompanyIndex">
     <input type="hidden" name="NumberOfDays" value="@ViewBag.TripIndices.NumberOfDays">
-    <input type="hidden" name="TravelIndex" value="@ViewBag.TripIndices.TravelIndex">
+    <input type="hidden" name="TravelIndex" value="@ViewBag.TripIndices.TravelIndex">*@
 
     <input type="submit" value="Total Price" style="color: black" />
+
 </form>
-<h1>Total Price: @TempData["RefreshedTotal"]</h1>
 <br />
 
 <hr />
