@@ -93,6 +93,22 @@ namespace Tra_Verse.Controllers
             }
         }
 
+        public ActionResult TotalPrice(FormCollection variables)
+        {
+            //current user rand price for YELP $$$ calc
+            TempData["ShipType"] = variables["ShipType"];
+            TempData["ExoSuit"] = variables["ExoSuit"];
+            TempData["Rating"] = variables["Rating"];
+            TempData["DateEnd"] = variables["DateEnd"];
+            TempData["DateStart"] = variables["DateStart"];
+            int pr = int.Parse(variables["BasePrice"]);
+            TempData["RefreshedTotal"] = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
+            //int index = UserController.currentUser.CurrentIndex;
+
+            return RedirectToAction("PrivateAccomodations");//how to send trip indices
+        }
+
+
         public ActionResult Login()
         {
             return View();
