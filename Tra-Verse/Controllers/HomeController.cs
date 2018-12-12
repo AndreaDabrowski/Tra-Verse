@@ -129,7 +129,7 @@ namespace Tra_Verse.Controllers
             if (user.OrderID > 0)
             {
                 TempData["OrderAlready"] = "This user already has the following order";
-                return RedirectToAction("Error");
+                return RedirectToAction("ConfirmationPage");
             }
             try
             {
@@ -154,38 +154,38 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult RefreshForEdit(VacationLog order)
-        {
-            TraVerseEntities database = new TraVerseEntities();
+        //public ActionResult RefreshForEdit(VacationLog order)
+        //{
+        //    TraVerseEntities database = new TraVerseEntities();
 
-            User user = database.Users.Find(UserController.currentUser.UserID);
-            if (UserController.currentUser.LoggedIn == false)
-            {
-                return View("LoginError", "User");
-            }
-            else if (user.OrderID <= 0)//Does this need to be here?????
-            {
-                return View("Error");
-            }
+        //    User user = database.Users.Find(UserController.currentUser.UserID);
+        //    if (UserController.currentUser.LoggedIn == false)
+        //    {
+        //        return View("LoginError", "User");
+        //    }
+        //    else if (user.OrderID <= 0)//Does this need to be here?????
+        //    {
+        //        return View("Error");
+        //    }
 
-            try
-            {
-                VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
-                vacationToEdit.DateEnd = order.DateEnd;
-                vacationToEdit.DateStart = order.DateStart;
-                vacationToEdit.ShipType = order.ShipType;
-                database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
-                database.SaveChanges();
-            }
-            catch (DbEntityValidationException e)
-            {
-                Console.Write(e.EntityValidationErrors);
-                return View("Error");
-            }
+        //    try
+        //    {
+        //        VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
+        //        vacationToEdit.DateEnd = order.DateEnd;
+        //        vacationToEdit.DateStart = order.DateStart;
+        //        vacationToEdit.ShipType = order.ShipType;
+        //        database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
+        //        database.SaveChanges();
+        //    }
+        //    catch (DbEntityValidationException e)
+        //    {
+        //        Console.Write(e.EntityValidationErrors);
+        //        return View("Error");
+        //    }
 
-            TempData["UpdatedOrder"] = "This is your updated order";
-            return RedirectToAction("Confirmation Page");
-        }
+        //    TempData["UpdatedOrder"] = "This is your updated order";
+        //    return RedirectToAction("Confirmation Page");
+        //}
 
 
         public ActionResult ProcessPayment(FormCollection fc)
@@ -212,12 +212,13 @@ namespace Tra_Verse.Controllers
 
             if (UserController.currentUser.LoggedIn == false)
             {
-                return View("LoginError", "User");
+                return RedirectToAction("LoginError", "User");
             }
 
             User user = database.Users.Find(UserController.currentUser.UserID);
             if (user.OrderID <= 0)//Does this need to be here?????
             {
+                ViewBag.NoOrder = "You dont have an order to display";
                 return View("Error");
             }
             
@@ -234,10 +235,6 @@ namespace Tra_Verse.Controllers
             return View();
         }
 
-        public ActionResult LoginError()
-        {
-            return View();
-        }
     }
 }
 

@@ -11,6 +11,7 @@ namespace Tra_Verse.Controllers
     {
         public ActionResult PublicAccomodations(TripListObject tripIndices)
         {
+
             if (ModelState.IsValid)
             {
                 ViewBag.Travel = API.Travel();

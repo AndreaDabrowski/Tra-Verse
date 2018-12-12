@@ -25,6 +25,7 @@ namespace Tra_Verse.Controllers
 
         public ActionResult PrivateAccomodations(TripListObject tripIndices, int index)
         {
+            
             if (ModelState.IsValid)
             {
                 Date test = new Date();
