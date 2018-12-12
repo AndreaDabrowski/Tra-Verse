@@ -18,8 +18,8 @@
 @for (int i = 0; i < 15; i++)
 {
     int p = trips[i].PlanetIndex;
-    var travel = ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0];
-    string priceString = ViewBag.Travel[p]["fare"]["total_price"].ToString();
+    var travel = ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0];
+    string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
     float priceBeforeTotal = float.Parse(priceString);
     <br />
     <br />
