@@ -101,37 +101,6 @@ namespace Tra_Verse.Controllers
             }
         }
 
-        //public ActionResult TotalPrice()
-        //{
-        //    return View();
-        //}
-
-
-        //public ActionResult TotalPrice(FormCollection form)
-        //{
-        //    string shipType = form["ShipType"];               ViewBag.ShipType = shipType;
-        //    string exoSuit = form["ExoSuit"];                 ViewBag.ExoSuit = exoSuit;
-        //    string dateEnd = form["DateEnd"];                 ViewBag.DateEnd = dateEnd;
-        //    string dateStart = form["DateStart"];             ViewBag.DateStart = dateStart;
-        //    string rating = form["Rating"];                   ViewBag.Rating = rating;
-        //    string planetName = form["PlanetName"];           ViewBag.PlName = planetName;
-        //    string refundable = form["Refundable"];           ViewBag.Refundable = refundable;
-        //    string companyName = form["CompanyName"];         ViewBag.CompanyName = companyName;
-        //    string planetIndex = form["PlanetIndex"];         ViewBag.PlanetIndex = planetIndex;
-        //    string companyIndex = form["CompanyIndex"];       ViewBag.CompanyIndex = companyIndex;
-        //    string travelIndex = form["TravelIndex"];         ViewBag.TravelIndex = travelIndex;
-        //    int basePrice = int.Parse(form["BasePrice"]);
-
-        //    int newGrandTotal = Calculation.TotalPrice(shipType, exoSuit, basePrice, rating);
-        //    VacationLog price = database.VacationLogs.Find(currentUser.OrderID);
-        //    price.Price = newGrandTotal;
-        //    ViewBag.TotalPrice = price.Price;
-
-
-        //    return View();
-        //}
-
-
         public ActionResult TotalPrice(FormCollection variables)
         {
             ViewBag.ShipType = variables["ShipType"];
