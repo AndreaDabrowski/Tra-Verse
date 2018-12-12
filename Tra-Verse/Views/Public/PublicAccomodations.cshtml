@@ -25,7 +25,7 @@
 <br />
 <p>Distance from Earth: @ViewBag.NASA[p]["st_dist"] parsecs</p>
 <p> Distance Index: 1 Parsec = 3.26 Light-years (about 20 trillion miles!)</p>
-<p>Departure Date: @ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>
+<p>Departure Date: @ViewBag.TripIndices.DepartureDate</p>
 <p>Number of Days: @ViewBag.TripIndices.NumberOfDays</p>
 <p>Return Date: @ViewBag.ReturnDate</p>
 <p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>
