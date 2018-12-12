@@ -13,7 +13,6 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
-
         public ActionResult Index()
         {
             return View();
@@ -36,7 +35,7 @@ namespace Tra_Verse.Controllers
             if (vacationToEdit.ShipType == "Public")
             {
                 ViewBag.ChooseNewVacation = "You can't customize cruise-style Vacations, Please choose a new trip";
-                return RedirectToAction("PublicTripList", "User");
+                return RedirectToAction("PublicTripList", "Public");
             }
             else if (vacationToEdit.ShipType == "1" || vacationToEdit.ShipType == "2"|| vacationToEdit.ShipType == "3")
             {
@@ -48,7 +47,6 @@ namespace Tra_Verse.Controllers
                 ViewBag.SomethingHappened = "Something went wrong but I don't know how you made it here";
                 return View("Error");
             }
-
         }
 
         public ActionResult EditTripInDB(FormCollection fc)
