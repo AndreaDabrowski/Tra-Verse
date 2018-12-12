@@ -15,7 +15,7 @@
 <h1>@ViewBag.NASA[ViewBag.Index]["pl_name"]</h1>
 <p>Distance from Earth: @ViewBag.NASA[ViewBag.Index]["st_dist"] parsecs</p>
 <p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>
-<img src="@path + @ViewBag.PlanetPic[ViewBag.Index]" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="left" />
+<img src="@String.Concat(path, ViewBag.PlanetPic[ViewBag.Index])" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="left" />
 <br />
 <p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
 <br />
@@ -39,6 +39,8 @@
     <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"]" />
     <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]" />
     <input type="hidden" name="PlanetName" value="@ViewBag.NASA[ViewBag.Index]["pl_name"]" />
+    <input type="hidden" name="PlanetPic" value="@ViewBag.PlanetPic[ViewBag.Index]" />
+   
 
     <p>Exosuit for exploration outside aircraft? </p>
     <input type="radio" value="Yes" name="ExoSuit" /><span>Yes +$500,000</span> <br />
