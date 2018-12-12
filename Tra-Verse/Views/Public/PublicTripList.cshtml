@@ -5,6 +5,8 @@
     string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
     var trips = ViewBag.TripList;
     string[] planets = ViewBag.PlanetList;
+    string path = "/Content/Images/Planets/";
+
 
 }
 <h1>Choose Your Cruise-Style Vacation :)</h1>
@@ -21,7 +23,7 @@
     <hr />
     <div>
         <h3>@trips[i].NumberOfDays-Day Trip To @ViewBag.NASA[p]["pl_name"]</h3>
-        <img src="@ViewBag.PlanetPic[p]" height="200" width="200" align="left">
+        <img src="@String.Concat(path, ViewBag.PlanetPic[p])" height="200" width="200" align="left">
         <br />
         <p>Company Name:@companyName[trips[i].CompanyIndex]</p>
         <img src="@shipImages[trips[i].CompanyIndex]" height="100" width="100" align="right" />

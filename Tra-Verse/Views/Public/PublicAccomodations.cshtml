@@ -14,7 +14,7 @@
 @*<p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>*@
 <h1>@ViewBag.NASA[p]["pl_name"]</h1>
 <h2>@ViewBag.TripIndices.NumberOfDays-Day Trip</h2>
-<img src="@ViewBag.PlanetPic[p]" alt=@ViewBag.NASA[p]["pl_name"] height="200" width="200" align="left" />
+<img src="@String.Concat(path, ViewBag.PlanetPic[p])" alt=@ViewBag.NASA[p]["pl_name"] height="200" width="200" align="left" />
 <br />
 <p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
 <p>Cruise Ship: </p>
@@ -41,7 +41,7 @@
     <input type="hidden" name="DateEnd" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"].ToString()">@*NEED TO CHANGE*@
     <input type="hidden" name="ShipType" value="Public" /> @*CHANGE PRIVATE SHIP TYPE TO PRIVATE*@
     <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex].ToString()">
-    <input type="hidden" name="PlanetImage" value="Planet Pic">@*@ViewBag.PlanetPic[p]*@
+    <input type="hidden" name="PlanetImage" value=@ViewBag.PlanetPic[p]>
     <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString()">
     <input type="hidden" name="Exosuit" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"].ToString()">
     <input type="submit" value="Proceed to Checkout" />
