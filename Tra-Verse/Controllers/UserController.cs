@@ -32,6 +32,12 @@ namespace Tra_Verse.Controllers
             List<User> userList = database.Users.ToList();
             logUser.Password = CurrentUser.HashPassword(logUser.Password);
 
+            if (logUser.Email == currentUser.Email && logUser.Password == currentUser.Password)
+            {
+                TempData["CurrentlyLoggedIn"] = "You are already logged in";
+                return RedirectToAction("Login", "User");
+            }
+
             foreach (var id in userList)
             {
                 if (logUser.Email == id.Email && logUser.Password == id.Password)
@@ -44,11 +50,6 @@ namespace Tra_Verse.Controllers
                         TempData["LoggedIn"] = "You've successfully logged in!";
                         return RedirectToAction("Login", "User");//, logUser
                     }
-                }
-                if (logUser.Email == currentUser.Email)
-                {
-                    TempData["CurrentlyLoggedIn"] = "You are already logged in";
-                    return RedirectToAction("Login", "User");
                 }
             }
             TempData["InvalidLogin"] = "Invalid Username or Password";
@@ -97,8 +98,6 @@ namespace Tra_Verse.Controllers
                 return RedirectToAction("LoginError", "Home");
             }
         }
-
-        
 
         public ActionResult Login()
         {

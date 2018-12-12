@@ -8,6 +8,11 @@
 <h1>@TempData["UpdatedOrder"]</h1>
 @ViewBag.EditedConfirmationPage
 @TempData["UpdatedOrder"]
+@{
+    string path = "/Content/Images/Planets/";
+    
+    }
+
 
 <form action="/Email/ConfirmationPageEmail" method="post" type>
 
@@ -17,16 +22,15 @@
         <hr />
         <h4>Confirmation of your vacation with TraVerse through @ViewBag.Vacation.CompanyName</h4>
         <br />
-        <img src="@ViewBag.Vacation.PlanetImage" height="200" width="200" align="middle" />
+        <img src="@String.Concat(path, ViewBag.Vacation.PlanetImage)" height="200" width="200" align="middle" />
         <p>Planet Name: @ViewBag.Vacation.PlanetName</p>
         <p>Destination Rating: @ViewBag.Vacation.Rating</p>
         <p>Total Price: @ViewBag.Vacation.Price</p>
         <p>Ship Choice:</p>
 
-        <form action="/User/TotalPrice" method="post">
+        @*<form action="/User/TotalPrice" method="post">
             <input type="hidden" name="BasePrice" value="@priceBeforeTotal" />
 
-            @*<form action="/Private/RefreshForTotal?index=@ViewBag.Index" method="post">*@
             <input type="hidden" name="BasePrice" value="@priceBeforeTotal.ToString()" />
             <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]" />
             <p>Exosuit for exploration outside aircraft? </p>
@@ -39,7 +43,7 @@
             <input type="radio" value="2" name="ShipType" /><span>+$200,000</span><br />
             <img src="@shipImages[2]" height="50" width="65" />
             <input type="radio" value="3" name="ShipType" /><span>+$300,000</span><br />
-            <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
+            <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" />
             <label>End Date: </label><input type="date" name="DateEnd" value="8018-12-15" /><br />
             <input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
             <input type="hidden" name="CompanyIndex" value="@ViewBag.TripIndices.CompanyIndex">
@@ -47,7 +51,7 @@
             <input type="hidden" name="TravelIndex" value="@ViewBag.TripIndices.TravelIndex">
 
             <input type="submit" value="Total Price" />
-        </form>
+        </form>*@
 
         <p name="DateStart">Start Date: @ViewBag.Vacation.DateStart</p>
         <p name="DateStart">End Date: @ViewBag.Vacation.DateEnd</p>
