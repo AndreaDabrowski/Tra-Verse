@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using Tra_Verse.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Tra_Verse.Controllers
 {
@@ -27,9 +29,10 @@ namespace Tra_Verse.Controllers
 
         public ActionResult LoginButton(User logUser)
         {
-            List<User> foundID = database.Users.ToList();
+            List<User> userList = database.Users.ToList();
+            logUser.Password = CurrentUser.HashPassword(logUser.Password);
 
-            foreach(var id in foundID)
+            foreach (var id in userList)
             {
                 if (logUser.Email == id.Email && logUser.Password == id.Password)
                 {
@@ -65,6 +68,8 @@ namespace Tra_Verse.Controllers
                         return RedirectToAction("Login", "User");
                     }
                 }
+
+                newUser.Password = CurrentUser.HashPassword(newUser.Password);
 
                 User added = database.Users.Add(newUser);
                 database.SaveChanges();
