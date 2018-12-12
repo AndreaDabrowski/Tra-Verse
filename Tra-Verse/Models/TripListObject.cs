@@ -51,11 +51,11 @@ namespace Tra_Verse.Models
 
         public static string[] Planets()
         {
-            string path = "~/Content/Images/Planets/";
-            string[] planetPhotos = new string[16] { path + "HD1461c.jpg", path + "HD142b.png", path + "HD142c.jpg",
+            string path = "/Content/Images/Planets/";
+            string[] planetPhotos = new string[16] { path + "HD1461c.jpg", path + "HD142b.jpg", path + "HD142c.jpg",
                     path + "HD564b.jpg", path + "HD1461b.png", path + "HD1502b.png", path + "KELT1b.jpg", path + "GJ3021b.jpg",
                     path + "WASP26b.png", path + "WASP32b.png", path + "WASP44b.png", path + "WASP96b.PNG", path + "WASP158b.PNG",
-                    path + "HATS34b.png", path + "WASP136b.png", path + "Qatar4b.jpg" };
+                    path + "HATS34b.png", path + "WASP136b.png", path + "Qatar4b.png" };
             return planetPhotos;
         }
     }
