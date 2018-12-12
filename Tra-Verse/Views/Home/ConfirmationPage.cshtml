@@ -3,6 +3,10 @@
 @*@Html.AntiForgeryToken()*@
 @*@using (Html.BeginForm("ConfirmationPage", "Home")
     {*@
+@{ 
+    string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
+    string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
+}
 
 <h1>@TempData["OrderAlready"]</h1>
 <h1>@TempData["UpdatedOrder"]</h1>
@@ -20,39 +24,14 @@
         <img src="@ViewBag.Vacation.PlanetImage" height="200" width="200" align="middle" />
         <p>Planet Name: @ViewBag.Vacation.PlanetName</p>
         <p>Destination Rating: @ViewBag.Vacation.Rating</p>
-        <p>Total Price: @ViewBag.Vacation.Price</p>
         <p>Ship Choice:</p>
-
-        <form action="/User/TotalPrice" method="post">
-            <input type="hidden" name="BasePrice" value="@priceBeforeTotal" />
-
-            @*<form action="/Private/RefreshForTotal?index=@ViewBag.Index" method="post">*@
-            <input type="hidden" name="BasePrice" value="@priceBeforeTotal.ToString()" />
-            <input type="hidden" name="Rating" value="@ViewBag.Yelp["businesses"][p]["rating"]" />
-            <p>Exosuit for exploration outside aircraft? </p>
-            <input type="radio" value="Yes" name="ExoSuit" /><span>Yes +$500,000</span> <br />
-            <input type="radio" value="No" name="ExoSuit" /><span>No +$0</span><br />
-            <br />
-            <img src="@shipImages[0]" height="50" width="65" />
-            <input type="radio" value="1" name="ShipType" /> <span>+$100,000</span><br />
-            <img src="@shipImages[1]" height="50" width="65" />
-            <input type="radio" value="2" name="ShipType" /><span>+$200,000</span><br />
-            <img src="@shipImages[2]" height="50" width="65" />
-            <input type="radio" value="3" name="ShipType" /><span>+$300,000</span><br />
-            <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
-            <label>End Date: </label><input type="date" name="DateEnd" value="8018-12-15" /><br />
-            <input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
-            <input type="hidden" name="CompanyIndex" value="@ViewBag.TripIndices.CompanyIndex">
-            <input type="hidden" name="NumberOfDays" value="@ViewBag.TripIndices.NumberOfDays">
-            <input type="hidden" name="TravelIndex" value="@ViewBag.TripIndices.TravelIndex">
-
-            <input type="submit" value="Total Price" />
-        </form>
-
+        <img src="@shipImages[int.Parse(ViewBag.Vacation.ShipType)-1]" height="75" width="100"/>
+        <br />
         <p name="DateStart">Start Date: @ViewBag.Vacation.DateStart</p>
         <p name="DateStart">End Date: @ViewBag.Vacation.DateEnd</p>
-
-
+        <br />
+        <br />
+        <p>Total Price: @ViewBag.Vacation.Price</p>
         <p>Charge has been made to: @ViewBag.User.NameOnCard</p>
         <p>With the following card information: @ViewBag.User.CreditCard</p>
         <p>Refunds Allowed? @ViewBag.Vacation.Refundable</p>

@@ -13,7 +13,6 @@ namespace Tra_Verse.Controllers
 {
     public class HomeController : Controller
     {
-        TraVerseEntities database = new TraVerseEntities();
 
         public ActionResult Index()
         {
@@ -22,6 +21,7 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTripButton()
         {
+            TraVerseEntities database = new TraVerseEntities();
             User user = database.Users.Find(UserController.currentUser.UserID);
             VacationLog vacationToEdit = database.VacationLogs.Find(user.OrderID);
             if (UserController.currentUser.LoggedIn == false)
@@ -50,8 +50,10 @@ namespace Tra_Verse.Controllers
             }
 
         }
+
         public ActionResult EditTripInDB(FormCollection fc)
         {
+            TraVerseEntities database = new TraVerseEntities();
             User user = database.Users.Find(UserController.currentUser.UserID);
             VacationLog vacationToEdit = database.VacationLogs.Find(user.OrderID);
             vacationToEdit.Exosuit = fc["Exosuit"];
@@ -64,8 +66,15 @@ namespace Tra_Verse.Controllers
             TempData["UpdatedOrder"] = "Your Order Has Been Updated!";
             return RedirectToAction("ConfirmationPage");
         }
+
+        /// <summary>
+        /// Accesses currentUser's order
+        /// </summary>
+        /// <returns>CurrentVacation to EditPage</returns>
         public ActionResult PrivateEditPage()
         {
+            TraVerseEntities database = new TraVerseEntities();
+
             User user = database.Users.Find(UserController.currentUser.UserID);
             VacationLog vacationToEdit = database.VacationLogs.Find(user.OrderID);
             ViewBag.Vacation = vacationToEdit;
@@ -75,6 +84,8 @@ namespace Tra_Verse.Controllers
 
         public ActionResult DeleteTrip()
         {
+            TraVerseEntities database = new TraVerseEntities();
+
             if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError", "User");
@@ -99,8 +110,15 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Index");
         }
 
+        /// <summary>
+        /// Adds new order to DB
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns>currentVacation to checkout view</returns>
         public ActionResult Checkout(VacationLog order)
         {
+            TraVerseEntities database = new TraVerseEntities();
+
             if (UserController.currentUser.LoggedIn == false)
             {
                 return View("LoginError", "User");
@@ -138,6 +156,8 @@ namespace Tra_Verse.Controllers
 
         public ActionResult RefreshForEdit(VacationLog order)
         {
+            TraVerseEntities database = new TraVerseEntities();
+
             User user = database.Users.Find(UserController.currentUser.UserID);
             if (UserController.currentUser.LoggedIn == false)
             {
@@ -167,20 +187,10 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("Confirmation Page");
         }
 
-        //public ActionResult Checkout(int price)
-        //{
-        //    ViewBag.NASAInfo = API.NASA("notSorted");
-        //    ViewBag.Index = UserController.currentUser.CurrentIndex;
-
-            
-        //    //database.Entry(currentVacation).State = System.Data.Entity.EntityState.Modified;
-        //    //database.SaveChanges();
-
-        //    return View();
-        //}
 
         public ActionResult ProcessPayment(FormCollection fc)
         {
+            TraVerseEntities database = new TraVerseEntities();
 
             User findEmail = database.Users.Find(UserController.currentUser.UserID);
             string creditCard = fc["CreditCard"];
@@ -198,8 +208,20 @@ namespace Tra_Verse.Controllers
 
         public ActionResult ConfirmationPage()
         {
-            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
+            TraVerseEntities database = new TraVerseEntities();
+
+            if (UserController.currentUser.LoggedIn == false)
+            {
+                return View("LoginError", "User");
+            }
+
             User user = database.Users.Find(UserController.currentUser.UserID);
+            if (user.OrderID <= 0)//Does this need to be here?????
+            {
+                return View("Error");
+            }
+            
+            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             ViewBag.Vacation = vacationInfo;
             ViewBag.User = user;
 

@@ -1,5 +1,5 @@
 ﻿<br /><br />
-@ViewBag.RefreshedTotal
+      <h1>Total Price: @ViewBag.RefreshedTotal</h1>
 
 @*@ViewBag.TotalPrice*@
 
@@ -12,7 +12,7 @@
     <input type="hidden" name="DateEnd" value="@ViewBag.DateEnd" />
     <input type="hidden" name="Rating" value="@ViewBag.Rating" />
     <input type="hidden" name="CompanyName" value="@ViewBag.CompanyName" />@*INDEX AT 4?*@
-    <input type="hidden" name="PlanetImage" value="Planet Picture" />@*@ViewBag.PlanetPic[ViewBag.PlanetIndex].ToString()*@
+    <input type="hidden" name="PlanetImage" value="@ViewBag.PlanetPic[ViewBag.PlanetIndex]" />
     <input type="hidden" name="Refundable" value="@ViewBag.Refundable" />
-    <input type="submit" value="Proceed to Checkout" />
+    <input type="submit" value="Proceed to Checkout" style="color: black"/>
 </form>

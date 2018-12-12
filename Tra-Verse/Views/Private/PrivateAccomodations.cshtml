@@ -43,16 +43,20 @@
    
 
     <p>Exosuit for exploration outside aircraft? </p>
-    <input type="radio" value="Yes" name="ExoSuit" /><span>Yes +$500,000</span> <br />
-    <input type="radio" value="No" name="ExoSuit" /><span>No +$0</span><br />
+    <span>
+        <input type="radio" value="Yes" name="ExoSuit" /><span>Yes +$500,000</span> <br />
+        <input type="radio" value="No" name="ExoSuit" /><span>No +$0</span>
+    </span>
     <br />
-
-    <img src="@shipImages[0]" height="50" width="65" />
-    <input type="radio" value="1" name="ShipType" /> <span>+$100,000</span><br />
-    <img src="@shipImages[1]" height="50" width="65" />
-    <input type="radio" value="2" name="ShipType" /><span>+$200,000</span><br />
-    <img src="@shipImages[2]" height="50" width="65" />
-    <input type="radio" value="3" name="ShipType" /><span>+$300,000</span><br />
+    <br />
+    <span>
+        <img src="@shipImages[0]" height="50" width="65" />
+        <input type="radio" value="1" name="ShipType" /> <span>+$100,000</span><br />
+        <img src="@shipImages[1]" height="50" width="65" />
+        <input type="radio" value="2" name="ShipType" /><span>+$200,000</span><br />
+        <img src="@shipImages[2]" height="50" width="65" />
+        <input type="radio" value="3" name="ShipType" /><span>+$300,000</span><br />
+    </span>
     <label>Start Date: </label><input type="date" name="DateStart" style="color: black" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
     <label>End Date: </label><input type="date" name="DateEnd" style="color: black" value="8018-12-15" /><br />
     <input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
