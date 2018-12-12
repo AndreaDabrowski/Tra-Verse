@@ -12,6 +12,11 @@
 <h1>@TempData["UpdatedOrder"]</h1>
 @ViewBag.EditedConfirmationPage
 @TempData["UpdatedOrder"]
+@{
+    string path = "/Content/Images/Planets/";
+    
+    }
+
 
 <form action="/Email/ConfirmationPageEmail" method="post" type>
 
@@ -21,7 +26,7 @@
         <hr />
         <h4>Confirmation of your vacation with TraVerse through @ViewBag.Vacation.CompanyName</h4>
         <br />
-        <img src="@ViewBag.Vacation.PlanetImage" height="200" width="200" align="middle" />
+        <img src="@String.Concat(path, ViewBag.Vacation.PlanetImage)" height="200" width="200" align="middle" />
         <p>Planet Name: @ViewBag.Vacation.PlanetName</p>
         <p>Destination Rating: @ViewBag.Vacation.Rating</p>
         @if(ViewBag.Vacation.ShipType != "Public")

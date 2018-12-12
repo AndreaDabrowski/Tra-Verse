@@ -20,8 +20,9 @@ namespace Tra_Verse.Controllers
                 ViewBag.TripIndices = tripIndices;
                 ViewBag.PlanetPic = TripListObject.Planets();
                 ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
-
-
+                DateTime DTDeparture = DateTime.Parse(tripIndices.DepartureDate);
+                ViewBag.ReturnDate = DTDeparture.AddDays(tripIndices.NumberOfDays);
+                
                 return View();
             }
             else
@@ -38,7 +39,7 @@ namespace Tra_Verse.Controllers
             ViewBag.PlanetPic = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
             ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
-
+            ViewBag.DepartureDate = Date.DepartureDate(30);
             return View();
         }
     }

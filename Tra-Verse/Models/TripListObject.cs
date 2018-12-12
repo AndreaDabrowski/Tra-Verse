@@ -8,7 +8,7 @@ namespace Tra_Verse.Models
     public class TripListObject
     {
         public int PlanetIndex { get; set; }
-        public int TravelIndex { get; set; }
+        public string DepartureDate { get; set; }
         public int CompanyIndex { get; set; }
         public int NumberOfDays { get; set; }
 
@@ -25,7 +25,7 @@ namespace Tra_Verse.Models
                 TripListObject obj = new TripListObject();
 
                 obj.PlanetIndex = rand.Next(0, 16);
-                obj.TravelIndex = rand.Next(1, 30);
+                //obj.TravelIndex = rand.Next(1, 30);
                 obj.CompanyIndex = rand.Next(0, 3);
                 obj.NumberOfDays = rand.Next(3, 11);
 
