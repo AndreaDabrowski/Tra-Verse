@@ -12,7 +12,6 @@ namespace Tra_Verse.Models
 {
     public class API
     {
-
         public static JArray NASA(string sortOption)//API has an order_by option built in
         {
             HttpWebRequest nasaRequest;
@@ -63,6 +62,7 @@ namespace Tra_Verse.Models
             rd.Close();
             return yelpJson;
         }
+
         public static JObject Travel()
         {
         
