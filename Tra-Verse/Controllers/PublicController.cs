@@ -37,6 +37,7 @@ namespace Tra_Verse.Controllers
             ViewBag.PlanetPic = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
             ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
+            ViewBag.DepartureDate = Date.DepartureDate(30);
 
             return View();
         }
