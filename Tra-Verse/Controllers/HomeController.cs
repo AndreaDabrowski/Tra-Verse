@@ -50,10 +50,18 @@ namespace Tra_Verse.Controllers
             }
 
         }
-        public ActionResult EditTripInDB(//form collection)
+        public ActionResult EditTripInDB(FormCollection fc)
         {
-            //edit deets
-            //vb to show updated order
+            User user = database.Users.Find(UserController.currentUser.UserID);
+            VacationLog vacationToEdit = database.VacationLogs.Find(user.OrderID);
+            vacationToEdit.Exosuit = fc["Exosuit"];
+            vacationToEdit.ShipType = fc["ShipType"];
+            vacationToEdit.DateEnd = fc["DateEnd"];
+            vacationToEdit.DateStart = fc["DateStart"];
+            database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
+            database.SaveChanges();
+
+            TempData["UpdatedOrder"] = "Your Order Has Been Updated!";
             return RedirectToAction("ConfirmationPage");
         }
         public ActionResult PrivateEditPage()
