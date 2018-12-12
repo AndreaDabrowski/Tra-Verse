@@ -12,20 +12,21 @@
 
     <div name="Message" class="form-group">
 
-        <h1 @*@Html.ValueFor(model => model.Message)*@>Confirmation Page</h1><br />
+        <h1>Confirmation Page</h1><br />
         <hr />
-        <h4>Confirmation of your vacation with Traverse</h4>
+        <h4>Confirmation of your vacation with TraVerse through @ViewBag.Vacation.CompanyName</h4>
         <br />
-        <p>Planet Name: @ViewBag.Planet</p>
-        <p>Destination Rating: @ViewBag.Rating</p>
-        <p>Total Price: @ViewBag.Price</p>
+        <img src="@ViewBag.Vacation.PlanetImage" height="200" width="200" align="middle" />
+        <p>Planet Name: @ViewBag.Vacation.PlanetName</p>
+        <p>Destination Rating: @ViewBag.Vacation.Rating</p>
+        <p>Total Price: @ViewBag.Vacation.Price</p>
         <p>Ship Choice:</p>
 
-        @if (ViewBag.Ship == "1")
+        @if (ViewBag.Vacation.ShipType == "1")
         {
-            <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" />
+            <img src="https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg" height="50" width="65" align="middle"/>
         }
-        else if (ViewBag.Ship == "2")
+        else if (ViewBag.Vacation.ShipType == "2")
         {
             <img src="http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg" height="50" width="65" />
         }
@@ -34,12 +35,14 @@
             <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
         }
 
-        <p name="DateStart">Start Date: @ViewBag.Start</p>
-        <p name="DateStart">End Date: @ViewBag.End</p>
+        <p name="DateStart">Start Date: @ViewBag.Vacation.DateStart</p>
+        <p name="DateStart">End Date: @ViewBag.Vacation.DateEnd</p>
 
 
-        <p>Charge has been made to: @ViewBag.Name</p>
-        <p>With the following card information: @ViewBag.Card</p>
+        <p>Charge has been made to: @ViewBag.User.NameOnCard</p>
+        <p>With the following card information: @ViewBag.User.CreditCard</p>
+        <p>Refunds Allowed? @ViewBag.Vacation.Refundable</p>
+        <p>Space Suit Available: @ViewBag.Vacation.Exosuit</p>
 
     </div>
     <div class="form-group">
@@ -52,6 +55,4 @@
 <input type="button" value="Edit this order" onclick="location.href='@Url.Action("EditTrip", "Home")'" class="btn-default" />
 <input type="button" value="Delete this order" onclick="location.href='@Url.Action("DeleteTrip", "Home")'" class="btn-danger" />
 
-@*<a href="/Home/EditTrip">EDIT YOUR CURRENT TRIP</a>*@
 <input type="button" value="Return Home" onclick="location.href='@Url.Action("Index", "Home")'" class="btn-default" />
-@*<a class="btn-default" href="/Home/Index">Return To Home Page</a>*@

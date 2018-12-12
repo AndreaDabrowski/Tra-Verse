@@ -14,10 +14,11 @@ namespace Tra_Verse.Controllers
 
         public ActionResult TripList()
         {
-            ViewBag.Travel = API.Travel()["results"];//jobject
+            ViewBag.Travel = API.Travel();//jobject
             ViewBag.NASA = API.NASA("notSorted");//jarray
             ViewBag.Yelp = API.Yelp();
-            ViewBag.PlanetList = TripListObject.Planets();
+            ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
+            ViewBag.PlanetPic = TripListObject.Planets();
             ViewBag.TripList = TripListObject.GenerateTrips();
 
             return View();
@@ -32,13 +33,14 @@ namespace Tra_Verse.Controllers
                 ViewBag.Yelp = API.Yelp();
                 ViewBag.TripIndices = tripIndices;
                 ViewBag.PlanetPic = TripListObject.Planets();
+                ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
                 ViewBag.Index = index;
                 return View();
             }
             else
             {
                 ViewBag.ModelNotValid = "Model Not Valid";
-                return View("Error", "Home");
+                return RedirectToAction("Error", "Home");
             }
         }
     }
