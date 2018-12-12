@@ -95,19 +95,26 @@ namespace Tra_Verse.Controllers
 
         public ActionResult TotalPrice(FormCollection variables)
         {
-            //current user rand price for YELP $$$ calc
-            TempData["ShipType"] = variables["ShipType"];
-            TempData["ExoSuit"] = variables["ExoSuit"];
-            TempData["Rating"] = variables["Rating"];
-            TempData["DateEnd"] = variables["DateEnd"];
-            TempData["DateStart"] = variables["DateStart"];
-            int pr = int.Parse(variables["BasePrice"]);
-            TempData["RefreshedTotal"] = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
-            //int index = UserController.currentUser.CurrentIndex;
+            ViewBag.ShipType = variables["ShipType"];
+            ViewBag.Exosuit = variables["ExoSuit"];
+            ViewBag.Rating = variables["Rating"];
+            ViewBag.DateEnd = variables["DateEnd"];
+            ViewBag.DateStart = variables["DateStart"];
+            ViewBag.Rating = variables["Rating"];//need
+            ViewBag.PlanetName = variables["PlanetName"];
+            ViewBag.Refundable = variables["Refundable"];
+            ViewBag.CompanyName = variables["CompanyName"];
 
-            return RedirectToAction("PrivateAccomodations");//how to send trip indices
+            ViewBag.PlanetIndex = variables["PlanetIndex"];
+            ViewBag.CompanyIndex = variables["CompanyIndex"];
+            ViewBag.TravelIndex = variables["TravelIndex"];
+            string test = variables["BasePrice"];
+        
+            int pr = Convert.ToInt32(test);
+            ViewBag.RefreshedTotal = Calculation.TotalPrice(variables["ShipType"].ToString(), variables["ExoSuit"].ToString(), pr, variables["Rating"].ToString());
+            ViewBag.PlanetPic = TripListObject.Planets();
+            return View(variables);//how to send trip indices
         }
-
 
         public ActionResult Login()
         {
