@@ -34,7 +34,12 @@ namespace Tra_Verse.Controllers
             }
             if (vacationToEdit.ShipType == "Public")
             {
-                ViewBag.ChooseNewVacation = "You can't customize cruise-style Vacations, Please choose a new trip";
+                TempData["NoCustom"] = "You can't customize cruise-style Vacations, Please choose a new trip";
+                
+                user.OrderID = 0;
+                UserController.currentUser.OrderID = 0;
+                database.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
                 return RedirectToAction("PublicTripList", "Public");
             }
             else if (vacationToEdit.ShipType == "1" || vacationToEdit.ShipType == "2"|| vacationToEdit.ShipType == "3")
@@ -65,10 +70,6 @@ namespace Tra_Verse.Controllers
             return RedirectToAction("ConfirmationPage");
         }
 
-        /// <summary>
-        /// Accesses currentUser's order
-        /// </summary>
-        /// <returns>CurrentVacation to EditPage</returns>
         public ActionResult PrivateEditPage()
         {
             TraVerseEntities database = new TraVerseEntities();
@@ -129,6 +130,14 @@ namespace Tra_Verse.Controllers
                 TempData["OrderAlready"] = "This user already has the following order";
                 return RedirectToAction("ConfirmationPage");
             }
+            if (user.NameOnCard != null)
+            {
+                user.NameOnCard = null;
+                user.CreditCard = null;
+                user.CRV = null;
+                database.Entry(user).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+            }
             try
             {
                 VacationLog added = database.VacationLogs.Add(order);
@@ -151,41 +160,7 @@ namespace Tra_Verse.Controllers
 
             return View();
         }
-
-        //public ActionResult RefreshForEdit(VacationLog order)
-        //{
-        //    TraVerseEntities database = new TraVerseEntities();
-
-        //    User user = database.Users.Find(UserController.currentUser.UserID);
-        //    if (UserController.currentUser.LoggedIn == false)
-        //    {
-        //        return View("LoginError", "User");
-        //    }
-        //    else if (user.OrderID <= 0)//Does this need to be here?????
-        //    {
-        //        return View("Error");
-        //    }
-
-        //    try
-        //    {
-        //        VacationLog vacationToEdit = database.VacationLogs.Find(UserController.currentUser.OrderID);
-        //        vacationToEdit.DateEnd = order.DateEnd;
-        //        vacationToEdit.DateStart = order.DateStart;
-        //        vacationToEdit.ShipType = order.ShipType;
-        //        database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
-        //        database.SaveChanges();
-        //    }
-        //    catch (DbEntityValidationException e)
-        //    {
-        //        Console.Write(e.EntityValidationErrors);
-        //        return View("Error");
-        //    }
-
-        //    TempData["UpdatedOrder"] = "This is your updated order";
-        //    return RedirectToAction("Confirmation Page");
-        //}
-
-
+                
         public ActionResult ProcessPayment(FormCollection fc)
         {
             TraVerseEntities database = new TraVerseEntities();
@@ -235,7 +210,7 @@ namespace Tra_Verse.Controllers
 
     }
 }
-
+//Sorting feature start
 /* public ActionResult TripList(string price)
      {
          List<VacationLog> test = database.VacationLogs.ToList();

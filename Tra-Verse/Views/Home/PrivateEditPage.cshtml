@@ -1,16 +1,18 @@
-﻿
+﻿@{ 
+    string path = "/Content/Images/Planets/";
+}
 <h1>Update Your Order</h1>
 <br />
 <p>Planet Name: @ViewBag.Vacation.PlanetName</p>
 <hr />
 <h4>Booked with: @ViewBag.Vacation.CompanyName</h4>
 <br />
-<img src="@ViewBag.Vacation.PlanetImage" height="200" width="200" align="middle" />
+<img src="@String.Concat(path, ViewBag.Vacation.PlanetImage)" height="200" width="200" align="middle" />
 <p>Destination Rating: @ViewBag.Vacation.Rating</p>
 <p>Total Price: @ViewBag.Vacation.Price</p>@*PRICE WILL NOT CHANGE*@
         
 <form action="/Home/EditTripInDB" method="post">
-    <input type="hidden" name="BasePrice" value="@ViewBag.Vacation.Price" /> @*DO WE NEED TO UPDATE THIS??*@
+    <input type="hidden" name="BasePrice" value="@ViewBag.Vacation.Price" /> @*NO CHANGE*@
     <br />
     <p>Exosuit for exploration outside aircraft? </p>
     <input type="radio" value="Yes" name="ExoSuit" /><span>Yes +$500,000</span> <br />
@@ -24,8 +26,8 @@
     <img src="https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" height="50" width="65" />
     <input type="radio" value="3" name="ShipType" /><span>+$300,000</span>
     <br />
-    <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
-    <label>End Date: </label><input type="date" name="DateEnd" value="8018-12-15" /><br />
+    <label>Start Date: </label><input type="date" name="DateStart" value="8018-12-14" style="color:black"/>
+    <label>End Date: </label><input type="date" name="DateEnd" value="8018-12-15" style="color:black"/><br />
 
     <input type="submit" value="Edit Trip Details" style="color:black"/>
 </form>

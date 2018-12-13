@@ -249,16 +249,12 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Private\PrivateAccomodations.cshtml" />
     <Content Include="Views\Public\PublicAccomodations.cshtml" />
-    <Content Include="Views\Home\EditTrip.cshtml" />
     <Content Include="Views\Home\CheckOut.cshtml" />
     <Content Include="Views\Home\ConfirmationPage.cshtml" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
     <Content Include="Views\User\LoginError.cshtml" />
-    <Content Include="Views\Home\PreOrderError.cshtml" />
-    <Content Include="Views\User\YourTrip.cshtml" />
-    <Content Include="Views\Home\Redo.cshtml" />
     <Content Include="Views\Public\PublicTripList.cshtml" />
     <Content Include="Views\User\Login.cshtml" />
     <Content Include="Views\User\LoggedIn.cshtml" />

@@ -27,48 +27,19 @@
     <br />
     <hr />
 <div>
-    <img src="@String.Concat(path, ViewBag.PlanetPic[i])" height="200" width="200" align="left">@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
-    <h3>Trip To "@ViewBag.NASA[i]["pl_name"]"</h3>@*PLANET INDEX i FOR ALL DIFF PLANETS??*@
-    @*<h2>NASA 3d Imaging: @ViewBag.PlanetNasaLink[i]</h2>*@
+    <img src="@String.Concat(path, ViewBag.PlanetPic[i])" height="200" width="200" align="left">
+    <h3>Trip To "@ViewBag.NASA[i]["pl_name"]"</h3>
     <br />
-    @*<p>Company Name:@companyName[trips[i].CompanyIndex]</p>@*COMPANY INDEX 4??
-    <img src="@shipImages[trips[i].CompanyIndex]" height="100" width="100" align="right" />@*COMPANY INDEX 4??*@
+    <img src="@shipImages[trips[i].CompanyIndex]" height="100" width="100" align="right" />
     <h3>Base Price : $@(priceBeforeTotal * 2319)</h3>
     <p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
     <form action="/Private/PrivateAccomodations?index=@i" method="post">
         <input type="hidden" name="PlanetIndex" value="@trips[i].PlanetIndex">
         <input type="hidden" name="CompanyIndex" value="@trips[i].CompanyIndex">
         <input type="hidden" name="NumberOfDays" value="@trips[i].NumberOfDays">
-        @*<input type="hidden" name="TravelIndex" value="@trips[i].TravelIndex">*@
         <input type="submit" value="Choose this Vacation" class="btn-default" style="color: black">
     </form>
 </div>
 <br />
 }
-@*<p>Departure Date: @ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]</p>*@
-@*<p>Rooms remaining: @(ViewBag.Travel[p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"]* trips[i].NumberOfDays)</p>*@
-@*<p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>*@
-@*<p>
-    Distance from Earth: @ViewBag.NASA[p]["st_dist"] parsecs
-    *Unit of distance where 1 parsec equals the distance from the Earth to Sun
-</p>*@
 
-@*<h1>Choose Your Vacation :)</h1>
-    @TempData["LoggedIn"]
-<br />
-<br />
-<p> Distance Index: 1 Parsec = 3.26 Light-years (The time it take for light from the sun to reach Earth)</p>
-    @*Search function!!!!!!!!!!!!*
-    @for (int i = 0; i < 10; i++)
-    {
-<div>
-    <img src=@shipImages[i] alt=@ViewBag.NASAInfo[i]["pl_name"] height="200" width="200" align="left">
-    <span>Planet Name: @ViewBag.NASAInfo[i]["pl_name"]</span><br />
-    <p>Distance from Earth: @ViewBag.NASAInfo[i]["st_dist"] parsecs</p>
-    <p>Trip base price: @ViewBag.YelpInfo["businesses"][i]["price"]</p>
-    <p>@ViewBag.YelpInfo["businesses"][i]["review_count"] Current Reviews</p>
-    <p>Rating: @ViewBag.YelpInfo["businesses"][i]["rating"]</p>
-    <a class="btn-default" href="/Home/PrivateAccomodations?index=@i">Choose this Destination</a><br /><br /><br />
-</div>
-<br />
-    }*@
