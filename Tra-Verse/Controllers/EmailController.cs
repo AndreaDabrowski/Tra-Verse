@@ -20,8 +20,8 @@ namespace Tra_Verse.Controllers
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             User user = database.Users.Find(UserController.currentUser.UserID);
             var message = new MailMessage();
-            message.To.Add(new MailAddress(user.Email));  // replace with valid value 
-            message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  // replace with valid value
+            message.To.Add(new MailAddress(user.Email));   
+            message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  
             message.Subject = "Confirmation of your vacation with TraVerse";
             message.Body = string.Format("<p>Confirmation of your vacation with TraVerse</p>" +
             "<p>Trip Details: </p>" +
@@ -44,8 +44,8 @@ namespace Tra_Verse.Controllers
             {
                 var credential = new NetworkCredential
                 {
-                    UserName = "TraVerseAlwaysMovingForward@Outlook.com",  // replace with valid value
-                    Password = "GucciBoi"  // replace with valid value
+                    UserName = "TraVerseAlwaysMovingForward@Outlook.com",  
+                    Password = "GucciBoi"  
                 };
                 smtp.Credentials = credential;
                 smtp.Host = "smtp-mail.outlook.com";

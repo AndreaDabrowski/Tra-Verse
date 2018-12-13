@@ -14,9 +14,7 @@ namespace Tra_Verse.Models
 
         public static TripListObject[] GenerateTrips()
         {
-            //int delta = 1;
-            //int spirit = 2;
-            //int southwest = 3;
+            
             Random rand = new Random();
             TripListObject[] tripsWithShips = new TripListObject[30];
 

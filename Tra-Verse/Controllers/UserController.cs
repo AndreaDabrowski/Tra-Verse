@@ -16,18 +16,9 @@ namespace Tra_Verse.Controllers
         {
             TraVerseEntities database = new TraVerseEntities();
 
-            List<User> userList = database.Users.ToList();
             logUser.Password = CurrentUser.HashPassword(logUser.Password);
-
-            if (logUser.Email == currentUser.Email && logUser.Password == currentUser.Password)
-            {
-                TempData["CurrentlyLoggedIn"] = "You are already logged in";
-                return RedirectToAction("Login");
-            }
-            if (logUser.Email != currentUser.Email || logUser.Password != currentUser.Password)
-            {
-                TempData["InvalidLogin"] = "Invalid Username or Password";
-            }
+            currentUser.Password = CurrentUser.HashPassword(currentUser.Password);
+            List<User> userList = database.Users.ToList();
 
             foreach (var id in userList)
             {
@@ -42,6 +33,16 @@ namespace Tra_Verse.Controllers
                         return RedirectToAction("Login");//, logUser
                     }
                 }
+            }
+            if (logUser.Email == currentUser.Email && logUser.Password == currentUser.Password)
+            {
+                TempData["CurrentlyLoggedIn"] = "You are already logged in";
+                return RedirectToAction("Login");
+            }
+            if (logUser.Email != currentUser.Email || logUser.Password != currentUser.Password)
+            {
+                TempData["InvalidLogin"] = "Invalid Username or Password";
+                return RedirectToAction("Login");
             }
             return RedirectToAction("Login");
         }
@@ -104,7 +105,33 @@ namespace Tra_Verse.Controllers
                 return RedirectToAction("LoginError", "Home");
             }
         }
+        public ActionResult TotalPrice(FormCollection variables)
+        {
+            ViewBag.ShipType = variables["ShipType"];
+            ViewBag.Exosuit = variables["ExoSuit"];
+            ViewBag.DateEnd = variables["DateEnd"];
+            ViewBag.DateStart = variables["DateStart"];
+            ViewBag.Rating = variables["Rating"];
+            ViewBag.PlanetName = variables["PlanetName"];
+            ViewBag.Refundable = variables["Refundable"];
+            ViewBag.CompanyName = variables["CompanyName"];
 
+            ViewBag.PlanetIndex = variables["PlanetIndex"];
+            ViewBag.CompanyIndex = variables["CompanyIndex"];
+            ViewBag.TravelIndex = variables["TravelIndex"];
+
+            string shipType = ViewBag.ShipType;
+            string exoSuit = ViewBag.Exosuit;
+            string rating = ViewBag.Rating;
+
+            string test = variables["BasePrice"].ToString();
+
+            int pr = int.Parse(test);
+            ViewBag.RefreshedTotal = Calculation.TotalPrice(variables["ShipType"], variables["ExoSuit"], pr, variables["Rating"]);
+            //ViewBag.RefreshedTotal = Calculation.TotalPrice(shipType, exoSuit, 5, rating);
+            ViewBag.PlanetPic = TripListObject.Planets();
+            return View();//how to send trip indices
+        }
         public ActionResult Login()
         {
             return View();

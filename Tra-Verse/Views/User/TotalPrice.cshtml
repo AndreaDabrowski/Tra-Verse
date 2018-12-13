@@ -1,7 +1,7 @@
 ﻿<br /><br />
-      <h1>Total Price: </h1>@ViewBag.RefreshedTotal
+      <h1>Total Price: @ViewBag.RefreshedTotal</h1>
 
-@*@ViewBag.TotalPrice*@
+
 
 <form action="/Home/Checkout" method="post">
     <input type="hidden" name="ShipType" value="@ViewBag.ShipType" />
@@ -11,8 +11,8 @@
     <input type="hidden" name="DateStart" value="@ViewBag.DateStart" />
     <input type="hidden" name="DateEnd" value="@ViewBag.DateEnd" />
     <input type="hidden" name="Rating" value="@ViewBag.Rating" />
-    <input type="hidden" name="CompanyName" value="@ViewBag.CompanyName" />@*INDEX AT 4?*@
-    <input type="hidden" name="PlanetImage" value="@ViewBag.PlanetPic[ViewBag.PlanetIndex]" />
+    <input type="hidden" name="CompanyName" value="@ViewBag.CompanyName" />
+    <input type="hidden" name="PlanetImage" value="@ViewBag.PlanetPic[int.Parse(ViewBag.PlanetIndex)]" />
     <input type="hidden" name="Refundable" value="@ViewBag.Refundable" />
     <input type="submit" value="Proceed to Checkout" style="color: black"/>
 </form>

@@ -10,8 +10,6 @@ namespace Tra_Verse.Models
     {
         public static int TripPriceRandomizer(string dollar)
         {
-            //var yelp = API.Yelp();
-            //string randomPrice = yelp["businesses"][index]["price"].ToString();
             int pricePerDollarSign = 0;
             Random rand = new Random();
 
@@ -54,12 +52,7 @@ namespace Tra_Verse.Models
                     suitCharge = 0;
                     break;
             }
-            //var Nasa = API.NASA("notSorted");
-            //var takeDistance = Nasa[UserController.currentUser.CurrentIndex]["st_dist"];
-            //int distance = Convert.ToInt32(takeDistance);
-
-            //int pricePerDistance = distance / 100 * 2500;
-            //int pricePerDollarSign = dollarSign * 1000;
+            
             int pricePerDollar = TripPriceRandomizer(dollar);
 
             int priceShipOption = 0;
