@@ -17,8 +17,8 @@ namespace Tra_Verse.Controllers
         public async Task<ActionResult> ConfirmationPage()
         {
             TraVerseEntities database = new TraVerseEntities();
-            VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
             User user = database.Users.Find(UserController.currentUser.UserID);
+            VacationLog vacationInfo = database.VacationLogs.Find(user.OrderID);
             var message = new MailMessage();
             message.To.Add(new MailAddress(user.Email));   
             message.From = new MailAddress("TraVerseAlwaysMovingForward@outlook.com");  
@@ -31,7 +31,7 @@ namespace Tra_Verse.Controllers
             "Departure Date: " + vacationInfo.DateStart.ToString() + "</p>" +
             "Return Date: " + vacationInfo.DateEnd.ToString() + "</p>" +
             "</br>" +
-            "TOTAL: " + vacationInfo.Price.ToString() + "</p>" +
+            "TOTAL: $" + vacationInfo.Price.ToString() + "</p>" +
             "</br>" +
             "<p>This amount was charged to: " + user.NameOnCard.ToString() + "</p>" +
             "<p>Card number: " + user.CreditCard.ToString() + "</p>" +
