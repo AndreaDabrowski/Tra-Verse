@@ -9,39 +9,41 @@
     float priceBeforeTotal = float.Parse(priceString);
 }
 
-<h1>@ViewBag.NASA[p]["pl_name"]</h1>
-<h2>@ViewBag.TripIndices.NumberOfDays-Day Trip</h2>
-<img src="@String.Concat(path, ViewBag.PlanetPic[p])" alt=@ViewBag.NASA[p]["pl_name"] height="200" width="200" align="left" />
-<br />
-<p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
-<p>Cruise Ship: </p>
-<img src="@shipImages[ViewBag.TripIndices.CompanyIndex]" height="100" width="100" align="left" />
-<br />
-<h3>Total Price: $@(priceBeforeTotal * 2319)</h3>
-<br />
-<p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>
-<p name="Rating">Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
-<br />
+
+<h1>@ViewBag.TripIndices.NumberOfDays-Day Trip to @ViewBag.NASA[p]["pl_name"]</h1>
+<img src="@String.Concat(path, ViewBag.PlanetPic[p])" alt=@ViewBag.NASA[p]["pl_name"] height="200" width="200" align="middle" />
+<hr />
+<p>Destination: @ViewBag.NASA[p]["pl_name"]</p>
 <p>Distance from Earth: @ViewBag.NASA[p]["st_dist"] parsecs</p>
 <p> Distance Index: 1 Parsec = 3.26 Light-years (about 20 trillion miles!)</p>
+<br />
+<p>Travel Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
+<p>Cruise Ship: </p>
+<img src="@shipImages[ViewBag.TripIndices.CompanyIndex]" height="100" width="125" align="middle" />
+<br />
+<p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>
+<p>Destination Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
+<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>
+<br />
 <p>Departure Date: @ViewBag.TripIndices.DepartureDate</p>
 <p>Number of Days: @ViewBag.TripIndices.NumberOfDays</p>
 <p>Return Date: @ViewBag.ReturnDate</p>
-<p>Rooms remaining: @(ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["booking_info"]["seats_remaining"] * ViewBag.TripIndices.NumberOfDays)</p>
 <br />
-<p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"] </p>
 <p>Spacesuit for exploration outside aircraft? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"]</p>
+<p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"] </p>
+<br />
+<h3>Total Price: $@(priceBeforeTotal * 2319)</h3>
 <form action="/Home/Checkout" method="post">
     <input type="hidden" name="PlanetName" value="@ViewBag.NASA[p]["pl_name"]">
     <input type="hidden" name="Price" value="@(priceBeforeTotal * 2319)">
     <input type="hidden" name="Rating" value="@float.Parse("4.5")">@*@float.Parse(ViewBag.Yelp["businesses"][p]["rating"])*@
     <input type="hidden" name="DateStart" value="@ViewBag.TripIndices.DepartureDate">
-    <input type="hidden" name="DateEnd" value="@ViewBag.Travel["results"][p]["itineraries"][0]["outbound"]["flights"][0]["departs_at"]">@*NEED TO CHANGE*@
-    <input type="hidden" name="ShipType" value="Public" /> 
+    <input type="hidden" name="DateEnd" value="@ViewBag.ReturnDate">@*NEED TO CHANGE*@
+    <input type="hidden" name="ShipType" value="Public" />
     <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]">
     <input type="hidden" name="PlanetImage" value=@ViewBag.PlanetPic[p]>
-    <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"]">
     <input type="hidden" name="Exosuit" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["change_penalties"]">
+    <input type="hidden" name="Refundable" value="@ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"]">
     <input type="submit" style="color: black" value="Proceed to Checkout" />
 </form>
 @*if null, show unkown*@
@@ -52,7 +54,6 @@
 <ul>Mass in Units of Earth's Weight: @ViewBag.NASA[p]["pl_masse"] Earths</ul>
 <ul>Time to Orbit Local Star: @ViewBag.NASA[p]["pl_orbper"] days</ul>
 <ul>Year of Discovery: @ViewBag.NASA[p]["pl_disc"]</ul>
-<ul>To Learn More: </ul> <a href="@ViewBag.PlanetNasaLink[p]">NASA 3d Imaging</a>
-<a href="@ViewBag.PlanetNasaLink[p]">NASA 3d Imaging</a>
-@*<p>Exoplanet Encyplopedia: @ViewBag.NASA[p]["pl_pelink"]</p>*@
-@*<p>Exoplanet Data Explorer: @ViewBag.NASA[p]["pl_edelink"]</p>*@
+<p>To Learn More: </p>
+<p>NASA's Interactive Site: </p><a href="@ViewBag.PlanetNasaLink[p]">@ViewBag.PlanetNasaLink[p]</a>
+<p>Exoplanet Encyplopedia:</p> <a href="@ViewBag.NASA[p]["pl_pelink"]">@ViewBag.NASA[p]["pl_pelink"]</a>

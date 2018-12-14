@@ -21,14 +21,16 @@ namespace Tra_Verse.Controllers
                 ViewBag.PlanetPic = TripListObject.Planets();
                 ViewBag.PlanetNasaLink = TripListObject.PlanetImagingSystem();
                 DateTime DTDeparture = DateTime.Parse(tripIndices.DepartureDate);
-                ViewBag.ReturnDate = DTDeparture.AddDays(tripIndices.NumberOfDays);
-                
+                DateTime returnDate = DTDeparture.AddDays(tripIndices.NumberOfDays);
+                string format = returnDate.ToString("MM/dd/yyyy hh:mm");
+                ViewBag.ReturnDate = format;
+
                 return View();
             }
             else
             {
                 ViewBag.ModelNotValid = "Model Not Valid";
-                return View("Error", "Home");
+                return View("Error", "User");
             }
         }
 

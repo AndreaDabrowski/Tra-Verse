@@ -1,20 +1,17 @@
 ﻿
-@{ 
+@{
+    string path = "/Content/Images/Planets/";
     string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
     string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
 }
 
 <h1>@TempData["OrderAlready"]</h1>
 <h1>@TempData["UpdatedOrder"]</h1>
-@ViewBag.EditedConfirmationPage
+@ViewBag.EditedConfirmationPageX
 @TempData["UpdatedOrder"]
-@{
-    string path = "/Content/Images/Planets/";
-    
-    }
+@TempData["EmailSent!"]
 
-
-<form action="/Email/ConfirmationPageEmail" method="post" type>
+<form action="/Email/ConfirmationPage" method="post" type>
 
     <div name="Message" class="form-group">
 
@@ -25,11 +22,11 @@
         <img src="@String.Concat(path, ViewBag.Vacation.PlanetImage)" height="200" width="200" align="middle" />
         <p>Planet Name: @ViewBag.Vacation.PlanetName</p>
         <p>Destination Rating: @ViewBag.Vacation.Rating</p>
-        @if(ViewBag.Vacation.ShipType != "Public")
+        @if (ViewBag.Vacation.ShipType != "Public")
         {
             <p>Ship Choice:</p>
             int shipNum = int.Parse(ViewBag.Vacation.ShipType);
-            <img src="@shipImages[shipNum-1]" height="75" width="100"/>
+            <img src="@shipImages[shipNum-1]" height="75" width="100" />
         }
         <br />
         <p name="DateStart">Start Date: @ViewBag.Vacation.DateStart</p>
@@ -50,7 +47,15 @@
     </div>
 </form>
 
-<input type="button" value="Edit this order" onclick="location.href='@Url.Action("EditTripButton", "Home")'" class="btn-default" />
-<input type="button" value="Delete this order" onclick="location.href='@Url.Action("DeleteTrip", "Home")'" class="btn-danger" />
+@if (ViewBag.Vacation.ShipType == "Public")
+{
+    <a href="Home/EditTripButton" type="button" value="Edit this order" class="btn-default" onclick="return confirm('Since cruise-style trips cannot be edited, your next selection will overwrite your current. Are you sure?')">Edit Order</a>
+}
+else
+{
+    <a href="EditTripButton" type="button" value="Edit this order" class="btn-default" onclick="return confirm('Are you sure you would like to edit this private-style vacation?')">Edit Order</a>
+}
+<a href="DeleteTrip" type="button" value="Delete this order" class="btn-danger" onclick="return confirm('Are you sure you would like to permanently delete your trip?')">Delete</a>
+<a href="Index" type="button" value="Return Home" class="btn-default" >Return to Home Page</a>
 
-<input type="button" value="Return Home" onclick="location.href='@Url.Action("Index", "Home")'" class="btn-default" />
+@*onclick="location.href='@Url.Action("DeleteTrip", "Home")'"*@
