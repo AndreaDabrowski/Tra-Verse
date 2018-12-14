@@ -41,7 +41,7 @@ namespace Tra_Verse.Controllers
             }
             else
             {
-                ViewBag.ModelNotValid = "Model Not Valid";
+                TempData["ModelNotValid"] = "You must have a selection for all options";
                 return RedirectToAction("Error", "Home");
             }
         }

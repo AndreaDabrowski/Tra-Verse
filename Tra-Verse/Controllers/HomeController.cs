@@ -56,18 +56,28 @@ namespace Tra_Verse.Controllers
 
         public ActionResult EditTripInDB(FormCollection fc)
         {
-            TraVerseEntities database = new TraVerseEntities();
-            User user = database.Users.Find(UserController.currentUser.UserID);
-            VacationLog vacationToEdit = database.VacationLogs.Find(user.OrderID);
-            vacationToEdit.Exosuit = fc["Exosuit"];
-            vacationToEdit.ShipType = fc["ShipType"];
-            vacationToEdit.DateEnd = fc["DateEnd"];
-            vacationToEdit.DateStart = fc["DateStart"];
-            database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
-            database.SaveChanges();
+            if(ModelState.IsValid)
+            {
 
-            TempData["UpdatedOrder"] = "Your Order Has Been Updated!";
-            return RedirectToAction("ConfirmationPage");
+                TraVerseEntities database = new TraVerseEntities();
+                User user = database.Users.Find(UserController.currentUser.UserID);
+                VacationLog vacationToEdit = database.VacationLogs.Find(user.OrderID);
+                vacationToEdit.Exosuit = fc["Exosuit"];
+                vacationToEdit.ShipType = fc["ShipType"];
+                vacationToEdit.DateEnd = fc["DateEnd"];
+                vacationToEdit.DateStart = fc["DateStart"];
+                database.Entry(vacationToEdit).State = System.Data.Entity.EntityState.Modified;
+                database.SaveChanges();
+
+                TempData["UpdatedOrder"] = "Your Order Has Been Updated!";
+                return RedirectToAction("ConfirmationPage");
+            }
+            else
+            {
+                TempData["SelectOptions"] = "You must make a selection from all options in the form";
+                return View("Error");
+
+            }
         }
 
         public ActionResult PrivateEditPage()
@@ -120,7 +130,8 @@ namespace Tra_Verse.Controllers
 
             if (UserController.currentUser.LoggedIn == false)
             {
-                return View("LoginError", "User");
+                TempData["PleaseLogIn"] = "Please Log in to place an order";
+                return RedirectToAction("LoginError", "User");
             }
 
             User user = database.Users.Find(UserController.currentUser.UserID);
@@ -191,7 +202,7 @@ namespace Tra_Verse.Controllers
             User user = database.Users.Find(UserController.currentUser.UserID);
             if (user.OrderID <= 0)//Does this need to be here?????
             {
-                ViewBag.NoOrder = "You dont have an order to display";
+                ViewBag.NoOrder = "You don't have an order to display...yet";
                 return View("Error");
             }
             

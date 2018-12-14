@@ -3,7 +3,6 @@
     string[] companyName = new string[3] { "Delta", "Spirit", "Infinity" };
     string[] shipImages = new string[3] { "https://cdn.mos.cms.futurecdn.net/eJCVbwUPfV9Mx7sH7bdPRj-970-80.jpg", "http://www.ex-astris-scientia.org/scans/factfiles/raven-cgi.jpg", "https://vignette.wikia.nocookie.net/memory-gamma/images/9/99/Renovamen_Class.jpg/revision/latest?cb=20160303004949" };
 
-    //string[] PlanetImages = new string[10] { "https://images-assets.nasa.gov/image/PIA03456/PIA03456~small.jpg", "https://images-assets.nasa.gov/image/PIA14888/PIA14888~medium.jpg", "https://images-assets.nasa.gov/image/PIA00104/PIA00104~medium.jpg", "https://images-assets.nasa.gov/image/PIA16853/PIA16853~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e001427/GSFC_20171208_Archive_e001427~medium.jpg", "https://www.nasa.gov/centers/goddard/images/content/169859main_Art_Planet_sm.jpg", "https://cdn.zmescience.com/wp-content/uploads/2016/08/600px-Venus_in_Real_Color_28Mosaic29.jpg", "https://news-cdn.softpedia.com/images/fitted/620x/NASA-Wants-to-Send-Astronauts-to-Venus-Have-Them-Study-the-Planet-468012-2.jpg", "https://images-assets.nasa.gov/image/PIA03152/PIA03152~small.jpg", "https://images-assets.nasa.gov/image/GSFC_20171208_Archive_e000132/GSFC_20171208_Archive_e000132~medium.jpg" };
     string priceString = ViewBag.Travel["results"][p]["fare"]["total_price"].ToString();
     float priceBeforeTotal = float.Parse(priceString) * 2319;//change p to travel Index??
     string path = "/Content/Images/Planets/";
@@ -13,19 +12,18 @@
 
 
 <h1>@ViewBag.NASA[ViewBag.Index]["pl_name"]</h1>
+<img src="@String.Concat(path, ViewBag.PlanetPic[ViewBag.Index])" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="middle" />
+<hr />
+<p>Destination: @ViewBag.NASA[ViewBag.Index]["pl_name"]</p>
 <p>Distance from Earth: @ViewBag.NASA[ViewBag.Index]["st_dist"] parsecs</p>
 <p> Distance Index: 1 Parsec = 3.26 Light-years (about 20 trillion miles!)</p>
-<img src="@String.Concat(path, ViewBag.PlanetPic[ViewBag.Index])" alt=@ViewBag.NASA[ViewBag.Index]["pl_name"] height="200" width="200" align="left" />
 <br />
-<p>Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
+<p>Travel Company Name: @companyName[ViewBag.TripIndices.CompanyIndex]</p>
 <br />
 <p>Review count: @ViewBag.Yelp["businesses"][p]["review_count"]</p>
-<p>Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
+<p>Destination Rating: @ViewBag.Yelp["businesses"][p]["rating"]</p>
 <br />
 <p>Refundable? @ViewBag.Travel["results"][p]["fare"]["restrictions"]["refundable"].ToString() </p>
-<br />
-<h3>Base Price : $@priceBeforeTotal</h3>
-<p>*Price may be affected by customizations and ratings - refresh total below</p>
 <br />
 
 <form action="/User/TotalPrice" method="post">
@@ -35,29 +33,36 @@
     <input type="hidden" name="CompanyName" value="@companyName[ViewBag.TripIndices.CompanyIndex]" />
     <input type="hidden" name="PlanetName" value="@ViewBag.NASA[ViewBag.Index]["pl_name"]" />
     <input type="hidden" name="PlanetPic" value="@ViewBag.PlanetPic[ViewBag.Index]" />
-   
 
-    <p>Exosuit for exploration outside aircraft? </p>
+
+    <p>Spacesuit for exploration outside aircraft? </p>
     <span>
         <input type="radio" value="Yes" name="ExoSuit" /><span>Yes +$500,000</span> <br />
         <input type="radio" value="No" name="ExoSuit" /><span>No +$0</span>
     </span>
     <br />
     <br />
+    <p>Please select a ship:</p>
     <span>
-        <img src="@shipImages[0]" height="50" width="65" />
+        <img src="@shipImages[0]" height="75" width="100" />
         <input type="radio" value="1" name="ShipType" /> <span>+$100,000</span><br />
-        <img src="@shipImages[1]" height="50" width="65" />
+        <img src="@shipImages[1]" height="75" width="100" />
         <input type="radio" value="2" name="ShipType" /><span>+$200,000</span><br />
-        <img src="@shipImages[2]" height="50" width="65" />
+        <img src="@shipImages[2]" height="75" width="100" />
         <input type="radio" value="3" name="ShipType" /><span>+$300,000</span><br />
     </span>
+    <br />
+    <p>Please select the dates of your vacation</p>
     <label>Start Date: </label><input type="date" name="DateStart" style="color: black" value="8018-12-14" />@*CHANGE TO DATE TIME FOR CALC*@
     <label>End Date: </label><input type="date" name="DateEnd" style="color: black" value="8018-12-15" /><br />
+    <br />
     <input type="hidden" name="PlanetIndex" value="@ViewBag.TripIndices.PlanetIndex">
     <input type="hidden" name="CompanyIndex" value="@ViewBag.TripIndices.CompanyIndex">
     <input type="hidden" name="NumberOfDays" value="@ViewBag.TripIndices.NumberOfDays">
-    
+
+    <h3>Base Price : $@priceBeforeTotal</h3>
+    <p>*Price may be affected by customizations and ratings - view total by submitting below</p>
+    <br />
     <input type="submit" value="Total Price" style="color: black" />
 
 </form>
@@ -70,10 +75,9 @@
 <ul>Mass in Units of Earth's Weight: @ViewBag.NASA[p]["pl_masse"] Earths</ul>
 <ul>Time to Orbit Local Star: @ViewBag.NASA[p]["pl_orbper"] days</ul>
 <ul>Year of Discovery: @ViewBag.NASA[p]["pl_disc"]</ul>
-<ul>To Learn More: @ViewBag.PlanetNasaLink</ul>
-<a href="@ViewBag.PlanetNasaLink[p]"><h2>NASA 3d Imaging</h2></a>
-<p>Exoplanet Encyplopedia: @ViewBag.NASA[p]["pl_pelink"]</p>
-
+<p>To Learn More: </p>
+<p>NASA's Interactive Site: </p><a href="@ViewBag.PlanetNasaLink[p]">@ViewBag.PlanetNasaLink[p]</a>
+<p>Exoplanet Encyplopedia:</p> <a href="@ViewBag.NASA[p]["pl_pelink"]">@ViewBag.NASA[p]["pl_pelink"]</a>
 
 
 

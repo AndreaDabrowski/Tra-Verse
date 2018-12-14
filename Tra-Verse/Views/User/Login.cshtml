@@ -1,5 +1,5 @@
 ﻿
-<h1>Tra-Verse</h1>
+<h1>TraVerse</h1>
 <h3>Always Moving Forward</h3><br /> <br />
 
 @ViewBag.Error
@@ -11,9 +11,10 @@
 <a href="/User/Logout">Log Out</a>
 <br />
 <h4 style="color:red">@TempData["InvalidLogin"]</h4>
-@ViewBag.LoggedOut
+@TempData["LoggedOut"]
 @TempData["CurrentlyLoggedIn"]
 @TempData["LoggedIn"]
+@TempData["NotLoggedIn"]
 
 <form action="/User/LoginButton" method="post">
 

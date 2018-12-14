@@ -54,10 +54,10 @@ namespace Tra_Verse.Controllers
                 currentUser.LoggedIn = false;
                 currentUser.UserID = 0;
                 currentUser.OrderID = 0;
-                ViewBag.Logout = "You've been Logged out!";
+                TempData["LoggedOut"] = "You've been Logged out!";
                 return RedirectToAction("Login");
             }
-            ViewBag.LoggedOut = "You're not logged in";
+            TempData["NotLoggedIn"] = "You're not logged in";
             return RedirectToAction("Login");
         }
 
@@ -107,6 +107,11 @@ namespace Tra_Verse.Controllers
         }
         public ActionResult TotalPrice(FormCollection variables)
         {
+            if(variables["ExoSuit"] == null || variables["ShipType"]==null)
+            {
+                TempData["SelectAllOptions"] = "Please return and select customizations to calculate price";
+                return RedirectToAction("Error", "Home");
+            }
             ViewBag.ShipType = variables["ShipType"];
             ViewBag.Exosuit = variables["ExoSuit"];
             ViewBag.DateEnd = variables["DateEnd"];

@@ -1,7 +1,8 @@
 ﻿<br /><br />
-      <h1>Total Price: @ViewBag.RefreshedTotal</h1>
-
-
+<h1>Total Price: $@ViewBag.RefreshedTotal</h1>
+<br />
+<p>Return to previous page to make changes, or proceed to checkout</p>
+<br />
 
 <form action="/Home/Checkout" method="post">
     <input type="hidden" name="ShipType" value="@ViewBag.ShipType" />

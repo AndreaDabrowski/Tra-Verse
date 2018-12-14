@@ -196,6 +196,7 @@
     <Content Include="Content\Images\Planets\WASP44b.png" />
     <Content Include="Content\Images\Planets\WASP96b.PNG" />
     <Content Include="Content\Images\projectBackground.jpg" />
+    <Content Include="Content\Images\traverse-baby-blue.png" />
     <Content Include="Content\Images\traverse-rough-color-centered.png" />
     <Content Include="Content\StylingPage.css" />
     <Content Include="favicon.ico" />
@@ -221,6 +222,7 @@
     <Content Include="Models\TraVerse.edmx.diagram">
       <DependentUpon>TraVerse.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\TraVerse - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\CreditCardValidation.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />

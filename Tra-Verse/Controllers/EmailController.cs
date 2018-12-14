@@ -14,7 +14,7 @@ namespace Tra_Verse.Controllers
     {
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        public async Task<ActionResult> ConfirmationPageEmail()
+        public async Task<ActionResult> ConfirmationPage()
         {
             TraVerseEntities database = new TraVerseEntities();
             VacationLog vacationInfo = database.VacationLogs.Find(UserController.currentUser.OrderID);
@@ -52,6 +52,7 @@ namespace Tra_Verse.Controllers
                 smtp.Port = 587;
                 smtp.EnableSsl = true;
                 await smtp.SendMailAsync(message);
+                TempData["EmailSent!"] = "Your Email Has Been Sent!";
                 return RedirectToAction("ConfirmationPage", "Home");
             }
             //return RedirectToAction("ConfirmationPage");
